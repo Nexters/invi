@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ui": "pnpx shadcn-ui@latest",
-    "ui:add": "pnpx shadcn-ui@latest add",
-    "ui:lint": "pnpx prettier src/components/ui/* --write"
+    "ui": "bunx shadcn-ui@latest",
+    "ui:add": "bunx shadcn-ui@latest add",
+    "ui:lint": "bunx prettier src/components/ui/* --write"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.0",
