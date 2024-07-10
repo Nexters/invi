@@ -1,7 +1,7 @@
 "use client";
 
 import { GearIcon } from "@radix-ui/react-icons";
-import { useIsMutating, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useIsMutating, useQuery } from "@tanstack/react-query";
 import { josa } from "es-hangul";
 import { toast } from "sonner";
 import { useAlertDialogStore } from "~/components/global-alert";
@@ -23,27 +23,30 @@ import {
 } from "~/components/ui/dropdown-menu";
 import type { Test } from "~/lib/db/schema/test";
 import { deleteTest, getTestsWithTestJobs } from "~/lib/db/schema/test.query";
+import { useOptimisticMutation } from "~/lib/hooks/use-optimistic-mutation";
 import { cn } from "~/lib/utils";
 
 export default function TestList() {
-  const queryClient = useQueryClient();
+  const isMutatingTestList = useIsMutating({ mutationKey: ["tests"] });
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["tests"],
     queryFn: () => getTestsWithTestJobs(),
   });
 
-  const isMutating = useIsMutating({ mutationKey: ["tests"] });
+  const deleteMutation = useOptimisticMutation({
+    mutationFn: deleteTest,
+    queryKey: ["tests"],
+    updater: (prevData: Test[], testId) => {
+      return prevData.filter((test) => test.id !== testId);
+    },
+    invalidates: ["tests"],
+  });
 
   const onAlertDelete = useAlertDialogStore((state) => {
     return (test: Test) => {
       const onConfirm = () => {
-        const onDelete = async () => {
-          await deleteTest(test.id);
-          queryClient.invalidateQueries({ queryKey: ["tests"] });
-        };
-
-        toast.promise(onDelete, {
+        toast.promise(deleteMutation.mutateAsync(test.id), {
           loading: "로딩중...",
           success: (data) => {
             return `${josa(test.name, "이/가")} 삭제되었습니다.`;
@@ -67,7 +70,7 @@ export default function TestList() {
     <div
       className={cn(
         "grid grid-cols-3 gap-3 transition",
-        isMutating && "pointer-events-none opacity-50",
+        isMutatingTestList && "pointer-events-none opacity-50",
       )}
     >
       {error && <>{JSON.stringify(error, null, 2)}</>}
