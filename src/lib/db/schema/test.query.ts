@@ -61,4 +61,5 @@ export async function updateTest(
 
 export async function deleteTest(id: Test["id"]) {
   await db.delete(tests).where(eq(tests.id, id));
+  revalidatePath("/playground/test");
 }

@@ -1,7 +1,9 @@
 "use client";
 
 import { GearIcon } from "@radix-ui/react-icons";
-import { useIsMutating, useQuery } from "@tanstack/react-query";
+import { useIsMutating, useQuery, useQueryClient } from "@tanstack/react-query";
+import { josa } from "es-hangul";
+import { toast } from "sonner";
 import { useAlertDialogStore } from "~/components/global-alert";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -20,10 +22,12 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import type { Test } from "~/lib/db/schema/test";
-import { getTestsWithTestJobs } from "~/lib/db/schema/test.query";
+import { deleteTest, getTestsWithTestJobs } from "~/lib/db/schema/test.query";
 import { cn } from "~/lib/utils";
 
 export default function TestList() {
+  const queryClient = useQueryClient();
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["tests"],
     queryFn: () => getTestsWithTestJobs(),
@@ -32,18 +36,29 @@ export default function TestList() {
   const isMutating = useIsMutating({ mutationKey: ["tests"] });
 
   const onAlertDelete = useAlertDialogStore((state) => {
-    const onDelete = () => {
-      return true;
-    };
-
     return (test: Test) => {
+      const onConfirm = () => {
+        const onDelete = async () => {
+          await deleteTest(test.id);
+          queryClient.invalidateQueries({ queryKey: ["tests"] });
+        };
+
+        toast.promise(onDelete, {
+          loading: "로딩중...",
+          success: (data) => {
+            return `${josa(test.name, "이/가")} 삭제되었습니다.`;
+          },
+          error: "에러가 발생했습니다.",
+        });
+      };
+
       state.openDialog({
         title: `정말로 ${test.name}을 삭제하시겠습니까?`,
         description:
           "이 작업은 되돌릴 수 없습니다. 관련 데이터가 영구적으로 삭제됩니다.",
         cancelText: "취소",
         confirmText: "삭제하기",
-        onConfirm: onDelete,
+        onConfirm,
       });
     };
   });

@@ -17,7 +17,7 @@ type AlertDialogOptions = {
   description?: string;
   confirmText: string;
   cancelText?: string;
-  onConfirm: () => Promise<boolean | void> | boolean | void;
+  onConfirm: () => void;
 };
 
 type AlertDialogStore = AlertDialogOptions & {
@@ -46,12 +46,6 @@ export const GlobalAlert = () => {
     closeDialog,
   } = useAlertDialogStore();
 
-  const onClickConfirm = async () => {
-    if (await onConfirm()) {
-      closeDialog();
-    }
-  };
-
   return (
     <AlertDialog
       open={isOpen}
@@ -66,7 +60,7 @@ export const GlobalAlert = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           {cancelText && <AlertDialogCancel>{cancelText}</AlertDialogCancel>}
-          <AlertDialogAction onClick={onClickConfirm}>
+          <AlertDialogAction onClick={onConfirm}>
             {confirmText}
           </AlertDialogAction>
         </AlertDialogFooter>
