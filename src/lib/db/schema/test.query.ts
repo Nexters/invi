@@ -1,11 +1,14 @@
 "use server";
 
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 import { db } from "~/lib/db";
 import { tests, type Test, type TestInsert } from "~/lib/db/schema/test";
 
 export async function createTest(data: TestInsert) {
-  return db.insert(tests).values(data);
+  const res = await db.insert(tests).values(data);
+  revalidatePath("/playground/test");
+  return res;
 }
 
 export async function getTests() {
