@@ -11,13 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { getTests } from "~/lib/db/schema/test.query";
+import { getTestsWithTestJobs } from "~/lib/db/schema/test.query";
 import { cn } from "~/lib/utils";
 
 export default function TestList() {
   const { data, isLoading } = useQuery({
     queryKey: ["tests"],
-    queryFn: () => getTests(),
+    queryFn: () => getTestsWithTestJobs(),
   });
 
   const isMutating = useIsMutating({ mutationKey: ["tests"] });

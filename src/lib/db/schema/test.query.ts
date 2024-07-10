@@ -3,7 +3,13 @@
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "~/lib/db";
-import { tests, type Test, type TestInsert } from "~/lib/db/schema/test";
+import {
+  testJobs,
+  tests,
+  type Test,
+  type TestInsert,
+  type TestJobSelect,
+} from "~/lib/db/schema/test";
 
 export async function createTest(data: TestInsert) {
   const res = await db.insert(tests).values(data);
@@ -13,6 +19,33 @@ export async function createTest(data: TestInsert) {
 
 export async function getTests() {
   return db.select().from(tests);
+}
+
+export async function getTestsWithTestJobs() {
+  const res = await db
+    .select()
+    .from(tests)
+    .leftJoin(testJobs, eq(tests.id, testJobs.testId));
+
+  const groupedTests = res.reduce(
+    (acc, row) => {
+      const test = row.test;
+      const job = row.test_job;
+
+      if (!acc[test.id]) {
+        acc[test.id] = { ...test, jobs: [] };
+      }
+
+      if (job) {
+        acc[test.id].jobs.push(job);
+      }
+
+      return acc;
+    },
+    {} as Record<number, Test & { jobs: TestJobSelect[] }>,
+  );
+
+  return Object.values(groupedTests);
 }
 
 export async function getTestById(id: Test["id"]) {
