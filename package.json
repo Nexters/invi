@@ -34,6 +34,9 @@
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@t3-oss/env-nextjs": "^0.10.1",
+    "@tanstack/react-form": "^0.26.1",
+    "@tanstack/react-query": "^5.50.1",
+    "@tanstack/zod-form-adapter": "^0.25.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.31.3",
@@ -47,6 +50,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.50.1",
+    "@tanstack/react-query-devtools": "^5.50.1",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

@@ -1,9 +1,15 @@
+"use server";
+
 import { eq } from "drizzle-orm";
 import { db } from "~/lib/db";
 import { tests, type Test, type TestInsert } from "~/lib/db/schema/test";
 
 export async function createTest(data: TestInsert) {
-  db.insert(tests).values(data);
+  return db.insert(tests).values(data);
+}
+
+export async function getTests() {
+  return db.select().from(tests);
 }
 
 export async function getTestById(id: Test["id"]) {
