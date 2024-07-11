@@ -10,7 +10,7 @@ import { getTestWithTestJobCnt } from "~/lib/db/schema/test.query";
 
 const getQueryClient = cache(() => new QueryClient());
 
-export default async function Home() {
+export default async function Page() {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({

@@ -3,15 +3,14 @@
 import { GearIcon } from "@radix-ui/react-icons";
 import { useIsMutating, useQuery } from "@tanstack/react-query";
 import { josa } from "es-hangul";
+import Link from "next/link";
 import { toast } from "sonner";
 import { useAlertDialogStore } from "~/components/global-alert";
-import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
@@ -69,7 +68,7 @@ export default function TestList() {
   return (
     <div
       className={cn(
-        "grid grid-cols-2 gap-2 transition",
+        "grid grid-cols-3 gap-2 transition",
         isMutatingTestList && "pointer-events-none opacity-50",
       )}
     >
@@ -77,39 +76,40 @@ export default function TestList() {
       {isLoading && <>로딩중...</>}
       {data?.length === 0 && <div>데이터를 찾을 수 없습니다.</div>}
       {data?.map((test) => (
-        <Card key={test.id}>
-          <CardHeader>
-            <CardTitle>{test.name}</CardTitle>
-            <CardDescription>{test.email}</CardDescription>
-            <div className="flex items-center gap-1">
-              <Badge variant="outline">ID {test.id}</Badge>
-              <Badge variant="outline">숫자 {test.number}</Badge>
-            </div>
-          </CardHeader>
-          <CardContent></CardContent>
-          <CardFooter className="gap-1">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="flex-shrink-0"
-                >
-                  <GearIcon />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
-                <DropdownMenuItem>수정하기</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onAlertDelete(test)}>
-                  삭제하기
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Button variant="outline" className="w-full">
-              추가하기
-            </Button>
-          </CardFooter>
-        </Card>
+        <div key={test.id} className="relative">
+          <Link href={`/playground/test/${test.id}`}>
+            <Card className="transition hover:bg-accent">
+              <CardHeader>
+                <CardTitle>{test.name}</CardTitle>
+                <CardDescription>{test.email}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>ID {test.id}</CardDescription>
+                <CardDescription>숫자 {test.number}</CardDescription>
+                <CardDescription>
+                  테스트 작업 {test.testJobCnt}개
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute bottom-5 right-4"
+              >
+                <GearIcon />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>수정하기</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onAlertDelete(test)}>
+                삭제하기
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       ))}
     </div>
   );

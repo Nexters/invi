@@ -63,6 +63,19 @@ export async function getTestById(id: Test["id"]) {
   return db.select().from(tests).where(eq(tests.id, id));
 }
 
+export async function getTestWithTestJobs(id: Test["id"]) {
+  const res = await db
+    .select()
+    .from(tests)
+    .leftJoin(testJobs, eq(tests.id, testJobs.testId))
+    .where(eq(tests.id, id));
+
+  const test = res[0].test;
+  const jobs = res.map((row) => row.test_job).filter(Boolean);
+
+  return { ...test, jobs };
+}
+
 export async function updateTest(
   id: Test["id"],
   data: Partial<Omit<Test, "id">>,
@@ -73,4 +86,10 @@ export async function updateTest(
 export async function deleteTest(id: Test["id"]) {
   await db.delete(tests).where(eq(tests.id, id));
   revalidatePath("/playground/test");
+}
+
+/* ------ test job ------ */
+
+export async function getTestJob(id: Test["id"]) {
+  return db.select().from(testJobs).where(eq(testJobs.id, id));
 }
