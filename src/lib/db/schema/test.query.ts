@@ -1,6 +1,6 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { count, eq, getTableColumns } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "~/lib/db";
 import {
@@ -19,6 +19,17 @@ export async function createTest(data: TestInsert) {
 
 export async function getTests() {
   return db.select().from(tests);
+}
+
+export async function getTestWithTestJobCnt() {
+  return db
+    .select({
+      ...getTableColumns(tests),
+      testJobCnt: count(testJobs.id),
+    })
+    .from(tests)
+    .leftJoin(testJobs, eq(testJobs.id, testJobs.testId))
+    .groupBy(tests.id);
 }
 
 export async function getTestsWithTestJobs() {

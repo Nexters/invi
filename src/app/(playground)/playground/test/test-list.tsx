@@ -22,7 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import type { Test } from "~/lib/db/schema/test";
-import { deleteTest, getTestsWithTestJobs } from "~/lib/db/schema/test.query";
+import { deleteTest, getTestWithTestJobCnt } from "~/lib/db/schema/test.query";
 import { useOptimisticMutation } from "~/lib/hooks/use-optimistic-mutation";
 import { cn } from "~/lib/utils";
 
@@ -31,7 +31,7 @@ export default function TestList() {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["tests"],
-    queryFn: () => getTestsWithTestJobs(),
+    queryFn: () => getTestWithTestJobCnt(),
   });
 
   const deleteMutation = useOptimisticMutation({
@@ -69,7 +69,7 @@ export default function TestList() {
   return (
     <div
       className={cn(
-        "grid grid-cols-3 gap-3 transition",
+        "grid grid-cols-2 gap-2 transition",
         isMutatingTestList && "pointer-events-none opacity-50",
       )}
     >

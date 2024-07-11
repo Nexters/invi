@@ -6,7 +6,7 @@ import {
 import { cache } from "react";
 import TestForm from "~/app/(playground)/playground/test/test-form";
 import TestList from "~/app/(playground)/playground/test/test-list";
-import { getTestsWithTestJobs } from "~/lib/db/schema/test.query";
+import { getTestWithTestJobCnt } from "~/lib/db/schema/test.query";
 
 const getQueryClient = cache(() => new QueryClient());
 
@@ -15,7 +15,7 @@ export default async function Home() {
 
   await queryClient.prefetchQuery({
     queryKey: ["tests"],
-    queryFn: getTestsWithTestJobs,
+    queryFn: getTestWithTestJobCnt,
   });
 
   return (
