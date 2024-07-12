@@ -5,6 +5,7 @@ import { useIsMutating, useQuery } from "@tanstack/react-query";
 import { josa } from "es-hangul";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useTestEditDialog } from "~/app/(playground)/playground/test/test-edit-dialog";
 import { useAlertDialogStore } from "~/components/global-alert";
 import { Button } from "~/components/ui/button";
 import {
@@ -41,6 +42,8 @@ export default function TestList() {
     },
     invalidates: ["tests"],
   });
+
+  const onOpenEditDialog = useTestEditDialog((state) => state.openDialog);
 
   const onAlertDelete = useAlertDialogStore((state) => {
     return (test: Test) => {
@@ -103,7 +106,9 @@ export default function TestList() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>수정하기</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onOpenEditDialog(test)}>
+                수정하기
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => onAlertDelete(test)}>
                 삭제하기
               </DropdownMenuItem>

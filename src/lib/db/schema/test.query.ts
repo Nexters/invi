@@ -76,11 +76,9 @@ export async function getTestWithTestJobs(id: Test["id"]) {
   return { ...test, jobs };
 }
 
-export async function updateTest(
-  id: Test["id"],
-  data: Partial<Omit<Test, "id">>,
-) {
-  await db.update(tests).set(data).where(eq(tests.id, id));
+export async function updateTest(data: Test) {
+  await db.update(tests).set(data).where(eq(tests.id, data.id));
+  revalidatePath("/playground/test");
 }
 
 export async function deleteTest(id: Test["id"]) {

@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { cache } from "react";
 import { ALink, AMain } from "~/app/(playground)/playground/inner-tools";
+import TestEditDialog from "~/app/(playground)/playground/test/test-edit-dialog";
 import TestForm from "~/app/(playground)/playground/test/test-form";
 import TestList from "~/app/(playground)/playground/test/test-list";
 import { getTestWithTestJobCnt } from "~/lib/db/schema/test.query";
@@ -25,6 +26,7 @@ export default async function Page() {
         <ALink href="/playground">playground</ALink>
         <TestForm />
         <TestList />
+        <TestEditDialog />
       </AMain>
     </HydrationBoundary>
   );
