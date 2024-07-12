@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
-import Link from "next/link";
 import path from "path";
+import { ALink, AMain } from "~/app/(playground)/playground/inner-tools";
 
 async function getPlaygroundRoutes() {
   const playgroundDir = path.join(
@@ -29,17 +29,15 @@ export default async function Page() {
   const routes = await getPlaygroundRoutes();
 
   return (
-    <main className="mx-auto w-full max-w-2xl space-y-20 px-10 pt-20">
+    <AMain>
       <h2 className="font-bold">playground</h2>
       <ul className="space-y-2">
         {routes.map((route) => (
           <li key={route}>
-            <Link href={route} className="text-blue-500 hover:underline">
-              {route}
-            </Link>
+            <ALink href={route}>{route}</ALink>
           </li>
         ))}
       </ul>
-    </main>
+    </AMain>
   );
 }

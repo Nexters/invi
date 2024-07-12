@@ -3,10 +3,9 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import Link from "next/link";
 import { cache } from "react";
+import { ALink, AMain } from "~/app/(playground)/playground/inner-tools";
 import TestInfo from "~/app/(playground)/playground/test/[testId]/test-info";
-import { Button } from "~/components/ui/button";
 import { getTestWithTestJobs } from "~/lib/db/schema/test.query";
 
 const getQueryClient = cache(() => new QueryClient());
@@ -23,16 +22,10 @@ export default async function Page({ params }: { params: { testId: string } }) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="mx-auto w-full max-w-2xl space-y-20 px-10 pt-20">
-        <div>
-          <Button asChild variant="ghost" size="sm" className="mb-4">
-            <Link href="/playground/test" className="text-sm">
-              뒤로가기
-            </Link>
-          </Button>
-          <TestInfo />
-        </div>
-      </div>
+      <AMain>
+        <ALink href="/playground/test">뒤로가기</ALink>
+        <TestInfo />
+      </AMain>
     </HydrationBoundary>
   );
 }
