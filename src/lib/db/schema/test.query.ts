@@ -79,6 +79,7 @@ export async function getTestWithTestJobs(id: Test["id"]) {
 export async function updateTest(data: Test) {
   await db.update(tests).set(data).where(eq(tests.id, data.id));
   revalidatePath("/playground/test");
+  revalidatePath(`/playground/test/${data.id}`);
 }
 
 export async function deleteTest(id: Test["id"]) {

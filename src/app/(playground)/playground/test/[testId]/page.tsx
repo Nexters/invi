@@ -6,6 +6,7 @@ import {
 import { cache } from "react";
 import { ALink, AMain } from "~/app/(playground)/playground/inner-tools";
 import TestInfo from "~/app/(playground)/playground/test/[testId]/test-info";
+import TestEditDialog from "~/app/(playground)/playground/test/test-edit-dialog";
 import { getTestWithTestJobs } from "~/lib/db/schema/test.query";
 
 const getQueryClient = cache(() => new QueryClient());
@@ -25,6 +26,7 @@ export default async function Page({ params }: { params: { testId: string } }) {
       <AMain>
         <ALink href="/playground/test">뒤로가기</ALink>
         <TestInfo />
+        <TestEditDialog />
       </AMain>
     </HydrationBoundary>
   );
