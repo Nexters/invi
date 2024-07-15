@@ -1,5 +1,5 @@
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { Google } from "arctic";
+import { Google, Kakao } from "arctic";
 import { Lucia } from "lucia";
 import { db } from "~/lib/db";
 import { sessions } from "~/lib/db/schema/auth";
@@ -46,4 +46,10 @@ export const google = new Google(
   env.GOOGLE_CLIENT_ID,
   env.GOOGLE_CLIENT_SECRET,
   env.GOOGLE_REDIRECT_URI,
+);
+
+export const kakao = new Kakao(
+  env.KAKAO_CLIENT_ID,
+  env.KAKAO_CLIENT_SECRET,
+  env.KAKAO_REDIRECT_URI,
 );
