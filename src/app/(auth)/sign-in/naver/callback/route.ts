@@ -1,8 +1,8 @@
 import { OAuth2RequestError } from "arctic";
 import ky from "ky";
-import { generateId } from "lucia";
 import { naver } from "~/lib/auth/lucia";
 import { createSession } from "~/lib/auth/utils";
+import { createUser, getUser } from "~/lib/db/schema/users.query";
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -33,16 +33,21 @@ export async function GET(request: Request): Promise<Response> {
       email: string;
     }>();
 
-    // TODO: 유저 데이터베이스 연동
-    let userId: string = generateId(15);
+    let dbUser = await getUser(user.id);
 
-    //
-    createSession(userId);
+    if (!dbUser) {
+      dbUser = await createUser({
+        id: user.id,
+        name: user.name,
+        provider: "naver",
+      });
+    }
+
+    createSession(dbUser.id);
 
     return new Response(null, {
       status: 302,
       headers: {
-        // Location: "/dashboard",
         Location: "/playground/sign-in",
       },
     });

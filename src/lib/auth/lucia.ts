@@ -4,7 +4,7 @@ import { Lucia } from "lucia";
 import { Naver } from "~/lib/auth/naver-provider";
 import { db } from "~/lib/db";
 import { sessions } from "~/lib/db/schema/auth";
-import { users } from "~/lib/db/schema/user";
+import { users } from "~/lib/db/schema/users";
 import { env } from "~/lib/env";
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessions, users);
