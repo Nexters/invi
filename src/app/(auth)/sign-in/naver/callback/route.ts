@@ -1,40 +1,36 @@
 import { OAuth2RequestError } from "arctic";
 import ky from "ky";
 import { generateId } from "lucia";
-import { kakao } from "~/lib/auth/lucia";
+import { naver } from "~/lib/auth/lucia";
 import { createSession } from "~/lib/auth/utils";
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
+  const state = url.searchParams.get("state");
+  const errorCode = url.searchParams.get("error");
+  const errorDescription = url.searchParams.get("error_description");
 
-  if (!code) {
-    return new Response(null, {
-      status: 400,
+  if (!code || !state) {
+    return new Response(errorDescription, {
+      status: errorCode ? parseInt(errorCode) : 400,
     });
   }
 
   try {
-    const tokens = await kakao.validateAuthorizationCode(code);
+    const tokens = await naver.validateAuthorizationCode(code, state);
     const accessToken = tokens.accessToken();
 
-    // @see https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info
-    const user = await ky("https://kapi.kakao.com/v2/user/me", {
+    // @see https://developers.naver.com/docs/login/devguide/devguide.md#3-4-5-접근-토큰을-이용하여-프로필-api-호출하기
+    const user = await ky("https://openapi.naver.com/v1/nid/me", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     }).json<{
       id: string;
+      nickname: string;
       name: string;
-      // TODO: 비즈앱 전환
       email: string;
-      phone_number: string;
-      kakao_account: {
-        profile: {
-          nickname: string;
-          profile_image_url: string;
-        };
-      };
     }>();
 
     // TODO: 유저 데이터베이스 연동

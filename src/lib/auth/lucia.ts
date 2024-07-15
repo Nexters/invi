@@ -1,6 +1,7 @@
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { Google, Kakao } from "arctic";
 import { Lucia } from "lucia";
+import { Naver } from "~/lib/auth/naver-provider";
 import { db } from "~/lib/db";
 import { sessions } from "~/lib/db/schema/auth";
 import { users } from "~/lib/db/schema/user";
@@ -52,4 +53,10 @@ export const kakao = new Kakao(
   env.KAKAO_CLIENT_ID,
   env.KAKAO_CLIENT_SECRET,
   env.KAKAO_REDIRECT_URI,
+);
+
+export const naver = new Naver(
+  env.NAVER_CLIENT_ID,
+  env.NAVER_CLIENT_SECRET,
+  env.NAVER_REDIRECT_URI,
 );
