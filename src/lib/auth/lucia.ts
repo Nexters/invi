@@ -1,4 +1,5 @@
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
+import { Google } from "arctic";
 import { Lucia } from "lucia";
 import { db } from "~/lib/db";
 import { sessions } from "~/lib/db/schema/auth";
@@ -35,3 +36,14 @@ declare module "lucia" {
 interface DatabaseUserAttributes {
   name: string;
 }
+
+// OAuth
+const OAuthKeyList = ["google"] as const;
+
+export type OAuthKey = (typeof OAuthKeyList)[number];
+
+export const google = new Google(
+  env.GOOGLE_CLIENT_ID,
+  env.GOOGLE_CLIENT_SECRET,
+  env.GOOGLE_REDIRECT_URI,
+);
