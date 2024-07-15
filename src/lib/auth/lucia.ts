@@ -39,10 +39,6 @@ interface DatabaseUserAttributes {
 }
 
 // OAuth
-const OAuthKeyList = ["google"] as const;
-
-export type OAuthKey = (typeof OAuthKeyList)[number];
-
 export const google = new Google(
   env.GOOGLE_CLIENT_ID,
   env.GOOGLE_CLIENT_SECRET,

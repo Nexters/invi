@@ -36,6 +36,7 @@ export async function GET(request: Request): Promise<Response> {
         };
       };
     }>();
+    console.log(":user", user);
 
     // TODO: 유저 데이터베이스 연동
     let userId: string = generateId(15);

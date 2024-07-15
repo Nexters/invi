@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { cache } from "react";
-import { lucia, type OAuthKey } from "~/lib/auth/lucia";
-import { env } from "~/lib/env";
+import { lucia } from "~/lib/auth/lucia";
 
 export type Auth = ReturnType<typeof lucia.validateSession>;
 
@@ -50,29 +49,4 @@ export const invalidateSessionCookie = async () => {
     sessionCookie.value,
     sessionCookie.attributes,
   );
-};
-
-// @see https://arcticjs.dev/guides/oauth2-pkce
-export const setPKCE = (key: OAuthKey, state: string, codeVerifier: string) => {
-  cookies().set(`${key}_oauth_state`, state, {
-    path: "/",
-    secure: env.NODE_ENV === "production",
-    httpOnly: true,
-    maxAge: 60 * 10,
-    sameSite: "lax",
-  });
-
-  cookies().set(`${key}_oauth_code_verifier`, codeVerifier, {
-    path: "/",
-    secure: env.NODE_ENV === "production",
-    httpOnly: true,
-    maxAge: 60 * 10,
-  });
-};
-
-export const getPKCE = (key: OAuthKey) => {
-  const storedState = cookies().get(`${key}_oauth_state`)?.value ?? null;
-  const codeVerifier = cookies().get(`${key}_oauth_code_verifier`)?.value;
-
-  return { storedState, codeVerifier };
 };

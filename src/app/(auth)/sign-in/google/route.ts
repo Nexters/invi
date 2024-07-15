@@ -1,6 +1,7 @@
 import { generateCodeVerifier, generateState } from "arctic";
+import { cookies } from "next/headers";
 import { google } from "~/lib/auth/lucia";
-import { setPKCE } from "~/lib/auth/utils";
+import { env } from "~/lib/env";
 
 export async function GET(): Promise<Response> {
   const state = generateState();
@@ -13,7 +14,20 @@ export async function GET(): Promise<Response> {
     "email",
   ]);
 
-  setPKCE("google", state, codeVerifier);
+  // @see https://arcticjs.dev/guides/oauth2-pkce
+  cookies().set("google_oauth_state", state, {
+    path: "/",
+    secure: env.NODE_ENV === "production",
+    httpOnly: true,
+    maxAge: 60 * 10,
+    sameSite: "lax",
+  });
+  cookies().set("google_oauth_code_verifier", codeVerifier, {
+    path: "/",
+    secure: env.NODE_ENV === "production",
+    httpOnly: true,
+    maxAge: 60 * 10,
+  });
 
   return Response.redirect(url);
 }
