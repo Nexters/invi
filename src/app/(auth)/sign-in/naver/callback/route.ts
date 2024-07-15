@@ -2,7 +2,7 @@ import { OAuth2RequestError } from "arctic";
 import ky from "ky";
 import { naver } from "~/lib/auth/lucia";
 import { createSession } from "~/lib/auth/utils";
-import { createUser, getUser } from "~/lib/db/schema/users.query";
+import { createUser, getUserByName } from "~/lib/db/schema/users.query";
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -33,17 +33,17 @@ export async function GET(request: Request): Promise<Response> {
       email: string;
     }>();
 
-    let dbUser = await getUser(user.id);
+    // TODO: 유닉한 탐색 키 설정
+    let dbUser = await getUserByName(user.id);
 
     if (!dbUser) {
       dbUser = await createUser({
-        id: user.id,
         name: user.name,
         provider: "naver",
       });
     }
 
-    createSession(dbUser.id);
+    await createSession(dbUser.id);
 
     return new Response(null, {
       status: 302,

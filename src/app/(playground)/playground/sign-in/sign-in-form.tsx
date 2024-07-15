@@ -13,6 +13,12 @@ export default function SignInForm() {
           <Button variant="outline" className="w-full" asChild>
             <Link href="/sign-in/google">Continue with Google</Link>
           </Button>
+          <Button variant="outline" className="w-full" asChild>
+            <Link href="/sign-in/kakao">Continue with Kakao</Link>
+          </Button>
+          <Button variant="outline" className="w-full" asChild>
+            <Link href="/sign-in/naver">Continue with Naver</Link>
+          </Button>
         </div>
       </CardContent>
     </Card>

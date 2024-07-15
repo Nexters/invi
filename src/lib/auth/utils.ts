@@ -1,10 +1,9 @@
 import { cookies } from "next/headers";
-import { cache } from "react";
 import { lucia } from "~/lib/auth/lucia";
 
 export type Auth = ReturnType<typeof lucia.validateSession>;
 
-export const getAuth = cache(async (): Promise<Auth> => {
+export const getAuth = async (): Promise<Auth> => {
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
   if (!sessionId) return { user: null, session: null };
 
@@ -20,7 +19,7 @@ export const getAuth = cache(async (): Promise<Auth> => {
     // Next.js throws error when attempting to set cookies when rendering page
   }
   return result;
-});
+};
 
 export const invalidateAuth = async (sessionId: string) => {
   await lucia.invalidateSession(sessionId);

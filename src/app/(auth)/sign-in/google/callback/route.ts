@@ -3,7 +3,7 @@ import ky from "ky";
 import { cookies } from "next/headers";
 import { google } from "~/lib/auth/lucia";
 import { createSession } from "~/lib/auth/utils";
-import { createUser, getUser } from "~/lib/db/schema/users.query";
+import { createUser, getUserByName } from "~/lib/db/schema/users.query";
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -37,17 +37,17 @@ export async function GET(request: Request): Promise<Response> {
     }>();
     console.log(":user", user);
 
-    let dbUser = await getUser(user.sub);
+    // TODO: 유닉한 탐색 키 설정
+    let dbUser = await getUserByName(user.name);
 
     if (!dbUser) {
       dbUser = await createUser({
-        id: user.sub,
         name: user.name,
         provider: "google",
       });
     }
 
-    createSession(dbUser.id);
+    await createSession(dbUser.id);
 
     return new Response(null, {
       status: 302,

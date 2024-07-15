@@ -17,7 +17,7 @@ export const lucia = new Lucia(adapter, {
     attributes: {
       secure: env.NODE_ENV === "production",
       sameSite: env.NODE_ENV === "production" ? "strict" : undefined,
-      domain: "invi.my",
+      domain: env.NODE_ENV === "production" ? "invi.my" : undefined,
     },
   },
   getUserAttributes: (attributes) => {
