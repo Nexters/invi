@@ -10,11 +10,11 @@
     "ui": "bunx shadcn-ui@latest",
     "ui:add": "bunx shadcn-ui@latest add",
     "ui:lint": "bunx prettier src/components/ui/* --write",
-    "db:lint": "bunx prettier src/lib/db/migrations/**/*.json --write",
+    "db:lint": "bunx prettier src/lib/db/migrations/**/*.{json,ts} --write",
     "db:generate": "drizzle-kit generate && bun db:lint",
     "db:migrate": "drizzle-kit migrate && bun db:lint",
     "db:push": "drizzle-kit push",
-    "db:pull": "drizzle-kit introspect",
+    "db:pull": "drizzle-kit introspect && bun db:lint",
     "db:drop": "drizzle-kit drop",
     "db:studio": "drizzle-kit studio",
     "db:check": "drizzle-kit check"
