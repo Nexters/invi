@@ -41,7 +41,7 @@ export const setSessionCookie = (sessionId: string) => {
   );
 };
 
-export const invalidateSessionCookie = async () => {
+export const invalidateSessionCookie = () => {
   const sessionCookie = lucia.createBlankSessionCookie();
   cookies().set(
     sessionCookie.name,
