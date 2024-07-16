@@ -2,7 +2,7 @@ import { OAuth2RequestError } from "arctic";
 import ky from "ky";
 import { kakao } from "~/lib/auth/lucia";
 import { createSession } from "~/lib/auth/utils";
-import { createUser, getUserByName } from "~/lib/db/schema/users.query";
+import { findOrCreateUser } from "~/lib/db/schema/users.query";
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -38,15 +38,11 @@ export async function GET(request: Request): Promise<Response> {
     }>();
     console.log(":user", user);
 
-    // TODO: 유닉한 탐색 키 설정
-    let dbUser = await getUserByName(user.name);
-
-    if (!dbUser) {
-      dbUser = await createUser({
-        name: user.name,
-        provider: "kakao",
-      });
-    }
+    const dbUser = await findOrCreateUser({
+      name: user.name,
+      email: user.email,
+      provider: "kakao",
+    });
 
     await createSession(dbUser.id);
 
