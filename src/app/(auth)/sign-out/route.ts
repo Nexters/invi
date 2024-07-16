@@ -1,18 +1,28 @@
-import {
-  getAuth,
-  invalidateAuth,
-  invalidateSessionCookie,
-} from "~/lib/auth/utils";
+import { signOutAction } from "~/app/(auth)/sign-out/actions";
 
 export async function GET(): Promise<Response> {
-  const { session } = await getAuth();
+  const result = await signOutAction();
 
-  if (!session) {
-    invalidateSessionCookie();
-    return Response.redirect("/");
+  if (result.error) {
+    return new Response(null, {
+      status: 401,
+    });
   }
 
-  await invalidateAuth(session.id);
+  if (result.refresh) {
+    return new Response(null, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/html",
+        Refresh: "0",
+      },
+    });
+  }
 
-  return Response.redirect("/");
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: "/playground/sign-in",
+    },
+  });
 }
