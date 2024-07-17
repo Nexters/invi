@@ -22,21 +22,26 @@ export async function GET(request: Request): Promise<Response> {
     const accessToken = tokens.accessToken();
 
     // @see https://developers.naver.com/docs/login/devguide/devguide.md#3-4-5-접근-토큰을-이용하여-프로필-api-호출하기
-    const user = await ky("https://openapi.naver.com/v1/nid/me", {
+    const res = await ky("https://openapi.naver.com/v1/nid/me", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     }).json<{
-      id: string;
-      nickname: string;
-      name: string;
-      email: string;
+      resultcode: string;
+      message: string;
+      response: {
+        id: string;
+        nickname: string;
+        profile_image: string;
+        email: string;
+        name: string;
+      };
     }>();
-    console.log(":user", user);
+    console.log(":res", res);
 
     const dbUser = await findOrCreateUser({
-      name: user.name,
-      email: user.email,
+      name: res.response.name,
+      email: res.response.email,
       provider: "naver",
     });
 
