@@ -18,11 +18,6 @@ export async function getUser(id: string) {
   return userList.at(0);
 }
 
-export async function getUserByName(name: string) {
-  const userList = await db.select().from(users).where(eq(users.name, name));
-  return userList.at(0);
-}
-
 export async function getUserByEmail(email: string) {
   const userList = await db.select().from(users).where(eq(users.email, email));
   return userList.at(0);
