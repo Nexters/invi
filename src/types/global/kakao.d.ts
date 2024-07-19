@@ -1,5 +1,8 @@
 declare global {
   interface Window {
+    daum: {
+      Postcode: any;
+    },
     kakao: {
       maps: {
         load: (callback: () => void) => void;
