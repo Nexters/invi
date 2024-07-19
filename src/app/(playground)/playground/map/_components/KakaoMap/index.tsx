@@ -1,8 +1,8 @@
 "use client"
 
 import { useRef, useEffect } from "react";
-import Script from "next/script";
-import { Coordinate, useKakaoAddress } from "~/app/(playground)/playground/map/_store/KakaoAdressStore";
+import { useKakaoAddress } from "~/app/(playground)/playground/map/_store/KakaoAdressStore";
+import type { Coordinate } from "~/app/(playground)/playground/map/_store/KakaoAdressStore";
 
 interface KakaoMapProps {
   width: string;
