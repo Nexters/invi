@@ -6,11 +6,6 @@ export const metadata: Metadata = {
   description: "당신의 환대, 초대장 플랫폼 '인비' 입니다.",
 };
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
 
 export default function RootLayout({
   children,

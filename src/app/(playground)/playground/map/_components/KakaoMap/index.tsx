@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import Script from "next/script";
-import { useKakaoAddress } from "~/app/(playground)/playground/map/_store/KakaoAdressStore";
+import { Coordinate, useKakaoAddress } from "~/app/(playground)/playground/map/_store/KakaoAdressStore";
 
 interface KakaoMapProps {
   width: string;
@@ -12,11 +12,11 @@ interface KakaoMapProps {
 }
 
 export default function KakaoMap({
-  width,
-  height,
-  level = 3,
-  addCenterPin = false
-  }: KakaoMapProps) {
+                                   width,
+                                   height,
+                                   level = 3,
+                                   addCenterPin = false
+                                 }: KakaoMapProps) {
   const { coordinate, setCoordinate } = useKakaoAddress();
   const mapRef = useRef<HTMLDivElement | null>(null);
 
@@ -24,12 +24,13 @@ export default function KakaoMap({
     if (!mapRef.current) return;
 
     window.kakao.maps.load(() => {
-      const center = new window.kakao.maps.LatLng(coordinate.latitude, coordinate.longitude);
+      const { latitude, longitude }: Coordinate = coordinate
+      const center = new window.kakao.maps.LatLng(latitude, longitude);
       const mapOption = {
         center: center,
         level: level,
       };
-      const map = new window.kakao.maps.Map(mapRef.current, mapOption);
+      const map = new window.kakao.maps.Map(mapRef.current as HTMLElement, mapOption);
 
       if (addCenterPin) {
         const marker = new window.kakao.maps.Marker({

@@ -1,13 +1,13 @@
 import create from 'zustand';
 
-interface Coordinate {
-  x: number;
-  y: number;
+export interface Coordinate {
+  latitude: number;
+  longitude: number;
 }
 
 interface KakaoAddressStore {
   coordinate: Coordinate;
-  setCoordinate: (x: number, y: number) => void;
+  setCoordinate: (latitude: number, longitude: number) => void;
 }
 
 const useKakaoAddressStore = create<KakaoAddressStore>((set) => ({

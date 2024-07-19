@@ -1,7 +1,7 @@
 declare global {
   interface Window {
     daum: {
-      Postcode: any;
+      Postcode: new (options: any) => any;
     },
     kakao: {
       maps: {
@@ -10,6 +10,11 @@ declare global {
         Map: new (container: HTMLElement, options: any) => any;
         Marker: new (options: any) => {
           setMap: (map: any) => void;
+        };
+        services: {
+          Geocoder: new () => {
+            addressSearch: (address: string, callback: (result: any, status: any) => void) => void;
+          };
         };
       };
     };
