@@ -8,6 +8,20 @@
       "when": 1720450854164,
       "tag": "0000_tranquil_sasquatch",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1721033805896,
+      "tag": "0001_far_archangel",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1721096502112,
+      "tag": "0002_zippy_stature",
+      "breakpoints": true
     }
   ]
 }

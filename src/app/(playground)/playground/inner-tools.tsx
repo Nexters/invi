@@ -6,7 +6,7 @@ export function AMain(props: React.HTMLAttributes<HTMLDivElement>) {
     <main
       {...props}
       className={cn(
-        "mx-auto w-full max-w-2xl space-y-20 px-10 pt-20",
+        "mx-auto w-full max-w-2xl space-y-20 px-10 py-20",
         props.className,
       )}
     />

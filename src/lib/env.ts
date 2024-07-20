@@ -7,6 +7,16 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     DATABASE_URL: z.string().min(1),
+    /* ---- OAuth ---- */
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
+    GOOGLE_REDIRECT_URI: z.string(),
+    KAKAO_CLIENT_ID: z.string(),
+    KAKAO_CLIENT_SECRET: z.string(),
+    KAKAO_REDIRECT_URI: z.string(),
+    NAVER_CLIENT_ID: z.string(),
+    NAVER_CLIENT_SECRET: z.string(),
+    NAVER_REDIRECT_URI: z.string(),
   },
   client: {},
   experimental__runtimeEnv: {},
