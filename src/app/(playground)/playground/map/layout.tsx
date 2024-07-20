@@ -2,11 +2,10 @@ import Script from "next/script";
 
 export default function KaKaoMapPageLayout({
   children,
-  }: {
+}: {
   children: React.ReactNode;
-}){
-
-  return(
+}) {
+  return (
     <>
       <Script
         strategy="beforeInteractive"
@@ -20,5 +19,5 @@ export default function KaKaoMapPageLayout({
       />
       {children}
     </>
-  )
+  );
 }

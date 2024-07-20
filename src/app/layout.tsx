@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   description: "당신의 환대, 초대장 플랫폼 '인비' 입니다.",
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,9 +21,7 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
       </head>
-      <body>
-          {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
