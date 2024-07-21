@@ -10,12 +10,12 @@ export default function KaKaoMapPageLayout({
       <Script
         strategy="beforeInteractive"
         type="text/javascript"
-        src={"//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"}
+        src={`${process.env.NEXT_PUBLIC_DAUMCDN_POSTOCDE_URL}`}
       />
       <Script
         strategy="beforeInteractive"
         type="text/javascript"
-        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
+        src={`${process.env.NEXT_PUBLIC_KAKAOMAP_BASE_URL}?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
       />
       {children}
     </>
