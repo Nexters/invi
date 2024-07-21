@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Coordinate } from "~/app/(playground)/playground/map/_store/KakaoAdressStore";
 import { useKakaoAddress } from "~/app/(playground)/playground/map/_store/KakaoAdressStore";
 
 interface KakaoMapProps {
@@ -9,6 +8,8 @@ interface KakaoMapProps {
   height: string;
   level?: number;
   addCenterPin?: boolean;
+  latitude?: number;
+  longitude?: number;
 }
 
 export default function KakaoMap({
@@ -16,30 +17,27 @@ export default function KakaoMap({
   height,
   level = 3,
   addCenterPin = false,
+  latitude,
+  longitude,
 }: KakaoMapProps) {
-  const { coordinate, setCoordinate } = useKakaoAddress();
+  const { coordinate } = useKakaoAddress();
   const mapRef = useRef<HTMLDivElement | null>(null);
 
   const initializeMap = () => {
     if (!mapRef.current) return;
 
     window.kakao.maps.load(() => {
-      const { latitude, longitude }: Coordinate = coordinate;
-      const center = new window.kakao.maps.LatLng(latitude, longitude);
-      const mapOption = {
-        center: center,
-        level: level,
-      };
-      const map = new window.kakao.maps.Map(
-        mapRef.current as HTMLElement,
-        mapOption,
+      const center = new window.kakao.maps.LatLng(
+        latitude ?? coordinate.latitude,
+        longitude ?? coordinate.longitude,
       );
+      const map = new window.kakao.maps.Map(mapRef.current as HTMLElement, {
+        center,
+        level,
+      });
 
       if (addCenterPin) {
-        const marker = new window.kakao.maps.Marker({
-          position: center,
-        });
-        marker.setMap(map);
+        new window.kakao.maps.Marker({ position: center }).setMap(map);
       }
     });
   };
@@ -48,7 +46,7 @@ export default function KakaoMap({
     if (window.kakao && window.kakao.maps) {
       initializeMap();
     }
-  }, [level, addCenterPin, coordinate]);
+  }, [coordinate]);
 
   return (
     <div style={{ width, height }}>
