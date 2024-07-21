@@ -1,5 +1,5 @@
 {
-  "id": "f11905dc-c092-4bac-84c7-aa15b24a3791",
+  "id": "1e7681b2-7222-4b1a-a6a5-eb338ef65ce8",
   "prevId": "c9d261b2-a826-4c92-b261-a6f5ca8a7264",
   "version": "7",
   "dialect": "postgresql",
@@ -33,12 +33,8 @@
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -134,12 +130,8 @@
           "name": "test_job_test_id_test_id_fk",
           "tableFrom": "test_job",
           "tableTo": "test",
-          "columnsFrom": [
-            "test_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["test_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -183,9 +175,7 @@
         "test_email_unique": {
           "name": "test_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       }
     },
@@ -233,9 +223,7 @@
         "user_email_unique": {
           "name": "user_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       }
     }
@@ -244,11 +232,7 @@
     "public.provider": {
       "name": "provider",
       "schema": "public",
-      "values": [
-        "google",
-        "kakao",
-        "naver"
-      ]
+      "values": ["google", "kakao", "naver"]
     }
   },
   "schemas": {},
