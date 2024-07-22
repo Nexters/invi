@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useState } from "react";
+import type { ReactNode } from "react";
+import { createContext, useContext, useState } from "react";
 
 export interface Coordinate {
   latitude: number;
