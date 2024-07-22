@@ -1,9 +1,10 @@
 "use client";
 
-import { useKakaoAddress } from "~/app/(playground)/playground/map/_store/KakaoAdressStore";
+import { useKakaoAddress } from "~/app/(playground)/playground/map/_components/KakaoAddressContext";
 
 export default function AddressSearchButton() {
-  const { coordinate, setCoordinate } = useKakaoAddress();
+  const { setCoordinate } = useKakaoAddress();
+
   const handleClickButton = () => {
     new window.daum.Postcode({
       oncomplete: (addressData: any) => {
