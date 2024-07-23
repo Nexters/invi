@@ -10,12 +10,12 @@ export default function KaKaoMapPageLayout({
       <Script
         strategy="beforeInteractive"
         type="text/javascript"
-        src={`${process.env.DAUMCDN_POSTOCDE_URL}`}
+        src={`${process.env.NEXT_PUBLIC_DAUMCDN_POSTOCDE_URL}`}
       />
       <Script
         strategy="beforeInteractive"
         type="text/javascript"
-        src={`${process.env.KAKAO_MAP_BASE_URL}?appkey=${process.env.KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
+        src={`${process.env.NEXT_PUBLIC_KAKAO_MAP_BASE_URL}?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
       />
       {children}
     </>

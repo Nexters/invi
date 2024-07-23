@@ -22,29 +22,51 @@ export default function KakaoMap({
 }: KakaoMapProps) {
   const { coordinate } = useKakaoAddress();
   const mapRef = useRef<HTMLDivElement | null>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const markerRef = useRef<any>(null);
 
-  const initializeMap = () => {
+  useEffect(() => {
     if (!mapRef.current) return;
 
-    window.kakao.maps.load(() => {
+    const initializeMap = () => {
       const center = new window.kakao.maps.LatLng(
         latitude ?? coordinate.latitude,
         longitude ?? coordinate.longitude,
       );
-      const map = new window.kakao.maps.Map(mapRef.current as HTMLElement, {
-        center,
-        level,
-      });
+
+      const mapInstance = new window.kakao.maps.Map(
+        mapRef.current as HTMLElement,
+        {
+          center,
+          level,
+        },
+      );
+
+      mapInstanceRef.current = mapInstance;
 
       if (addCenterPin) {
-        new window.kakao.maps.Marker({ position: center }).setMap(map);
+        const marker = new window.kakao.maps.Marker({ position: center });
+        marker.setMap(mapInstance);
+        markerRef.current = marker;
       }
-    });
-  };
+    };
+
+    if (window.kakao && window.kakao.maps) {
+      window.kakao.maps.load(initializeMap);
+    }
+  }, []);
 
   useEffect(() => {
-    if (window.kakao && window.kakao.maps) {
-      initializeMap();
+    if (mapInstanceRef.current) {
+      const newCenter = new window.kakao.maps.LatLng(
+        latitude ?? coordinate.latitude,
+        longitude ?? coordinate.longitude,
+      );
+      mapInstanceRef.current.setCenter(newCenter);
+
+      if (addCenterPin && markerRef.current) {
+        markerRef.current.setPosition(newCenter);
+      }
     }
   }, [coordinate]);
 
