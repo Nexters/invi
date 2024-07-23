@@ -17,6 +17,10 @@ export const env = createEnv({
     NAVER_CLIENT_ID: z.string(),
     NAVER_CLIENT_SECRET: z.string(),
     NAVER_REDIRECT_URI: z.string(),
+    /* ---- KaKao Map ---- */
+    KAKAO_MAP_BASE_URL: z.string(),
+    KAKAO_MAP_API_KEY: z.string(),
+    DAUMCDN_POSTOCDE_URL: z.string(),
   },
   client: {},
   experimental__runtimeEnv: {},
