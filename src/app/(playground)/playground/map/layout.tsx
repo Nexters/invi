@@ -1,4 +1,5 @@
 import Script from "next/script";
+import { env } from "~/lib/env";
 
 export default function KaKaoMapPageLayout({
   children,
@@ -10,12 +11,12 @@ export default function KaKaoMapPageLayout({
       <Script
         strategy="beforeInteractive"
         type="text/javascript"
-        src={`${process.env.NEXT_PUBLIC_DAUMCDN_POSTOCDE_URL}`}
+        src={`${env.DAUMCDN_POSTOCDE_URL}`}
       />
       <Script
         strategy="beforeInteractive"
         type="text/javascript"
-        src={`${process.env.NEXT_PUBLIC_KAKAO_MAP_BASE_URL}?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
+        src={`${env.KAKAO_MAP_BASE_URL}?appkey=${env.KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
       />
       {children}
     </>
