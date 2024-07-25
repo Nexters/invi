@@ -20,17 +20,15 @@ export default function EditorMain() {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
     dispatch({ type: "TOGGLE_LIVE_MODE" });
   };
+
   return (
     <div
       className={cn(
         "use-automation-zoom-in mr-[385px] h-full overflow-scroll rounded-md bg-background transition-all",
-        {
-          "!mr-0 !p-0":
-            editor.state.previewMode === true || editor.state.liveMode === true,
-          "!w-[850px]": editor.state.device === "Tablet",
-          "!w-[420px]": editor.state.device === "Mobile",
-          "w-full": editor.state.device === "Desktop",
-        },
+        (editor.state.previewMode || editor.state.liveMode) && "mr-0 p-0",
+        editor.state.device === "Desktop" && "w-full",
+        editor.state.device === "Tablet" && "w-[850px]",
+        editor.state.device === "Mobile" && "w-[420px]",
       )}
       onClick={handleClick}
     >
@@ -38,7 +36,7 @@ export default function EditorMain() {
         <Button
           variant={"ghost"}
           size={"icon"}
-          className="fixed left-0 top-0 z-[100] h-6 w-6 bg-slate-600 p-[2px]"
+          className="fixed left-0 top-0 z-[100] h-6 w-6 p-[2px]"
           onClick={handleUnpreview}
         >
           <EyeOff />
