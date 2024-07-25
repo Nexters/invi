@@ -1,5 +1,6 @@
 "use client";
 
+import { createPortal } from "react-dom";
 import EditorMain from "~/components/editor/main";
 import EditorNavigation from "~/components/editor/navigation";
 import EditorProvider, {
@@ -8,13 +9,16 @@ import EditorProvider, {
 import EditorSidebar from "~/components/editor/sidebar";
 
 export default function Editor(props: EditorProviderProps) {
-  return (
+  return createPortal(
     <EditorProvider {...props}>
-      <EditorNavigation />
-      <div className="flex h-full justify-center">
-        <EditorMain />
+      <div className="fixed bottom-0 left-0 right-0 top-0 z-[20] overflow-hidden bg-background">
+        <EditorNavigation />
+        <div className="flex h-full justify-center">
+          <EditorMain />
+        </div>
+        <EditorSidebar />
       </div>
-      <EditorSidebar />
-    </EditorProvider>
+    </EditorProvider>,
+    document.body,
   );
 }
