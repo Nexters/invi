@@ -47,14 +47,13 @@ export default function EditorNavigation({}: {}) {
   return (
     <nav
       className={cn(
-        "flex items-center justify-between gap-2 border-b-[1px] transition-all",
+        "flex items-center justify-between gap-2 border-b transition-all",
         editor.state.previewMode ? "h-0 overflow-hidden p-0" : "p-6",
       )}
     >
       <aside>
         <Tabs
           defaultValue="Desktop"
-          className="w-fit"
           value={editor.state.device}
           onValueChange={(value) => {
             dispatch({
@@ -63,7 +62,7 @@ export default function EditorNavigation({}: {}) {
             });
           }}
         >
-          <TabsList className="grid h-fit w-full grid-cols-3 bg-transparent">
+          <TabsList>
             <TabsTrigger value="Desktop" className="h-10 w-10 p-0">
               <Laptop />
             </TabsTrigger>
@@ -77,14 +76,14 @@ export default function EditorNavigation({}: {}) {
         </Tabs>
       </aside>
       <aside className="flex items-center gap-2">
-        <Button variant={"ghost"} size={"icon"} onClick={handlePreviewClick}>
+        <Button variant="ghost" size="icon" onClick={handlePreviewClick}>
           <EyeIcon />
         </Button>
         <Button
           disabled={!(editor.history.currentIndex > 0)}
           onClick={handleUndo}
-          variant={"ghost"}
-          size={"icon"}
+          variant="ghost"
+          size="icon"
         >
           <Undo2 />
         </Button>
@@ -93,8 +92,8 @@ export default function EditorNavigation({}: {}) {
             !(editor.history.currentIndex < editor.history.history.length - 1)
           }
           onClick={handleRedo}
-          variant={"ghost"}
-          size={"icon"}
+          variant="ghost"
+          size="icon"
         >
           <Redo2 />
         </Button>
