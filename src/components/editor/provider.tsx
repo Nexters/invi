@@ -15,10 +15,15 @@ export const EditorContext = createContext<{
   pageDetails: null,
 });
 
-export default function EditorProvider(props: {
-  children: React.ReactNode;
+export type EditorProviderProps = {
   pageDetails: any;
-}) {
+};
+
+export default function EditorProvider(
+  props: {
+    children: React.ReactNode;
+  } & EditorProviderProps,
+) {
   const [editor, dispatch] = useReducer(editorReducer, initialEditor);
 
   return (
