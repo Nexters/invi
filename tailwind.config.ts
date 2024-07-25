@@ -62,15 +62,21 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "automation-zoom-in": {
-          "0%": { transform: "translateY(-30px) scale(0.2)" },
-          "100%": { transform: "transform: translateY(0px) scale(1)" },
+        "zoom-in": {
+          "0%": {
+            opacity: "0",
+            transform: "scale(0.95)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "scale(1)",
+          },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "automation-zoom-in": "automation-zoom-in 0.5s",
+        "zoom-in": "zoom-in 0.5s ease-out",
       },
     },
   },

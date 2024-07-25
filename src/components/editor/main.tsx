@@ -24,7 +24,7 @@ export default function EditorMain() {
   return (
     <div
       className={cn(
-        "use-automation-zoom-in mr-[385px] h-full overflow-scroll rounded-md bg-background transition-all",
+        "animate-zoom-in mr-[385px] h-full overflow-scroll rounded-md bg-background transition-all",
         (editor.state.previewMode || editor.state.liveMode) && "mr-0 p-0",
         editor.state.device === "Desktop" && "w-full",
         editor.state.device === "Tablet" && "w-[850px]",
