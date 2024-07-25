@@ -1,7 +1,7 @@
 "use client";
 import { Trash } from "lucide-react";
+import { nanoid } from "nanoid";
 import React from "react";
-import { v4 } from "uuid";
 import { defaultStyles } from "~/components/editor/constant";
 import { useEditor } from "~/components/editor/provider";
 import type {
@@ -32,7 +32,7 @@ export default function Container({ element }: Props) {
             containerId: id,
             elementDetails: {
               content: { innerText: "Text Element" },
-              id: v4(),
+              id: nanoid(),
               name: "Text",
               styles: {
                 color: "black",
@@ -53,7 +53,7 @@ export default function Container({ element }: Props) {
                 innerText: "Link Element",
                 href: "#",
               },
-              id: v4(),
+              id: nanoid(),
               name: "Link",
               styles: {
                 color: "black",
@@ -73,7 +73,7 @@ export default function Container({ element }: Props) {
               content: {
                 src: "https://www.youtube.com/embed/A3l6YYkXzzg?si=zbcCeWcpq7Cwf8W1",
               },
-              id: v4(),
+              id: nanoid(),
               name: "Video",
               styles: {},
               type: "video",
@@ -88,7 +88,7 @@ export default function Container({ element }: Props) {
             containerId: id,
             elementDetails: {
               content: [],
-              id: v4(),
+              id: nanoid(),
               name: "Container",
               styles: { ...defaultStyles },
               type: "container",
@@ -103,7 +103,7 @@ export default function Container({ element }: Props) {
             containerId: id,
             elementDetails: {
               content: [],
-              id: v4(),
+              id: nanoid(),
               name: "Contact Form",
               styles: {},
               type: "contactForm",
@@ -118,7 +118,7 @@ export default function Container({ element }: Props) {
             containerId: id,
             elementDetails: {
               content: [],
-              id: v4(),
+              id: nanoid(),
               name: "Contact Form",
               styles: {},
               type: "paymentForm",
@@ -135,20 +135,20 @@ export default function Container({ element }: Props) {
               content: [
                 {
                   content: [],
-                  id: v4(),
+                  id: nanoid(),
                   name: "Container",
                   styles: { ...defaultStyles, width: "100%" },
                   type: "container",
                 },
                 {
                   content: [],
-                  id: v4(),
+                  id: nanoid(),
                   name: "Container",
                   styles: { ...defaultStyles, width: "100%" },
                   type: "container",
                 },
               ],
-              id: v4(),
+              id: nanoid(),
               name: "Two Columns",
               styles: { ...defaultStyles, display: "flex" },
               type: "2Col",
