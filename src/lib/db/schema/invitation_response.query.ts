@@ -1,4 +1,5 @@
 "use server";
+import { nanoid } from "nanoid";
 
 import { db } from "~/lib/db";
 import {
@@ -16,7 +17,7 @@ export async function createInvitationResponses(
   reason: string,
 ) {
   const data: InvitationResponseInsert = {
-    id: "asdf",
+    id: nanoid(),
     participant_name: participant_name,
     attendance: attendance,
     reason: reason,
