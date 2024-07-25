@@ -1,6 +1,6 @@
 "use server";
 
-import { eq, sql } from "drizzle-orm";
+import { count, eq, sql, sum } from "drizzle-orm";
 import { db } from "~/lib/db";
 import {
   invitationResponses,
@@ -22,11 +22,10 @@ export async function getInvitationResponseById(id: InvitationResponse["id"]) {
 export async function getInvitationResponseStats() {
   const result = await db
     .select({
-      totalResponses: sql`COUNT(*)`.as("total_responses"),
-      attendingCount:
-        sql`SUM(CASE WHEN ${invitationResponses.attendance} = true THEN 1 ELSE 0 END)`.as(
-          "attending_count",
-        ),
+      totalResponses: count(),
+      attendingCount: sum(
+        sql`CASE WHEN ${invitationResponses.attendance} = true THEN 1 ELSE 0 END`,
+      ).as("attending_count"),
     })
     .from(invitationResponses);
 
