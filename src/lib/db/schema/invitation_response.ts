@@ -1,7 +1,7 @@
-import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const invitationResponses = pgTable("invitation_response", {
-  id: uuid("id").primaryKey().notNull(),
+  id: text("id").primaryKey().notNull(),
   participant_name: text("participant_name").notNull(),
   attendance: boolean("attendance").notNull(),
   reason: text("reason"),
