@@ -31,7 +31,7 @@ export function ImageRadioOption({
         checked={checked}
       />
       <div
-        className={`flex h-full w-full flex-col items-center space-y-4 rounded-2xl border border-[#3C3C3C] bg-[#222222] px-[27px] pb-5 pt-6 transition-all duration-200 hover:border-blue-300 hover:bg-[#2E2E2E] peer-checked:border-[#5E8AFF] ${context.value !== value ? "brightness-50" : ""}`}
+        className={`flex h-full w-full flex-col items-center space-y-4 rounded-2xl border border-[#3C3C3C] bg-[#222222] px-[27px] pb-5 pt-6 transition-all duration-200 hover:border-blue-300 hover:bg-[#2E2E2E] peer-checked:border-[#5E8AFF] ${checked || context.value === "" ? "" : "brightness-50"}`}
       >
         {imageUrl && (
           <Image
