@@ -21,6 +21,7 @@ import AttendanceFalseActive from "~/assets/attendance/attendance-false-active.s
 import AttendanceFalseDefault from "~/assets/attendance/attendance-false-default.svg";
 import AttendanceTrueActive from "~/assets/attendance/attendance-true-active.svg";
 import AttendanceTrueDefault from "~/assets/attendance/attendance-true-default.svg";
+import { createInvitationResponses } from "~/lib/db/schema/invitation_response.query";
 
 const schema = z.object({
   name: z.string().min(1, "이름을 입력해주세요"),
@@ -37,7 +38,8 @@ export default function BottomSheet() {
     },
     validatorAdapter: zodValidator(schema),
     onSubmit: async ({ value }) => {
-      console.log(value);
+      const { name, attendance } = value;
+      createInvitationResponses(name, attendance);
     },
   });
 
