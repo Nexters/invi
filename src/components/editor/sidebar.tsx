@@ -23,7 +23,7 @@ export default function EditorSidebar() {
 
   return (
     <Sheet open={true} modal={false}>
-      <Tabs className="w-full" defaultValue="Settings">
+      <Tabs className="w-full" defaultValue="Components">
         <SheetContent
           side="right"
           className={cn(
@@ -32,15 +32,6 @@ export default function EditorSidebar() {
           )}
         >
           <TabsList className="flex w-full flex-col items-center gap-1 p-2">
-            <TabsTrigger value="Settings" asChild>
-              <Button
-                size="icon"
-                variant="ghost"
-                className="data-[state=active]:bg-secondary"
-              >
-                <SettingsIcon />
-              </Button>
-            </TabsTrigger>
             <TabsTrigger value="Components" asChild>
               <Button
                 size="icon"
@@ -48,6 +39,15 @@ export default function EditorSidebar() {
                 className="data-[state=active]:bg-secondary"
               >
                 <PlusIcon />
+              </Button>
+            </TabsTrigger>
+            <TabsTrigger value="Settings" asChild>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="data-[state=active]:bg-secondary"
+              >
+                <SettingsIcon />
               </Button>
             </TabsTrigger>
           </TabsList>
