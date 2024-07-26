@@ -12,6 +12,8 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "workbench.editor.customLabels.patterns": {
-    "**/{layout,page}.tsx": "${dirname} ${filename}"
+    "**/{layout,page}.tsx": "${dirname} ${filename}",
+    "**/{index}.ts": "${dirname}/index.ts",
+    "**/{index}.tsx": "${dirname}"
   }
 }
