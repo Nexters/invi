@@ -21,6 +21,8 @@ const Invi = () => {
       duration: 2000,
       style: {
         backgroundColor: "black",
+        opacity: 0.9,
+        height: "56px",
         color: "white",
         border: 0,
       },
