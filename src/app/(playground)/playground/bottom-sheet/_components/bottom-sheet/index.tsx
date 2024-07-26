@@ -55,7 +55,7 @@ export default function BottomSheet() {
           <Button
             variant="outline"
             className={
-              "h-full w-full rounded-xl border-none bg-[#5E8AFF] text-lg text-white"
+              "h-full w-full rounded-xl border-none bg-[#5E8AFF] text-lg font-bold text-white"
             }
           >
             세션 참여 조사하기
@@ -81,7 +81,10 @@ export default function BottomSheet() {
           <div className="flex-grow overflow-y-auto">
             <div className="gap-4 pb-4">
               <div className="flex flex-col items-center space-y-4">
-                <Label htmlFor="name" className="w-full text-left text-base">
+                <Label
+                  htmlFor="name"
+                  className="w-full text-left text-base font-semibold"
+                >
                   이름
                 </Label>
                 <form.Field name="name">
@@ -154,7 +157,7 @@ export default function BottomSheet() {
                       type="submit"
                       variant="outline"
                       disabled={!isFormComplete || isSubmitting}
-                      className={`h-full w-full rounded-xl border-none bg-[#5E8AFF] text-lg text-white disabled:bg-[#D5D7D9]`}
+                      className={`h-full w-full rounded-xl border-none bg-[#5E8AFF] text-lg font-bold text-white disabled:bg-[#D5D7D9]`}
                     >
                       제출하기
                     </Button>
