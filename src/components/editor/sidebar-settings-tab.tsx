@@ -385,7 +385,7 @@ export default function SidebarSettingsTab(props: Props) {
           </div>
           <div className="flex flex-col gap-1">
             <Label className="text-muted-foreground">Background Color</Label>
-            <div className="flex overflow-clip rounded-md border-[1px]">
+            <div className="flex overflow-clip rounded-md border focus-within:ring-1 focus-within:ring-ring">
               <div
                 className="w-12"
                 style={{
@@ -395,7 +395,7 @@ export default function SidebarSettingsTab(props: Props) {
               />
               <Input
                 placeholder="#HFI245"
-                className="mr-2 rounded-none !border-y-0 !border-r-0"
+                className="mr-2 rounded-none border-y-0 border-r-0 focus-visible:ring-0"
                 id="backgroundColor"
                 onChange={handleOnChanges}
                 value={editor.state.selectedElement.styles.backgroundColor}
@@ -404,7 +404,7 @@ export default function SidebarSettingsTab(props: Props) {
           </div>
           <div className="flex flex-col gap-1">
             <Label className="text-muted-foreground">Background Image</Label>
-            <div className="flex overflow-clip rounded-md border-[1px]">
+            <div className="flex overflow-clip rounded-md border focus-within:ring-1 focus-within:ring-ring">
               <div
                 className="w-12"
                 style={{
@@ -414,7 +414,7 @@ export default function SidebarSettingsTab(props: Props) {
               />
               <Input
                 placeholder="url()"
-                className="mr-2 rounded-none !border-y-0 !border-r-0"
+                className="mr-2 rounded-none border-y-0 border-r-0 focus-visible:ring-0"
                 id="backgroundImage"
                 onChange={handleOnChanges}
                 value={editor.state.selectedElement.styles.backgroundImage}
