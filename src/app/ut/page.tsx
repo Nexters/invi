@@ -27,7 +27,7 @@ const Invi = () => {
     });
   }
 
-  const address = "용산구 백범로 99길 40 용산베르디움프렌즈 101동";
+  const address = "서울시 공익활동지원센터";
 
   const openMap = (mapType: MapType, address: string) => {
     const mapUrls: MapUrls = {
