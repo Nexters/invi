@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowLeftIcon,
   EyeIcon,
   Laptop,
   Redo2,
@@ -8,6 +9,7 @@ import {
   Tablet,
   Undo2,
 } from "lucide-react";
+import Link from "next/link";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import type { DeviceType } from "~/components/editor/type";
@@ -15,7 +17,11 @@ import { Button } from "~/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { cn } from "~/lib/utils";
 
-export default function EditorNavigation({}: {}) {
+type Props = {
+  backLink?: string;
+};
+
+export default function EditorNavigation({ backLink = "./" }: Props) {
   const { editor, dispatch } = useEditor();
 
   const handlePreviewClick = () => {
@@ -50,7 +56,12 @@ export default function EditorNavigation({}: {}) {
         editor.state.isPreviewMode ? "h-0 overflow-hidden p-0" : "p-6",
       )}
     >
-      <aside>
+      <aside className="flex items-center gap-6">
+        <Button asChild variant="ghost" size="icon">
+          <Link href={backLink}>
+            <ArrowLeftIcon />
+          </Link>
+        </Button>
         <Tabs
           value={editor.state.device}
           onValueChange={(value) => {
@@ -73,28 +84,30 @@ export default function EditorNavigation({}: {}) {
           </TabsList>
         </Tabs>
       </aside>
-      <aside className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" onClick={handlePreviewClick}>
-          <EyeIcon />
-        </Button>
-        <Button
-          disabled={!(editor.history.currentIndex > 0)}
-          onClick={handleUndo}
-          variant="ghost"
-          size="icon"
-        >
-          <Undo2 />
-        </Button>
-        <Button
-          disabled={
-            !(editor.history.currentIndex < editor.history.history.length - 1)
-          }
-          onClick={handleRedo}
-          variant="ghost"
-          size="icon"
-        >
-          <Redo2 />
-        </Button>
+      <aside className="flex items-center gap-6">
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" onClick={handlePreviewClick}>
+            <EyeIcon />
+          </Button>
+          <Button
+            disabled={!(editor.history.currentIndex > 0)}
+            onClick={handleUndo}
+            variant="ghost"
+            size="icon"
+          >
+            <Undo2 />
+          </Button>
+          <Button
+            disabled={
+              !(editor.history.currentIndex < editor.history.history.length - 1)
+            }
+            onClick={handleRedo}
+            variant="ghost"
+            size="icon"
+          >
+            <Redo2 />
+          </Button>
+        </div>
         <Button onClick={handleOnSave}>Save</Button>
       </aside>
     </nav>
