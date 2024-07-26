@@ -514,18 +514,12 @@ export default function SidebarSettingsTab(props: Props) {
               }
               value={editor.state.selectedElement.styles.alignItems}
             >
-              <TabsList className="flex h-fit flex-row items-center justify-between gap-4 rounded-md border-[1px] bg-transparent">
-                <TabsTrigger
-                  value="center"
-                  className="h-10 w-10 p-0 data-[state=active]:bg-muted"
-                >
-                  <AlignVerticalJustifyCenter size={18} />
+              <TabsList className="flex h-fit w-fit items-center border">
+                <TabsTrigger value="center" className="aspect-square">
+                  <AlignVerticalJustifyCenter size={16} />
                 </TabsTrigger>
-                <TabsTrigger
-                  value="normal"
-                  className="h-10 w-10 p-0 data-[state=active]:bg-muted"
-                >
-                  <AlignVerticalJustifyStart size={18} />
+                <TabsTrigger value="normal" className="aspect-square">
+                  <AlignVerticalJustifyStart size={16} />
                 </TabsTrigger>
               </TabsList>
             </Tabs>
