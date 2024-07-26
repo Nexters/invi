@@ -1,6 +1,7 @@
 import React from "react";
 import ContainerPlaceholder from "~/components/editor/elements/container-placeholder";
 import TextPlaceholder from "~/components/editor/elements/text-placeholder";
+import TwoColumnsPlaceholder from "~/components/editor/elements/two-columns-placeholder";
 import type { EditorElementType } from "~/components/editor/type";
 import {
   Accordion,
@@ -19,45 +20,21 @@ export default function SidebarComponentsTab(props: Props) {
     group: "layout" | "elements";
   }[] = [
     {
-      Component: <TextPlaceholder />,
-      label: "Text",
-      id: "text",
-      group: "elements",
-    },
-    {
       Component: <ContainerPlaceholder />,
       label: "Container",
       id: "container",
       group: "layout",
     },
     {
-      Component: <ContainerPlaceholder />,
+      Component: <TwoColumnsPlaceholder />,
       label: "2 Columns",
       id: "2Col",
       group: "layout",
     },
     {
-      Component: <ContainerPlaceholder />,
-      label: "Video",
-      id: "video",
-      group: "elements",
-    },
-    {
-      Component: <ContainerPlaceholder />,
-      label: "Contact",
-      id: "contactForm",
-      group: "elements",
-    },
-    {
-      Component: <ContainerPlaceholder />,
-      label: "Checkout",
-      id: "paymentForm",
-      group: "elements",
-    },
-    {
-      Component: <ContainerPlaceholder />,
-      label: "Link",
-      id: "link",
+      Component: <TextPlaceholder />,
+      label: "Text",
+      id: "text",
       group: "elements",
     },
   ];
@@ -70,7 +47,7 @@ export default function SidebarComponentsTab(props: Props) {
     >
       <AccordionItem value="Layout" className="border-y-[1px] px-6 py-0">
         <AccordionTrigger>Layout</AccordionTrigger>
-        <AccordionContent className="flex flex-wrap gap-2">
+        <AccordionContent className="flex flex-wrap gap-6">
           {elements
             .filter((element) => element.group === "layout")
             .map((element) => (
@@ -79,14 +56,16 @@ export default function SidebarComponentsTab(props: Props) {
                 className="flex flex-col items-center justify-center"
               >
                 {element.Component}
-                <span className="text-muted-foreground">{element.label}</span>
+                <span className="text-sm text-muted-foreground">
+                  {element.label}
+                </span>
               </div>
             ))}
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="Elements" className="px-6 py-0">
         <AccordionTrigger>Elements</AccordionTrigger>
-        <AccordionContent className="flex flex-wrap gap-2">
+        <AccordionContent className="flex flex-wrap gap-6">
           {elements
             .filter((element) => element.group === "elements")
             .map((element) => (
@@ -95,7 +74,9 @@ export default function SidebarComponentsTab(props: Props) {
                 className="flex flex-col items-center justify-center"
               >
                 {element.Component}
-                <span className="text-muted-foreground">{element.label}</span>
+                <span className="text-sm text-muted-foreground">
+                  {element.label}
+                </span>
               </div>
             ))}
         </AccordionContent>
