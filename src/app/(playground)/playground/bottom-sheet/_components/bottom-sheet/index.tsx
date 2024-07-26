@@ -63,6 +63,7 @@ export default function BottomSheet() {
       <SheetContent
         side="bottom"
         className="fixed w-full flex-col space-y-10 rounded-t-[32px] border-none bg-[#1A1A1A] pb-0 pt-10 text-white"
+        aria-describedby={"세션참여 조사 Form"}
       >
         <div className="absolute left-1/2 top-4 -translate-x-1/2 transform">
           <div className="h-1 w-10 rounded-full bg-[#EDEDED]"></div>
