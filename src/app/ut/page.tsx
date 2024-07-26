@@ -128,29 +128,35 @@ const Invi = () => {
         <section className="flex flex-col items-center">
           <h3 className="mb-8 text-2xl font-bold">세션 일정</h3>
           <ul className="w-full">
-            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center rounded-t-[20px] py-12 pl-6 odd:bg-[#222222] even:bg-[#282828]">
-              <p>12:30 - 12:40</p>
-              <p>세션 안내</p>
+            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center gap-y-3 rounded-t-[20px] py-12 pl-6 text-sm odd:bg-[#222222] even:bg-[#282828]">
+              <p className="font-semibold">12:30 - 12:40</p>
+              <p className="font-medium text-[#D3D3D3]">세션 안내</p>
             </li>
-            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center py-12 pl-6 odd:bg-[#222222] even:bg-[#282828]">
-              <p>12:40 - 13:00</p>
-              <p>UT 준비</p>
+            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center gap-y-3 py-12 pl-6 text-sm odd:bg-[#222222] even:bg-[#282828]">
+              <p className="font-semibold">12:40 - 13:00</p>
+              <p className="font-medium text-[#D3D3D3]">UT 준비</p>
             </li>
-            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center py-12 pl-6 odd:bg-[#222222] even:bg-[#282828]">
-              <p>13:00 - 14:20</p>
-              <p>UT 1부 진행 및 팀 작업</p>
+            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center gap-y-3 py-12 pl-6 text-sm odd:bg-[#222222] even:bg-[#282828]">
+              <p className="font-semibold">13:00 - 14:20</p>
+              <p className="font-medium text-[#D3D3D3]">
+                UT 1부 진행 및 팀 작업
+              </p>
             </li>
-            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center py-12 pl-6 odd:bg-[#222222] even:bg-[#282828]">
-              <p>14:20 - 14:40</p>
-              <p>쉬는 시간</p>
+            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center gap-y-3 py-12 pl-6 text-sm odd:bg-[#222222] even:bg-[#282828]">
+              <p className="font-semibold">14:20 - 14:40</p>
+              <p className="font-medium text-[#D3D3D3]">쉬는 시간</p>
             </li>
-            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center py-12 pl-6 odd:bg-[#222222] even:bg-[#282828]">
-              <p>14:40 - 16:00</p>
-              <p>UT 2부 진행 및 팀 작업</p>
+            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center gap-y-3 py-12 pl-6 text-sm odd:bg-[#222222] even:bg-[#282828]">
+              <p className="font-semibold">14:40 - 16:00</p>
+              <p className="font-medium text-[#D3D3D3]">
+                UT 2부 진행 및 팀 작업
+              </p>
             </li>
-            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center rounded-b-[20px] py-12 pl-6 odd:bg-[#222222] even:bg-[#282828]">
-              <p>16:00 - 16:30</p>
-              <p>추가 작업 및 다음 세션 안내</p>
+            <li className="flex max-h-[88px] min-w-[320px] flex-col justify-center gap-y-3 rounded-b-[20px] py-12 pl-6 text-sm odd:bg-[#222222] even:bg-[#282828]">
+              <p className="font-semibold">16:00 - 16:30</p>
+              <p className="font-medium text-[#D3D3D3]">
+                추가 작업 및 다음 세션 안내
+              </p>
             </li>
           </ul>
         </section>
