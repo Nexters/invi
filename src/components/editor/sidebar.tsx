@@ -11,7 +11,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { PlusIcon, SettingsIcon } from "lucide-react";
 import { useEditor } from "~/components/editor/provider";
-import SidebarComponentTab from "~/components/editor/sidebar-component-tab";
+import SidebarComponentsTab from "~/components/editor/sidebar-components-tab";
+import SidebarSettingsTab from "~/components/editor/sidebar-settings-tab";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
@@ -70,7 +71,7 @@ export default function EditorSidebar() {
                   like.
                 </SheetDescription>
               </SheetHeader>
-              <SidebarComponentTab />
+              <SidebarSettingsTab />
             </TabsContent>
             <TabsContent
               value="Components"
@@ -82,7 +83,7 @@ export default function EditorSidebar() {
                   You can drag and drop components on the canvas
                 </SheetDescription>
               </SheetHeader>
-              <SidebarComponentTab />
+              <SidebarComponentsTab />
             </TabsContent>
           </div>
         </SheetContent>

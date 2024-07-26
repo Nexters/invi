@@ -11,7 +11,7 @@ import {
 
 type Props = {};
 
-export default function SidebarTab(props: Props) {
+export default function SidebarComponentsTab(props: Props) {
   const elements: {
     id: EditorElementType;
     label: string;
@@ -69,7 +69,7 @@ export default function SidebarTab(props: Props) {
       defaultValue={["Layout", "Elements"]}
     >
       <AccordionItem value="Layout" className="border-y-[1px] px-6 py-0">
-        <AccordionTrigger className="!no-underline">Layout</AccordionTrigger>
+        <AccordionTrigger>Layout</AccordionTrigger>
         <AccordionContent className="flex flex-wrap gap-2">
           {elements
             .filter((element) => element.group === "layout")
@@ -85,7 +85,7 @@ export default function SidebarTab(props: Props) {
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="Elements" className="px-6 py-0">
-        <AccordionTrigger className="!no-underline">Elements</AccordionTrigger>
+        <AccordionTrigger>Elements</AccordionTrigger>
         <AccordionContent className="flex flex-wrap gap-2">
           {elements
             .filter((element) => element.group === "elements")
