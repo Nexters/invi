@@ -7,11 +7,12 @@ import {
   SheetHeader,
   SheetTitle,
 } from "~/components/ui/sheet";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { PlusIcon, SettingsIcon } from "lucide-react";
 import { useEditor } from "~/components/editor/provider";
 import SidebarComponentTab from "~/components/editor/sidebar-component-tab";
+import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
 type Props = {};
@@ -25,35 +26,44 @@ export default function EditorSidebar() {
         <SheetContent
           side="right"
           className={cn(
-            "z-[80] mt-[97px] w-16 overflow-hidden p-0 shadow-none transition-all focus:border-none",
-            editor.state.previewMode && "hidden",
+            "z-[80] mt-[85px] w-[50px] overflow-hidden p-0 shadow-none transition-all",
+            editor.state.isPreviewMode && "hidden",
           )}
         >
-          <TabsList className="flex h-fit w-full flex-col items-center justify-evenly gap-4 bg-transparent">
-            <TabsTrigger
-              value="Settings"
-              className="h-10 w-10 p-0 data-[state=active]:bg-muted"
-            >
-              <SettingsIcon />
+          <TabsList className="flex w-full flex-col items-center gap-1 p-2">
+            <TabsTrigger value="Settings" asChild>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="data-[state=active]:bg-secondary"
+              >
+                <SettingsIcon />
+              </Button>
             </TabsTrigger>
-            <TabsTrigger
-              value="Components"
-              className="h-10 w-10 p-0 data-[state=active]:bg-muted"
-            >
-              <PlusIcon />
+            <TabsTrigger value="Components" asChild>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="data-[state=active]:bg-secondary"
+              >
+                <PlusIcon />
+              </Button>
             </TabsTrigger>
           </TabsList>
         </SheetContent>
         <SheetContent
           side="right"
           className={cn(
-            "z-[40] mr-16 mt-[97px] h-full w-80 overflow-hidden bg-background p-0 shadow-none transition-all",
-            editor.state.previewMode && "hidden",
+            "z-[40] mr-[62px] mt-[85px] h-full w-[320px] overflow-hidden border-r p-0 shadow-none transition-all",
+            editor.state.isPreviewMode && "hidden",
           )}
         >
-          <div className="grid h-full gap-4 overflow-scroll pb-36">
-            <TabsContent value="Settings">
-              <SheetHeader className="p-6 text-left">
+          <div className="grid h-full gap-4 overflow-auto pb-36">
+            <TabsContent
+              value="Settings"
+              className="focus-visible:outline-none"
+            >
+              <SheetHeader className="p-6">
                 <SheetTitle>Styles</SheetTitle>
                 <SheetDescription>
                   Show your creativity! You can customize every component as you
@@ -62,8 +72,11 @@ export default function EditorSidebar() {
               </SheetHeader>
               <SidebarComponentTab />
             </TabsContent>
-            <TabsContent value="Components">
-              <SheetHeader className="p-6 text-left">
+            <TabsContent
+              value="Components"
+              className="focus-visible:outline-none"
+            >
+              <SheetHeader className="p-6">
                 <SheetTitle>Components</SheetTitle>
                 <SheetDescription>
                   You can drag and drop components on the canvas

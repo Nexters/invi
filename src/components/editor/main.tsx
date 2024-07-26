@@ -18,21 +18,20 @@ export default function EditorMain() {
 
   const handleUnpreview = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
-    dispatch({ type: "TOGGLE_LIVE_MODE" });
   };
 
   return (
     <div
       className={cn(
-        "animate-zoom-in mr-[385px] h-full overflow-scroll rounded-md bg-background transition-all",
-        (editor.state.previewMode || editor.state.liveMode) && "mr-0 p-0",
-        editor.state.device === "Desktop" && "w-full",
-        editor.state.device === "Tablet" && "w-[850px]",
-        editor.state.device === "Mobile" && "w-[420px]",
+        "ml-[10px] mr-[392px] animate-zoom-in rounded-md bg-background transition-all",
+        editor.state.isPreviewMode && "m-0 overflow-hidden p-0",
+        editor.state.device === "Desktop" && "h-full w-full",
+        editor.state.device === "Tablet" && "h-full w-[850px]",
+        editor.state.device === "Mobile" && "h-[800px] w-[420px]",
       )}
       onClick={handleClick}
     >
-      {editor.state.previewMode && editor.state.liveMode && (
+      {editor.state.isPreviewMode && (
         <Button
           variant={"ghost"}
           size={"icon"}

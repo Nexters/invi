@@ -25,9 +25,8 @@ export const initialEditorState: EditorState = {
     styles: {},
     type: null,
   },
-  device: "Desktop",
-  previewMode: false,
-  liveMode: false,
+  device: "Mobile",
+  isPreviewMode: false,
   funnelPageId: "",
 };
 

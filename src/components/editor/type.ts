@@ -25,11 +25,10 @@ export type EditorElement = {
 };
 
 export type EditorState = {
-  liveMode: boolean;
   elements: EditorElement[];
   selectedElement: EditorElement;
   device: DeviceType;
-  previewMode: boolean;
+  isPreviewMode: boolean;
   funnelPageId: string;
 };
 

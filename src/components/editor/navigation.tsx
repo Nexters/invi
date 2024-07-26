@@ -20,7 +20,6 @@ export default function EditorNavigation({}: {}) {
 
   const handlePreviewClick = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
-    dispatch({ type: "TOGGLE_LIVE_MODE" });
   };
 
   const handleUndo = () => {
@@ -47,13 +46,12 @@ export default function EditorNavigation({}: {}) {
   return (
     <nav
       className={cn(
-        "flex items-center justify-between gap-2 border-b transition-all",
-        editor.state.previewMode ? "h-0 overflow-hidden p-0" : "p-6",
+        "flex items-center justify-between gap-2 border-b bg-background transition-all",
+        editor.state.isPreviewMode ? "h-0 overflow-hidden p-0" : "p-6",
       )}
     >
       <aside>
         <Tabs
-          defaultValue="Desktop"
           value={editor.state.device}
           onValueChange={(value) => {
             dispatch({

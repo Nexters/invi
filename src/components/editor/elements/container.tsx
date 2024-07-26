@@ -16,7 +16,14 @@ type Props = { element: EditorElement };
 
 export default function Container({ element }: Props) {
   const { id, content, name, styles, type } = element;
-  const { dispatch, editor } = useEditor();
+  const {
+    editor: {
+      state: { isPreviewMode, selectedElement },
+    },
+    dispatch,
+  } = useEditor();
+  const isRoot = type === "__body";
+  const isSelected = selectedElement.id === id;
 
   const handleOnDrop = (e: React.DragEvent, type: string) => {
     e.stopPropagation();
@@ -190,55 +197,43 @@ export default function Container({ element }: Props) {
   return (
     <div
       style={styles}
-      className={cn("group relative p-4 transition-all", {
-        "w-full max-w-full": type === "container" || type === "2Col",
-        "h-fit": type === "container",
-        "h-full": type === "__body",
-        "overflow-scroll": type === "__body",
-        "flex flex-col md:!flex-row": type === "2Col",
-        "!border-blue-500":
-          editor.state.selectedElement.id === id &&
-          !editor.state.liveMode &&
-          editor.state.selectedElement.type !== "__body",
-        "!border-4 !border-yellow-400":
-          editor.state.selectedElement.id === id &&
-          !editor.state.liveMode &&
-          editor.state.selectedElement.type === "__body",
-        "!border-solid":
-          editor.state.selectedElement.id === id && !editor.state.liveMode,
-        "border-[1px] border-dashed border-slate-300": !editor.state.liveMode,
-      })}
+      className={cn(
+        "group relative p-4 transition-all",
+        isRoot && "h-full overflow-y-auto",
+        type === "container" && "h-fit",
+        (type === "container" || type === "2Col") && "w-full max-w-full",
+        type === "2Col" && "flex flex-col md:!flex-row",
+        !isPreviewMode && [
+          "border border-dashed border-border",
+          (isSelected || isRoot) && "border-solid",
+          isSelected && !isRoot && "border-primary",
+        ],
+      )}
       onDrop={(e) => handleOnDrop(e, id)}
-      onDragOver={handleDragOver}
-      draggable={type !== "__body"}
-      onClick={handleOnClickBody}
       onDragStart={(e) => handleDragStart(e, "container")}
+      onDragOver={handleDragOver}
+      draggable={!isRoot}
+      onClick={handleOnClickBody}
     >
-      <Badge
-        className={cn(
-          "absolute -left-[1px] -top-[23px] hidden rounded-none rounded-t-lg",
-          {
-            block:
-              editor.state.selectedElement.id === element.id &&
-              !editor.state.liveMode,
-          },
-        )}
-      >
-        {element.name}
-      </Badge>
-
       {Array.isArray(content) &&
         content.map((childElement) => (
           <Recursive key={childElement.id} element={childElement} />
         ))}
 
-      {editor.state.selectedElement.id === element.id &&
-        !editor.state.liveMode &&
-        editor.state.selectedElement.type !== "__body" && (
-          <div className="absolute -right-[1px] -top-[25px] rounded-none rounded-t-lg bg-primary px-2.5 py-1 text-xs font-bold">
-            <Trash size={16} onClick={handleDeleteElement} />
+      {!isPreviewMode && isSelected && !isRoot && (
+        <>
+          <Badge className="absolute -left-[1px] -top-[23px] rounded-none rounded-t-lg">
+            {element.name}
+          </Badge>
+          <div className="absolute -right-[1px] -top-[25px] rounded-none rounded-t-lg bg-primary px-2.5 py-1 text-white">
+            <Trash
+              size={16}
+              className="cursor-pointer"
+              onClick={handleDeleteElement}
+            />
           </div>
-        )}
+        </>
+      )}
     </div>
   );
 }

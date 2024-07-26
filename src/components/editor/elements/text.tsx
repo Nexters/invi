@@ -9,23 +9,24 @@ type Props = {
   element: EditorElement;
 };
 
-export default function Text(props: Props) {
+export default function Text({ element }: Props) {
   const { dispatch, editor } = useEditor();
+  const isSelected = editor.state.selectedElement.id === element.id;
 
   const handleDeleteElement = () => {
     dispatch({
       type: "DELETE_ELEMENT",
-      payload: { elementDetails: props.element },
+      payload: { elementDetails: element },
     });
   };
-  const styles = props.element.styles;
+  const styles = element.styles;
 
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch({
       type: "CHANGE_CLICKED_ELEMENT",
       payload: {
-        elementDetails: props.element,
+        elementDetails: element,
       },
     });
   };
@@ -35,33 +36,24 @@ export default function Text(props: Props) {
     <div
       style={styles}
       className={cn(
-        "relative m-[5px] w-full p-[2px] text-[16px] transition-all",
-        {
-          "!border-blue-500":
-            editor.state.selectedElement.id === props.element.id,
-
-          "!border-solid": editor.state.selectedElement.id === props.element.id,
-          "border-[1px] border-dashed border-slate-300": !editor.state.liveMode,
-        },
+        "relative w-full p-[5px] text-[16px] transition-all",
+        !editor.state.isPreviewMode && [
+          "border-[1px] border-dashed border-border",
+          isSelected && "border-solid border-primary",
+        ],
       )}
       onClick={handleOnClickBody}
     >
-      {editor.state.selectedElement.id === props.element.id &&
-        !editor.state.liveMode && (
-          <Badge className="absolute -left-[1px] -top-[23px] rounded-none rounded-t-lg">
-            {editor.state.selectedElement.name}
-          </Badge>
-        )}
       <span
         className="outline-none"
-        contentEditable={!editor.state.liveMode}
+        contentEditable={!editor.state.isPreviewMode}
         onBlur={(e) => {
           const spanElement = e.target as HTMLSpanElement;
           dispatch({
             type: "UPDATE_ELEMENT",
             payload: {
               elementDetails: {
-                ...props.element,
+                ...element,
                 content: {
                   innerText: spanElement.innerText,
                 },
@@ -70,19 +62,23 @@ export default function Text(props: Props) {
           });
         }}
       >
-        {!Array.isArray(props.element.content) &&
-          props.element.content.innerText}
+        {!Array.isArray(element.content) && element.content.innerText}
       </span>
-      {editor.state.selectedElement.id === props.element.id &&
-        !editor.state.liveMode && (
-          <div className="absolute -right-[1px] -top-[25px] rounded-none rounded-t-lg bg-primary px-2.5 py-1 text-xs font-bold !text-white">
+
+      {isSelected && !editor.state.isPreviewMode && (
+        <>
+          <Badge className="absolute -left-[1px] -top-[23px] rounded-none rounded-t-lg">
+            {editor.state.selectedElement.name}
+          </Badge>
+          <div className="absolute -right-[1px] -top-[25px] rounded-none rounded-t-lg bg-primary px-2.5 py-1 text-white">
             <Trash
               className="cursor-pointer"
               size={16}
               onClick={handleDeleteElement}
             />
           </div>
-        )}
+        </>
+      )}
     </div>
   );
 }

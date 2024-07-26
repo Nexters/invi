@@ -51,19 +51,12 @@ export type EditorAction =
   | {
       type: "TOGGLE_PREVIEW_MODE";
     }
-  | {
-      type: "TOGGLE_LIVE_MODE";
-      payload?: {
-        value: boolean;
-      };
-    }
   | { type: "REDO" }
   | { type: "UNDO" }
   | {
       type: "LOAD_DATA";
       payload: {
         elements: EditorElement[];
-        withLive: boolean;
       };
     }
   | {
@@ -263,22 +256,10 @@ export const editorReducer = (
         ...editor,
         state: {
           ...editor.state,
-          previewMode: !editor.state.previewMode,
+          isPreviewMode: !editor.state.isPreviewMode,
         },
       };
       return toggleState;
-
-    case "TOGGLE_LIVE_MODE":
-      const toggleLiveMode: Editor = {
-        ...editor,
-        state: {
-          ...editor.state,
-          liveMode: action.payload
-            ? action.payload.value
-            : !editor.state.liveMode,
-        },
-      };
-      return toggleLiveMode;
 
     case "REDO":
       if (editor.history.currentIndex < editor.history.history.length - 1) {
@@ -318,7 +299,6 @@ export const editorReducer = (
         state: {
           ...initialEditor.state,
           elements: action.payload.elements || initialEditorState.elements,
-          liveMode: !!action.payload.withLive,
         },
       };
 
