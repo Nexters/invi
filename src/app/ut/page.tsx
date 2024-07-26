@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { toast } from "sonner";
-import { env } from "~/lib/env";
 
 type MapType = "naver" | "kakao";
 type MapUrls = Record<MapType, string>;
@@ -30,40 +29,6 @@ const Invi = () => {
         border: 0,
       },
     });
-  }
-
-  async function shareLocationKakao() {
-    if (window.Kakao) {
-      const kakao = window.Kakao;
-      if (!kakao.isInitialized()) {
-        kakao.init(env.KAKAO_SHARE_API_KEY);
-      }
-
-      kakao.Share.sendDefault({
-        objectType: "location",
-        address,
-        addressTitle: address,
-        content: {
-          title: "NEXTERS 세션 안내",
-          description: `4주차 UT 세션에 초대합니다\n세션 정보를 확인하고 참석여부를 응답해주세요.`,
-          imageUrl:
-            "https://github.com/user-attachments/assets/aea7c5d9-bb8b-4895-9aa8-2552154ba8d4",
-          link: {
-            mobileWebUrl: `https://invi.my/ut`,
-            webUrl: "https://invi.my/ut",
-          },
-        },
-        buttons: [
-          {
-            title: "초대장 열기",
-            link: {
-              mobileWebUrl: "https://invi.my/ut",
-              webUrl: "https://invi.my/ut",
-            },
-          },
-        ],
-      });
-    }
   }
 
   const openMap = (mapType: MapType, address: string) => {
@@ -298,14 +263,6 @@ const Invi = () => {
               {`당일 비가 많이 오는 경우\n정문이 폐쇄되어 후문으로 입장해야 할 수 있습니다.`}
             </p>
           </div>
-          <button className="mx-auto mt-[60px]" onClick={shareLocationKakao}>
-            <Image
-              src="/kakao-share.png"
-              alt="kakao-share"
-              width={42}
-              height={42}
-            />
-          </button>
         </section>
       </main>
     </div>

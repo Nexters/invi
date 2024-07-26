@@ -21,7 +21,6 @@ export const env = createEnv({
     KAKAO_MAP_BASE_URL: z.string(),
     KAKAO_MAP_API_KEY: z.string(),
     DAUMCDN_POSTOCDE_URL: z.string(),
-    KAKAO_SHARE_API_KEY: z.string(),
   },
   client: {},
   experimental__runtimeEnv: {},
