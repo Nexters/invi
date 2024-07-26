@@ -30,7 +30,7 @@ export function ImageRadioOption({
         onChange={context.onChange}
         checked={checked}
       />
-      <div className="flex h-full w-full flex-col items-center space-y-5 rounded-2xl border border-[#3C3C3C] bg-[#222222] p-4 transition-all duration-200 hover:border-blue-300 peer-checked:border-blue-500">
+      <div className="flex h-full w-full flex-col items-center space-y-5 rounded-2xl border border-[#3C3C3C] bg-[#222222] p-4 transition-all duration-200 hover:border-blue-300 hover:bg-[#2E2E2E] peer-checked:border-[#5E8AFF]">
         {imageUrl && (
           <Image
             src={imageUrl as string}
