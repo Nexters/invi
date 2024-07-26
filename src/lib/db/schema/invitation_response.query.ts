@@ -40,7 +40,7 @@ export async function getInvitationResponseStats() {
 export async function createInvitationResponses(
   participant_name: string,
   attendance: boolean,
-  reason: string,
+  reason?: string,
 ) {
   const data: InvitationResponseInsert = {
     id: nanoid(),

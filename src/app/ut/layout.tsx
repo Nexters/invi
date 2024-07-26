@@ -1,4 +1,5 @@
 import Script from "next/script";
+import BottomSheet from "~/app/(playground)/playground/bottom-sheet/_components/bottom-sheet";
 
 export default function UTPageLayout({
   children,
@@ -12,6 +13,7 @@ export default function UTPageLayout({
         src="https://developers.kakao.com/sdk/js/kakao.js"
       />
       {children}
+      <BottomSheet />
     </>
   );
 }
