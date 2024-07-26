@@ -53,10 +53,10 @@ export default function SidebarComponentsTab(props: Props) {
             .map((element) => (
               <div
                 key={element.id}
-                className="flex flex-col items-center justify-center"
+                className="flex flex-col items-center justify-center gap-1"
               >
                 {element.Component}
-                <span className="text-sm text-muted-foreground">
+                <span className="text-xs text-muted-foreground">
                   {element.label}
                 </span>
               </div>
@@ -71,10 +71,10 @@ export default function SidebarComponentsTab(props: Props) {
             .map((element) => (
               <div
                 key={element.id}
-                className="flex flex-col items-center justify-center"
+                className="flex flex-col items-center justify-center gap-1"
               >
                 {element.Component}
-                <span className="text-sm text-muted-foreground">
+                <span className="text-xs text-muted-foreground">
                   {element.label}
                 </span>
               </div>

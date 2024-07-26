@@ -199,7 +199,7 @@ export default function Container({ element }: Props) {
       style={styles}
       className={cn(
         "group relative p-4 transition-all",
-        isRoot && "h-full overflow-y-auto",
+        isRoot && "h-full overflow-visible",
         type === "container" && "h-fit",
         (type === "container" || type === "2Col") && "w-full max-w-full",
         type === "2Col" && "flex flex-col md:!flex-row",
