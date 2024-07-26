@@ -1,10 +1,12 @@
 "use server";
 
 import { count, eq, sql, sum } from "drizzle-orm";
+import { nanoid } from "nanoid";
 import { db } from "~/lib/db";
 import {
   invitationResponses,
   type InvitationResponse,
+  type InvitationResponseInsert,
 } from "~/lib/db/schema/invitation_response";
 
 export async function getAllInvitationResponses() {
@@ -33,4 +35,21 @@ export async function getInvitationResponseStats() {
     totalResponses: Number(result[0].totalResponses),
     attendingCount: Number(result[0].attendingCount),
   };
+}
+
+export async function createInvitationResponses(
+  participant_name: string,
+  attendance: boolean,
+  reason: string,
+) {
+  const data: InvitationResponseInsert = {
+    id: nanoid(),
+    participant_name: participant_name,
+    attendance: attendance,
+    reason: reason,
+    created_at: new Date(),
+  };
+
+  const res = db.insert(invitationResponses).values(data);
+  return res;
 }
