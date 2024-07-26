@@ -218,8 +218,8 @@ const Invi = () => {
                   </li>
                   <li className="flex gap-x-2 text-sm leading-[22px]">
                     <span>4.</span>
-                    <p>
-                      {`선출된 테스터들은 1부 팀들의 부스를 순서대로\n방문하여 UT를 수행합니다. (각 부스 당 20분)`}
+                    <p className="whitespace-pre-wrap">
+                      {`선출된 테스터들은 1부 팀들의 부스를 순서대로 방문하여 UT를 수행합니다.\n(각 부스 당 20분)`}
                     </p>
                   </li>
                   <li className="flex gap-x-2 text-sm leading-[22px]">
