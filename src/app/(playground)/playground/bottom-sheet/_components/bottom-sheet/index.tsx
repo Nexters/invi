@@ -17,9 +17,7 @@ import {
 
 import { toast } from "sonner";
 import AttendanceFalseDefault from "~/assets/attendance/attendance-false-default.svg";
-import AttendanceFalseDisabled from "~/assets/attendance/attendance-false-disabled.svg";
 import AttendanceTrueDefault from "~/assets/attendance/attendance-true-deafult.svg";
-import AttendanceTrueDisabled from "~/assets/attendance/attendance-true-disabled.svg";
 import { createInvitationResponses } from "~/lib/db/schema/invitation_response.query";
 
 export default function BottomSheet() {
@@ -66,6 +64,9 @@ export default function BottomSheet() {
         side="bottom"
         className="fixed w-full flex-col space-y-10 rounded-t-[32px] border-none bg-[#1A1A1A] pb-0 pt-10 text-white"
       >
+        <div className="absolute left-1/2 top-4 -translate-x-1/2 transform">
+          <div className="h-1 w-10 rounded-full bg-[#EDEDED]"></div>
+        </div>
         <SheetHeader>
           <SheetTitle className={"text-left text-2xl text-white"}>
             세션 참여 조사
@@ -109,6 +110,7 @@ export default function BottomSheet() {
                     <>
                       <ImageRadio
                         name={field.name}
+                        value={field.state.value}
                         onChange={(event) => {
                           field.handleChange(
                             event.target.value as "true" | "false" | "",
@@ -116,25 +118,13 @@ export default function BottomSheet() {
                         }}
                       >
                         <ImageRadio.Option
-                          imageUrl={
-                            field.state.value === "true"
-                              ? AttendanceTrueDefault
-                              : field.state.value === "false"
-                                ? AttendanceTrueDisabled
-                                : AttendanceTrueDefault
-                          }
+                          imageUrl={AttendanceTrueDefault}
                           value={"true"}
                           text={"참여"}
                           checked={field.state.value === "true"}
                         />
                         <ImageRadio.Option
-                          imageUrl={
-                            field.state.value === "false"
-                              ? AttendanceFalseDefault
-                              : field.state.value === "true"
-                                ? AttendanceFalseDisabled
-                                : AttendanceFalseDefault
-                          }
+                          imageUrl={AttendanceFalseDefault}
                           value={"false"}
                           text={"불참"}
                           checked={field.state.value === "false"}
