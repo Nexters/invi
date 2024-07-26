@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster as Sonner } from "~/components/ui/sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,7 +22,10 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Sonner />
+      </body>
     </html>
   );
 }
