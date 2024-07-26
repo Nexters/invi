@@ -1,18 +1,13 @@
 export type DeviceType = "Desktop" | "Mobile" | "Tablet";
 
 export type EditorElementType =
-  | "text"
-  | "container"
-  | "section"
-  | "contactForm"
-  | "paymentForm"
-  | "link"
-  | "2Col"
-  | "video"
   | "__body"
+  | "container"
+  | "2Col"
+  | "text"
+  | "section"
   | "image"
-  | null
-  | "3Col";
+  | null;
 
 export type EditorElement = {
   id: string;

@@ -32,62 +32,6 @@ export default function Container({ element }: Props) {
     ) as EditorElementType;
 
     switch (componentType) {
-      case "text":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: { innerText: "Text Element" },
-              id: nanoid(),
-              name: "Text",
-              styles: {
-                color: "black",
-                ...defaultStyles,
-              },
-              type: "text",
-            },
-          },
-        });
-        break;
-      case "link":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: {
-                innerText: "Link Element",
-                href: "#",
-              },
-              id: nanoid(),
-              name: "Link",
-              styles: {
-                color: "black",
-                ...defaultStyles,
-              },
-              type: "link",
-            },
-          },
-        });
-        break;
-      case "video":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: {
-                src: "https://www.youtube.com/embed/A3l6YYkXzzg?si=zbcCeWcpq7Cwf8W1",
-              },
-              id: nanoid(),
-              name: "Video",
-              styles: {},
-              type: "video",
-            },
-          },
-        });
-        break;
       case "container":
         dispatch({
           type: "ADD_ELEMENT",
@@ -99,36 +43,6 @@ export default function Container({ element }: Props) {
               name: "Container",
               styles: { ...defaultStyles },
               type: "container",
-            },
-          },
-        });
-        break;
-      case "contactForm":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: [],
-              id: nanoid(),
-              name: "Contact Form",
-              styles: {},
-              type: "contactForm",
-            },
-          },
-        });
-        break;
-      case "paymentForm":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: [],
-              id: nanoid(),
-              name: "Contact Form",
-              styles: {},
-              type: "paymentForm",
             },
           },
         });
@@ -159,6 +73,24 @@ export default function Container({ element }: Props) {
               name: "Two Columns",
               styles: { ...defaultStyles, display: "flex" },
               type: "2Col",
+            },
+          },
+        });
+        break;
+      case "text":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: { innerText: "Text Element" },
+              id: nanoid(),
+              name: "Text",
+              styles: {
+                color: "black",
+                ...defaultStyles,
+              },
+              type: "text",
             },
           },
         });

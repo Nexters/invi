@@ -91,20 +91,7 @@ export default function SidebarSettingsTab(props: Props) {
     >
       <AccordionItem value="Custom">
         <AccordionTrigger className="px-6">Custom</AccordionTrigger>
-        <AccordionContent className="px-6">
-          {editor.state.selectedElement.type === "link" &&
-            !Array.isArray(editor.state.selectedElement.content) && (
-              <div className="flex flex-col gap-2">
-                <p className="text-muted-foreground">Link Path</p>
-                <Input
-                  id="href"
-                  placeholder="https:domain.example.com/pathname"
-                  onChange={handleChangeCustomValues}
-                  value={editor.state.selectedElement.content.href}
-                />
-              </div>
-            )}
-        </AccordionContent>
+        <AccordionContent className="px-6"></AccordionContent>
       </AccordionItem>
       <AccordionItem value="Typography">
         <AccordionTrigger className="px-6">Typography</AccordionTrigger>
