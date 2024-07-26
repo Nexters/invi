@@ -107,7 +107,6 @@ export default function BottomSheet() {
                       <ImageRadio
                         name={field.name}
                         onChange={(event) => {
-                          console.log(field.state.value);
                           field.handleChange(
                             event.target.value as "true" | "false" | "",
                           );
