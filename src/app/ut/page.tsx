@@ -39,7 +39,7 @@ const Invi = () => {
 
   return (
     <div className="bg-[#1A1A1A] text-[#FBFBFB]">
-      <header className="flex h-[69px] items-center justify-center">
+      <header className="flex h-[69px] items-center justify-center bg-gradient-to-b from-black to-transparent">
         <Image src="/logo.png" alt="logo" width={52} height={25} />
       </header>
       <main className="flex flex-col items-center gap-y-[120px] bg-[#1A1A1A] -tracking-[0.2px] text-[#FBFBFB]">
