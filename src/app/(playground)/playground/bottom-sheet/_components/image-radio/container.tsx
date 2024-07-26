@@ -1,11 +1,11 @@
-import React, { ChangeEvent, ReactNode } from "react";
-
+import type { ChangeEvent, ReactNode } from "react";
+import { createContext } from "react";
 interface ImageRadioContextType {
   name: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const ImageRadioContext = React.createContext<
+export const ImageRadioContext = createContext<
   ImageRadioContextType | undefined
 >(undefined);
 

@@ -6,8 +6,6 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 
-import { zodValidator } from "@tanstack/zod-form-adapter";
-import { z } from "zod";
 import {
   Sheet,
   SheetClose,
@@ -17,18 +15,12 @@ import {
   SheetTrigger,
 } from "~/components/ui/sheet";
 
-import AttendanceFalseActive from "~/assets/attendance/attendance-false-active.svg";
+import { toast } from "sonner";
 import AttendanceFalseDefault from "~/assets/attendance/attendance-false-default.svg";
-import AttendanceTrueActive from "~/assets/attendance/attendance-true-active.svg";
-import AttendanceTrueDefault from "~/assets/attendance/attendance-true-default.svg";
+import AttendanceFalseDisabled from "~/assets/attendance/attendance-false-disabled.svg";
+import AttendanceTrueDefault from "~/assets/attendance/attendance-true-deafult.svg";
+import AttendanceTrueDisabled from "~/assets/attendance/attendance-true-disabled.svg";
 import { createInvitationResponses } from "~/lib/db/schema/invitation_response.query";
-
-const schema = z.object({
-  name: z.string().min(1, "이름을 입력해주세요"),
-  attendance: z.enum(["true", "false"], {
-    required_error: "참석 여부를 선택해주세요",
-  }),
-});
 
 export default function BottomSheet() {
   const form = useForm({
@@ -36,10 +28,19 @@ export default function BottomSheet() {
       name: "",
       attendance: "" as "true" | "false" | "",
     },
-    validatorAdapter: zodValidator(schema),
     onSubmit: async ({ value }) => {
       const { name, attendance } = value;
-      createInvitationResponses(name, attendance);
+      await createInvitationResponses(name, attendance as unknown as boolean);
+      toast("참여가 완료되었습니다.", {
+        duration: 2000,
+        style: {
+          backgroundColor: "black",
+          opacity: 0.9,
+          height: "56px",
+          color: "white",
+          border: 0,
+        },
+      });
     },
   });
 
@@ -105,15 +106,20 @@ export default function BottomSheet() {
                     <>
                       <ImageRadio
                         name={field.name}
-                        onChange={(event) =>
-                          field.handleChange(event.target.value)
-                        }
+                        onChange={(event) => {
+                          console.log(field.state.value);
+                          field.handleChange(
+                            event.target.value as "true" | "false" | "",
+                          );
+                        }}
                       >
                         <ImageRadio.Option
                           imageUrl={
                             field.state.value === "true"
-                              ? AttendanceTrueActive
-                              : AttendanceTrueDefault
+                              ? AttendanceTrueDefault
+                              : field.state.value === "false"
+                                ? AttendanceTrueDisabled
+                                : AttendanceTrueDefault
                           }
                           value={"true"}
                           text={"참여"}
@@ -122,8 +128,10 @@ export default function BottomSheet() {
                         <ImageRadio.Option
                           imageUrl={
                             field.state.value === "false"
-                              ? AttendanceFalseActive
-                              : AttendanceFalseDefault
+                              ? AttendanceFalseDefault
+                              : field.state.value === "true"
+                                ? AttendanceFalseDisabled
+                                : AttendanceFalseDefault
                           }
                           value={"false"}
                           text={"불참"}
@@ -136,16 +144,12 @@ export default function BottomSheet() {
               </div>
             </div>
           </div>
-          <div className={"h-[127px] py-[34px]"}>
-            <SheetClose asChild>
+          <SheetClose asChild>
+            <div className={"h-[127px] py-[34px]"}>
               <form.Subscribe selector={(state) => state}>
                 {({ isValid, isSubmitting, errors, values }) => {
                   const isFormComplete =
-                    isValid &&
-                    !errors["name"] &&
-                    !errors["attendance"] &&
-                    values.name &&
-                    values.attendance;
+                    isValid && values.name && values.attendance;
                   return (
                     <Button
                       type="submit"
@@ -158,8 +162,8 @@ export default function BottomSheet() {
                   );
                 }}
               </form.Subscribe>
-            </SheetClose>
-          </div>
+            </div>
+          </SheetClose>
         </form>
       </SheetContent>
     </Sheet>
