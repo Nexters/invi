@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="kr" className={`${pretendard.variable}`}>
+    <html lang="kr" className={`${pretendard.variable} bg-[#1A1A1A]`}>
       <head>
         <link
           rel="stylesheet"
