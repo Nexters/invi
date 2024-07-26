@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { toast } from "sonner";
 
+type MapType = "naver" | "kakao";
+type MapUrls = Record<MapType, string>;
+
 const Invi = () => {
   async function copyTextAsync(text: string) {
     try {
@@ -23,6 +26,16 @@ const Invi = () => {
       },
     });
   }
+
+  const address = "용산구 백범로 99길 40 용산베르디움프렌즈 101동";
+
+  const openMap = (mapType: MapType, address: string) => {
+    const mapUrls: MapUrls = {
+      naver: `nmap://search?query=${address}`,
+      kakao: `kakaomap://search?q=${address}`,
+    };
+    window.open(mapUrls[mapType]);
+  };
 
   return (
     <div className="bg-[#1A1A1A] text-[#FBFBFB]">
@@ -89,14 +102,24 @@ const Invi = () => {
               <span className="text-[#6E96FF]">모이다(다목적홀)</span>로
               모여주세요
             </p>
-            <article className="mt-4">
-              <button
-                onClick={() =>
-                  handleCopy(
-                    "용산구 백범로 99길 40 용산베르디움프렌즈 101동 지하1층",
-                  )
-                }
-              >
+            <article className="mt-4 flex gap-x-3">
+              <button onClick={() => openMap("naver", address)}>
+                <Image
+                  src="/naver-map.png"
+                  alt="naver-map"
+                  width={42}
+                  height={42}
+                />
+              </button>
+              <button onClick={() => openMap("kakao", address)}>
+                <Image
+                  src="/kakao-map.png"
+                  alt="kakao-map"
+                  width={42}
+                  height={42}
+                />
+              </button>
+              <button onClick={() => handleCopy(address)}>
                 <Image src="/copy.png" width={42} height={42} alt="copy" />
               </button>
             </article>
