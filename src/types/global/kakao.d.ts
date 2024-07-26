@@ -2,7 +2,7 @@ declare global {
   interface Window {
     daum: {
       Postcode: new (options: any) => any;
-    },
+    };
     kakao: {
       maps: {
         load: (callback: () => void) => void;
@@ -13,9 +13,19 @@ declare global {
         };
         services: {
           Geocoder: new () => {
-            addressSearch: (address: string, callback: (result: any, status: any) => void) => void;
+            addressSearch: (
+              address: string,
+              callback: (result: any, status: any) => void,
+            ) => void;
           };
         };
+      };
+    };
+    Kakao: {
+      isInitialized: () => boolean;
+      init: (key: string) => void;
+      Share: {
+        sendDefault: (options: any) => void;
       };
     };
   }
