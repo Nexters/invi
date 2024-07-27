@@ -52,7 +52,7 @@ const Invi = () => {
           <h2 className="text-xl font-semibold text-[#C28BFF]">NEXTERS</h2>
           <h1 className="text-3xl font-bold">4주차 세션 안내</h1>
           <article className="mt-8 flex w-full flex-col items-center rounded-[20px] bg-[#222222] pb-6 pt-5">
-            <p className="mb-4">기획 발표</p>
+            <p className="mb-4">UT</p>
             <ul className="flex flex-col gap-y-2">
               <li className="flex gap-x-4">
                 <p className="text-[16px] font-semibold leading-6 text-blue-400">
