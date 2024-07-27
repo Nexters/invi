@@ -2,9 +2,11 @@
 
 import {
   ArrowLeftIcon,
+  DownloadIcon,
   EyeIcon,
   Laptop,
   Redo2,
+  Share2Icon,
   Smartphone,
   Tablet,
   Undo2,
@@ -84,7 +86,7 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
           </TabsList>
         </Tabs>
       </aside>
-      <aside className="flex items-center gap-6">
+      <aside className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" onClick={handlePreviewClick}>
             <EyeIcon />
@@ -108,7 +110,12 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
             <Redo2 />
           </Button>
         </div>
-        <Button onClick={handleOnSave}>Save</Button>
+        <Button variant="secondary" onClick={handleOnSave} className="gap-1">
+          <DownloadIcon className="h-4 w-4" /> 저장
+        </Button>
+        <Button onClick={handleOnSave} className="gap-1">
+          <Share2Icon className="h-4 w-4" /> 공유
+        </Button>
       </aside>
     </nav>
   );
