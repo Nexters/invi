@@ -4,6 +4,6 @@
     "plugin:@tanstack/eslint-plugin-query/recommended"
   ],
   "rules": {
-    "react/no-children-prop": "no"
+    "react/no-children-prop": 0
   }
 }
