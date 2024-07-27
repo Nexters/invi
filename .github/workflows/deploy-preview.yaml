@@ -19,7 +19,9 @@ jobs:
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
         id: deploy
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          output=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "::set-output name=url::$(echo "$output" | grep -oP 'https://.*\.vercel\.app')"
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
