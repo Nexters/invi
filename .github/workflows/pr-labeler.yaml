@@ -9,7 +9,11 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
       - uses: actions/labeler@v5
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          configuration-path: "./.github/pr-labeler-config.yaml"
+          configuration-path: ".github/pr-labeler-config.yaml"
