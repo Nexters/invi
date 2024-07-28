@@ -22,6 +22,10 @@ jobs:
         run: |
           output=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
           echo "::set-output name=url::$(echo "$output" | grep -oP 'https://.*\.vercel\.app')"
+      
+      - name: Get Project Name
+        id: project-name
+        run: echo "name=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_OUTPUT
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
@@ -29,13 +33,18 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: "github-actions[bot]"
-          body-includes: Preview deployed to
-      - name: Create or Update Comment
+          body-includes: "The latest updates on your projects"
+      
+     - name: Create or Update Comment
         uses: peter-evans/create-or-update-comment@v4
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            Preview deployed to: ${{ steps.deploy.outputs.url }}
-            Last updated: ${{ github.event.pull_request.updated_at }}
+            **The latest updates on your projects**.
+
+            | Name | Status | Preview | Updated (UTC) |
+            | ---- | ------ | ------- | ------------- |
+            | **${{ steps.project-name.outputs.name }}** | ✅ Ready ([Inspect](https://vercel.com/dashboard)) | [Visit Preview](${{ steps.deploy.outputs.url }}) | ${{ github.event.pull_request.updated_at | date('YYYY-MM-DD HH:mm:ss', '+9 hours') }} |
+
           edit-mode: replace
