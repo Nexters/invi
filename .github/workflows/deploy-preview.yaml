@@ -22,10 +22,15 @@ jobs:
         run: |
           output=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
           echo "::set-output name=url::$(echo "$output" | grep -oP 'https://.*\.vercel\.app')"
-      
+
       - name: Get Project Name
         id: project-name
         run: echo "name=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_OUTPUT
+
+      - name: Format date to Korean time
+        id: date
+        run: |
+          echo "korean_time=$(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
@@ -34,7 +39,7 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: "github-actions[bot]"
           body-includes: "The latest updates on your projects"
-      
+
       - name: Create or Update Comment
         uses: peter-evans/create-or-update-comment@v4
         with:
@@ -45,6 +50,6 @@ jobs:
 
             | Name | Status | Preview | Updated (UTC) |
             | ---- | ------ | ------- | ------------- |
-            | **${{ steps.project-name.outputs.name }}** | ✅ Ready ([Inspect](https://vercel.com/dashboard)) | [Visit Preview](${{ steps.deploy.outputs.url }}) | ${{ github.event.pull_request.updated_at | date('YYYY-MM-DD HH:mm:ss', '+9 hours') }} |
+            | **${{ steps.project-name.outputs.name }}** | ✅ Ready ([Inspect](https://vercel.com/dashboard)) | [Visit Preview](${{ steps.deploy.outputs.url }}) | ${{ steps.date.outputs.korean_time }} |
 
           edit-mode: replace
