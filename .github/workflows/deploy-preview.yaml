@@ -35,7 +35,7 @@ jobs:
           comment-author: "github-actions[bot]"
           body-includes: "The latest updates on your projects"
       
-     - name: Create or Update Comment
+      - name: Create or Update Comment
         uses: peter-evans/create-or-update-comment@v4
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
