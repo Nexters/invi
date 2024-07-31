@@ -23,7 +23,7 @@ export default async function Page() {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <AMain>
-        <ALink href="/playground">playground</ALink>
+        <ALink href="./">playground</ALink>
         <TestForm />
         <TestList />
         <TestEditDialog />

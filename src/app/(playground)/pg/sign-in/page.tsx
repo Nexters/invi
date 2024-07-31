@@ -9,7 +9,7 @@ export default async function Page() {
 
   return (
     <AMain>
-      <ALink href="/playground">playground</ALink>
+      <ALink href="./">playground</ALink>
       {!!auth.user ? (
         <Card>
           <CardHeader>
