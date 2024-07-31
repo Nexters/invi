@@ -1,0 +1,21 @@
+feat:
+  - head-branch: ["^feat", "^feature"]
+
+fix:
+  - head-branch: ["^fix"]
+
+refactor:
+  - head-branch: ["^refactor"]
+
+api:
+  - changed-files:
+      - any-glob-to-any-file: ["src/app/api/*"]
+
+db:
+  - changed-files:
+      - any-glob-to-any-file: ["src/lib/db/*", "drizzle.config.ts"]
+
+chore:
+  - head-branch: ["^chore"]
+  - changed-files:
+      - any-glob-to-any-file: ["package.json", "bun.lockb"]

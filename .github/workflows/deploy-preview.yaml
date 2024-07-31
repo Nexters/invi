@@ -3,9 +3,8 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
-  push:
-    branches-ignore:
-      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
@@ -19,4 +18,38 @@ jobs:
       - name: Build Project Artifacts
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        id: deploy
+        run: |
+          output=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "::set-output name=url::$(echo "$output" | grep -oP 'https://.*\.vercel\.app')"
+
+      - name: Get Project Name
+        id: project-name
+        run: echo "name=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_OUTPUT
+
+      - name: Format date to Korean time
+        id: date
+        run: |
+          echo "korean_time=$(TZ='Asia/Seoul' date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_OUTPUT
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: "The latest updates on your projects"
+
+      - name: Create or Update Comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            **The latest updates on your projects**.
+
+            | Name | Status | Preview | Updated (UTC) |
+            | ---- | ------ | ------- | ------------- |
+            | **${{ steps.project-name.outputs.name }}** | ✅ Ready ([Inspect](https://vercel.com/dashboard)) | [Visit Preview](${{ steps.deploy.outputs.url }}) | ${{ steps.date.outputs.korean_time }} |
+
+          edit-mode: replace
