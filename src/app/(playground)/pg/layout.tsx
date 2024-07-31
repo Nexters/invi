@@ -17,7 +17,11 @@ export default async function AppLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
       </head>
-      <body className="font-sans">
+      <body
+        style={{
+          fontFamily: '"Pretendard Variable", Pretendard, sans-serif',
+        }}
+      >
         <Providers>
           {children}
           <Toaster />
