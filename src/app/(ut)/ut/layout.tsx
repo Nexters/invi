@@ -9,7 +9,7 @@ export default function UTPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="kr" className={`${pretendard.variable} bg-[#1A1A1A]`}>
+    <html lang="kr" className="bg-[#1A1A1A]">
       <body className={pretendard.className}>
         {children}
         <BottomSheet />
