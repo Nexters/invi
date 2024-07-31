@@ -8,7 +8,7 @@ export default async function AppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="kr">
+    <html lang="ko">
       <head>
         <link
           rel="stylesheet"
