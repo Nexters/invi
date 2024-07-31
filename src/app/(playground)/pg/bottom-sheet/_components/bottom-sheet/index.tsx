@@ -2,7 +2,7 @@
 
 import { useForm } from "@tanstack/react-form";
 import { useCallback, useEffect, useRef, useState } from "react";
-import ImageRadio from "~/app/(playground)/playground/bottom-sheet/_components/image-radio";
+import ImageRadio from "~/app/(playground)/pg/bottom-sheet/_components/image-radio";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";

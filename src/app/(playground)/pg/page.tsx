@@ -1,12 +1,9 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { ALink, AMain } from "~/app/(playground)/playground/inner-tools";
+import { ALink, AMain } from "~/app/(playground)/pg/inner-tools";
 
 async function getPlaygroundRoutes() {
-  const playgroundDir = path.join(
-    process.cwd(),
-    "src/app/(playground)/playground",
-  );
+  const playgroundDir = path.join(process.cwd(), "src/app/(playground)/pg");
   const entries = await fs.readdir(playgroundDir, { withFileTypes: true });
 
   const routes = await Promise.all(
@@ -16,7 +13,7 @@ async function getPlaygroundRoutes() {
         const fullPath = path.join(playgroundDir, entry.name);
         const files = await fs.readdir(fullPath);
         if (files.includes("page.tsx")) {
-          return `/playground/${entry.name}`;
+          return `/pg/${entry.name}`;
         }
         return null;
       }),

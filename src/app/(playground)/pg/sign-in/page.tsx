@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ALink, AMain } from "~/app/(playground)/playground/inner-tools";
+import { ALink, AMain } from "~/app/(playground)/pg/inner-tools";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { getAuth } from "~/lib/auth/utils";

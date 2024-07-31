@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useContext } from "react";
-import { ImageRadioContext } from "~/app/(playground)/playground/bottom-sheet/_components/image-radio/container";
+import { ImageRadioContext } from "~/app/(playground)/pg/bottom-sheet/_components/image-radio/container";
 
 interface ImageRadioOptionProps {
   value: string;

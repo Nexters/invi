@@ -1,5 +1,5 @@
 import Script from "next/script";
-import BottomSheet from "~/app/(playground)/playground/bottom-sheet/_components/bottom-sheet";
+import BottomSheet from "~/app/(playground)/pg/bottom-sheet/_components/bottom-sheet";
 
 export default function UTPageLayout({
   children,

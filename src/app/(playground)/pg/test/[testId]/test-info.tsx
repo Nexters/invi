@@ -3,7 +3,7 @@
 import { GearIcon } from "@radix-ui/react-icons";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { useTestEditDialog } from "~/app/(playground)/playground/test/test-edit-dialog";
+import { useTestEditDialog } from "~/app/(playground)/pg/test/test-edit-dialog";
 import { Button } from "~/components/ui/button";
 import {
   Card,

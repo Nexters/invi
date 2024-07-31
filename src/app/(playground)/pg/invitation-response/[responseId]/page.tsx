@@ -4,8 +4,8 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { cache } from "react";
-import { ALink, AMain } from "~/app/(playground)/playground/inner-tools";
-import InvitationResponseInfo from "~/app/(playground)/playground/invitation-response/[responseId]/invitation-response-info";
+import { ALink, AMain } from "~/app/(playground)/pg/inner-tools";
+import InvitationResponseInfo from "~/app/(playground)/pg/invitation-response/[responseId]/invitation-response-info";
 import { getInvitationResponseById } from "~/lib/db/schema/invitation_response.query";
 
 const getQueryClient = cache(() => new QueryClient());

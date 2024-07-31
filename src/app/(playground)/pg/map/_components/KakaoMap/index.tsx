@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useKakaoAddress } from "~/app/(playground)/playground/map/_components/KakaoAddressContext";
+import { useKakaoAddress } from "~/app/(playground)/pg/map/_components/KakaoAddressContext";
 
 interface KakaoMapProps {
   width: string;

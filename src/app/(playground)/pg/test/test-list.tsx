@@ -5,7 +5,7 @@ import { useIsMutating, useQuery } from "@tanstack/react-query";
 import { josa } from "es-hangul";
 import Link from "next/link";
 import { toast } from "sonner";
-import { useTestEditDialog } from "~/app/(playground)/playground/test/test-edit-dialog";
+import { useTestEditDialog } from "~/app/(playground)/pg/test/test-edit-dialog";
 import { useAlertDialogStore } from "~/components/global-alert";
 import { Button } from "~/components/ui/button";
 import {

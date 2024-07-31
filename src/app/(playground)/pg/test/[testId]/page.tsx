@@ -4,9 +4,9 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { cache } from "react";
-import { ALink, AMain } from "~/app/(playground)/playground/inner-tools";
-import TestInfo from "~/app/(playground)/playground/test/[testId]/test-info";
-import TestEditDialog from "~/app/(playground)/playground/test/test-edit-dialog";
+import { ALink, AMain } from "~/app/(playground)/pg/inner-tools";
+import TestInfo from "~/app/(playground)/pg/test/[testId]/test-info";
+import TestEditDialog from "~/app/(playground)/pg/test/test-edit-dialog";
 import { getTestWithTestJobs } from "~/lib/db/schema/test.query";
 
 const getQueryClient = cache(() => new QueryClient());

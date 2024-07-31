@@ -1,7 +1,7 @@
-import { AMain } from "~/app/(playground)/playground/inner-tools";
-import AddressSearchButton from "~/app/(playground)/playground/map/_components/AddressSearchButton";
-import { KakaoAddressProvider } from "~/app/(playground)/playground/map/_components/KakaoAddressContext";
-import KakaoMap from "~/app/(playground)/playground/map/_components/KakaoMap";
+import { AMain } from "~/app/(playground)/pg/inner-tools";
+import AddressSearchButton from "~/app/(playground)/pg/map/_components/AddressSearchButton";
+import { KakaoAddressProvider } from "~/app/(playground)/pg/map/_components/KakaoAddressContext";
+import KakaoMap from "~/app/(playground)/pg/map/_components/KakaoMap";
 
 export default function KaKaoMapPage() {
   return (

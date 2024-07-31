@@ -1,5 +1,5 @@
-import BottomSheet from "~/app/(playground)/playground/bottom-sheet/_components/bottom-sheet";
-import { AMain } from "~/app/(playground)/playground/inner-tools";
+import BottomSheet from "~/app/(playground)/pg/bottom-sheet/_components/bottom-sheet";
+import { AMain } from "~/app/(playground)/pg/inner-tools";
 
 export default function BottomSheetPage() {
   return (
