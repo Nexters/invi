@@ -7,6 +7,7 @@ export type EditorElementType =
   | "text"
   | "section"
   | "image"
+  | "map"
   | null;
 
 export type EditorElement = {
