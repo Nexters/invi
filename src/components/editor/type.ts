@@ -7,6 +7,7 @@ export type EditorElementType =
   | "text"
   | "section"
   | "image"
+  | "kakaoMap"
   | null;
 
 export type EditorElement = {
