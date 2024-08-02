@@ -1,4 +1,4 @@
-import Placeholder from "~/components/editor/elements/placeholder";
+import Placeholder from "~/components/editor/elements/_default/placeholder";
 
 type Props = {};
 

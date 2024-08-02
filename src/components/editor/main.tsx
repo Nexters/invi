@@ -1,7 +1,7 @@
 "use client";
 
 import { EyeOff } from "lucide-react";
-import Recursive from "~/components/editor/elements/recursive";
+import Recursive from "~/components/editor/elements/_default/recursive";
 import { useEditor } from "~/components/editor/provider";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";

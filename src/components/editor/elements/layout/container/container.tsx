@@ -3,6 +3,7 @@ import { Trash } from "lucide-react";
 import { nanoid } from "nanoid";
 import React from "react";
 import { defaultStyles } from "~/components/editor/constant";
+import Recursive from "~/components/editor/elements/_default/recursive";
 import { useEditor } from "~/components/editor/provider";
 import type {
   EditorElement,
@@ -10,7 +11,6 @@ import type {
 } from "~/components/editor/type";
 import { Badge } from "~/components/ui/badge";
 import { cn } from "~/lib/utils";
-import Recursive from "./recursive";
 
 type Props = { element: EditorElement };
 
@@ -95,6 +95,23 @@ export default function Container({ element }: Props) {
           },
         });
         break;
+      case "kakaoMap":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: { innerText: "1" },
+              id: nanoid(),
+              name: "KaKao Map",
+              styles: {
+                width: "100%",
+                ...defaultStyles,
+              },
+              type: "kakaoMap",
+            },
+          },
+        });
     }
   };
 

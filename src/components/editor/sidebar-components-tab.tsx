@@ -1,7 +1,8 @@
 import React from "react";
-import ContainerPlaceholder from "~/components/editor/elements/container-placeholder";
-import TextPlaceholder from "~/components/editor/elements/text-placeholder";
-import TwoColumnsPlaceholder from "~/components/editor/elements/two-columns-placeholder";
+import KakaoMapPlaceholder from "~/components/editor/elements/elements/kakao-map/kakao-map-placeholder";
+import TextPlaceholder from "~/components/editor/elements/elements/text/text-placeholder";
+import ContainerPlaceholder from "~/components/editor/elements/layout/container/container-placeholder";
+import TwoColumnsPlaceholder from "~/components/editor/elements/layout/two-columns/two-columns-placeholder";
 import type { EditorElementType } from "~/components/editor/type";
 import {
   Accordion,
@@ -35,6 +36,12 @@ export default function SidebarComponentsTab(props: Props) {
       Component: <TextPlaceholder />,
       label: "Text",
       id: "text",
+      group: "elements",
+    },
+    {
+      Component: <KakaoMapPlaceholder />,
+      label: "KaKao Map",
+      id: "kakaoMap",
       group: "elements",
     },
   ];
