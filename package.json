@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "ts:watch": "tsc -w",
     "ui": "bunx shadcn-ui@latest",
     "ui:add": "bunx shadcn-ui@latest add",
     "ui:lint": "bunx prettier src/components/ui/* --write",
