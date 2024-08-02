@@ -101,7 +101,7 @@ export default function Container({ element }: Props) {
           payload: {
             containerId: id,
             elementDetails: {
-              content: { innerText: "1" },
+              content: [],
               id: nanoid(),
               name: "KaKao Map",
               styles: {
@@ -112,6 +112,7 @@ export default function Container({ element }: Props) {
             },
           },
         });
+        break;
     }
   };
 

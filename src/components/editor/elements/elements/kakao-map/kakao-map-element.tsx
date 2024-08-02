@@ -1,7 +1,9 @@
 "use client";
 
+import { Trash } from "lucide-react";
 import React, { useEffect, useRef } from "react";
 import { useKakaoAddress } from "~/components/editor/elements/elements/kakao-map/kakao-map-context";
+import KakaoMapSetLocationButton from "~/components/editor/elements/elements/kakao-map/kakao-map-set-location-button";
 import { useEditor } from "~/components/editor/provider";
 import type { EditorElement } from "~/components/editor/type";
 
@@ -15,13 +17,12 @@ type Props = {
 export default function KakaoMapElement({
   element,
   level,
-  addCenterPin,
+  addCenterPin = true,
   latitude,
   longitude,
 }: Props) {
   const { dispatch, editor } = useEditor();
   const isSelected = editor.state.selectedElement.id === element.id;
-
   const { coordinate } = useKakaoAddress();
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<any>(null);
@@ -73,6 +74,7 @@ export default function KakaoMapElement({
   }, [coordinate]);
 
   const handleDeleteElement = () => {
+    console.log(element);
     dispatch({
       type: "DELETE_ELEMENT",
       payload: { elementDetails: element },
@@ -91,8 +93,24 @@ export default function KakaoMapElement({
   };
   //WE ARE NOT ADDING DRAG DROP
   return (
-    <div style={{ height: "250px" }}>
-      <div ref={mapRef} style={{ width: "100%", height: "100%" }} />
+    <div className={"relative h-[250px] w-full"}>
+      {isSelected && !editor.state.isPreviewMode && (
+        <>
+          <div className="-left[0px] absolute -top-[42px] z-50 rounded-none rounded-t-lg">
+            <KakaoMapSetLocationButton />
+          </div>
+          <div className="absolute -right-[1px] -top-[25px] z-50 rounded-none rounded-t-lg bg-primary px-2.5 py-1 text-white">
+            <Trash
+              className="cursor-pointer"
+              size={16}
+              onClick={handleDeleteElement}
+            />
+          </div>
+        </>
+      )}
+      <div style={{ height: "250px" }} onClick={handleOnClickBody}>
+        <div ref={mapRef} style={{ width: "100%", height: "100%" }} />
+      </div>
     </div>
   );
 }

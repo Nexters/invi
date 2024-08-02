@@ -13,6 +13,8 @@ export default function Text({ element }: Props) {
   const { dispatch, editor } = useEditor();
   const isSelected = editor.state.selectedElement.id === element.id;
 
+  console.log("texst", editor.state.selectedElement);
+
   const handleDeleteElement = () => {
     dispatch({
       type: "DELETE_ELEMENT",
