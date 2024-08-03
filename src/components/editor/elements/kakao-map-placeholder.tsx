@@ -1,4 +1,4 @@
-import Placeholder from "~/components/editor/elements/_default/placeholder";
+import Placeholder from "~/components/editor/elements/placeholder";
 
 export default function KakaoMapPlaceholder() {
   return (

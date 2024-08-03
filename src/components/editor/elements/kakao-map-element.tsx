@@ -2,8 +2,8 @@
 
 import { Trash } from "lucide-react";
 import React, { useEffect, useRef } from "react";
-import { useKakaoAddress } from "~/components/editor/elements/elements/kakao-map/kakao-map-context";
-import KakaoMapSetLocationButton from "~/components/editor/elements/elements/kakao-map/kakao-map-set-location-button";
+import { useKakaoAddress } from "~/components/editor/elements/kakao-map-context";
+import KakaoMapSetLocationButton from "~/components/editor/elements/kakao-map-set-location-button";
 import { useEditor } from "~/components/editor/provider";
 import type { EditorElement } from "~/components/editor/type";
 

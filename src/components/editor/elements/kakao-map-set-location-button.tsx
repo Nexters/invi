@@ -1,6 +1,6 @@
 "use client";
 
-import { useKakaoAddress } from "~/components/editor/elements/elements/kakao-map/kakao-map-context";
+import { useKakaoAddress } from "~/components/editor/elements/kakao-map-context";
 
 export default function KakaoMapSetLocationButton() {
   const { setCoordinate } = useKakaoAddress();

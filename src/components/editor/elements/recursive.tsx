@@ -1,7 +1,7 @@
-import KakaoMap from "~/components/editor/elements/elements/kakao-map/indext";
-import Text from "~/components/editor/elements/elements/text/text";
-import Container from "~/components/editor/elements/layout/container/container";
-import TwoColumns from "~/components/editor/elements/layout/two-columns/two-columns";
+import Container from "~/components/editor/elements/container";
+import KakaoMap from "~/components/editor/elements/kakao-map";
+import Text from "~/components/editor/elements/text";
+import TwoColumns from "~/components/editor/elements/two-columns";
 import type { EditorElement } from "~/components/editor/type";
 
 export default function Recursive({ element }: { element: EditorElement }) {

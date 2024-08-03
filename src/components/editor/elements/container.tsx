@@ -3,7 +3,7 @@ import { Trash } from "lucide-react";
 import { nanoid } from "nanoid";
 import React from "react";
 import { defaultStyles } from "~/components/editor/constant";
-import Recursive from "~/components/editor/elements/_default/recursive";
+import Recursive from "~/components/editor/elements/recursive";
 import { useEditor } from "~/components/editor/provider";
 import type {
   EditorElement,

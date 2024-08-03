@@ -1,5 +1,5 @@
 import { TypeIcon } from "lucide-react";
-import Placeholder from "~/components/editor/elements/_default/placeholder";
+import Placeholder from "~/components/editor/elements/placeholder";
 
 type Props = {};
 

@@ -1,5 +1,5 @@
-import { KakaoAddressProvider } from "~/components/editor/elements/elements/kakao-map/kakao-map-context";
-import KakaoMapElement from "~/components/editor/elements/elements/kakao-map/kakao-map-element";
+import { KakaoAddressProvider } from "~/components/editor/elements/kakao-map-context";
+import KakaoMapElement from "~/components/editor/elements/kakao-map-element";
 
 import type { EditorElement } from "~/components/editor/type";
 
