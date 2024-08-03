@@ -80,20 +80,16 @@ const MapShareComponents = ({ element }: Props) => {
       draggable
       onDragStart={(e) => handleDragStart(e, "map")}
       onClick={handleOnClickBody}
-      // className={clsx(
-      //   "relative m-[5px] w-full p-[2px] text-[16px] transition-all",
-      //   {
-      //     "!border-blue-500": state.selectedElement.id === element.id,
-
-      //     "!border-solid": state.selectedElement.id === element.id,
-      //   },
-      // )}
       className={cn(
         "relative w-full p-[5px] text-[16px] transition-all",
         !editor.state.isPreviewMode && [
           "border-[1px] border-dashed border-border",
           isSelected && "border-solid border-primary",
         ],
+        {
+          "border-blue-500": state.selectedElement.id === element.id,
+          "border-solid": state.selectedElement.id === element.id,
+        },
       )}
     >
       <article className="flex gap-x-3">
