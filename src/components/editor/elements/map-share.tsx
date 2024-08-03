@@ -21,7 +21,7 @@ const MapShareComponents = ({ element }: Props) => {
   const state = editor.state;
   const isSelected = editor.state.selectedElement.id === element.id;
   const address =
-    !Array.isArray(content) && content.innerText ? content.innerText : "";
+    !Array.isArray(content) && content.address ? content.address : "";
   const openMap = (mapType: MapType, address: string) => {
     const mapUrls: MapUrls = {
       naver: `nmap://search?query=${address}`,
