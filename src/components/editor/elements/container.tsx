@@ -102,8 +102,7 @@ export default function Container({ element }: Props) {
             containerId: id,
             elementDetails: {
               content: {
-                // src: "https://example.com",
-                innerText: "Map Element",
+                address: "",
               },
               id: nanoid(),
               name: "map",
