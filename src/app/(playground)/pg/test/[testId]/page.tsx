@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: { testId: string } }) {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <AMain>
-        <ALink href="/playground/test">뒤로가기</ALink>
+        <ALink href="/pg/test">뒤로가기</ALink>
         <TestInfo />
         <TestEditDialog />
       </AMain>

@@ -80,7 +80,7 @@ export default function TestList() {
       {data?.length === 0 && <div>데이터를 찾을 수 없습니다.</div>}
       {data?.map((test) => (
         <div key={test.id} className="relative">
-          <Link href={`/playground/test/${test.id}`}>
+          <Link href={`/pg/test/${test.id}`}>
             <Card className="transition hover:bg-accent">
               <CardHeader>
                 <CardTitle>{test.name}</CardTitle>
