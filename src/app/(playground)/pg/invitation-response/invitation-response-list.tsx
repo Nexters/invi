@@ -61,7 +61,7 @@ export default function InvitationResponseList() {
       <div className="grid grid-cols-3 gap-2">
         {responses.map((response) => (
           <Link
-            href={`/playground/invitation-response/${response.id}`}
+            href={`/pg/invitation-response/${response.id}`}
             key={response.id}
           >
             <Card>

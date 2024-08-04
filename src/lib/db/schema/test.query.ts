@@ -13,7 +13,7 @@ import {
 
 export async function createTest(data: TestInsert) {
   const res = await db.insert(tests).values(data);
-  revalidatePath("/playground/test");
+  revalidatePath("/pg/test");
   return res;
 }
 
@@ -78,13 +78,13 @@ export async function getTestWithTestJobs(id: Test["id"]) {
 
 export async function updateTest(data: Test) {
   await db.update(tests).set(data).where(eq(tests.id, data.id));
-  revalidatePath("/playground/test");
-  revalidatePath(`/playground/test/${data.id}`);
+  revalidatePath("/pg/test");
+  revalidatePath(`/pg/test/${data.id}`);
 }
 
 export async function deleteTest(id: Test["id"]) {
   await db.delete(tests).where(eq(tests.id, id));
-  revalidatePath("/playground/test");
+  revalidatePath("/pg/test");
 }
 
 /* ------ test job ------ */

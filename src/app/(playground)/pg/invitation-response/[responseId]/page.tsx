@@ -27,7 +27,7 @@ export default async function Page({
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <AMain>
-        <ALink href="/playground/invitation-response">뒤로가기</ALink>
+        <ALink href="/pg/invitation-response">뒤로가기</ALink>
         <InvitationResponseInfo />
       </AMain>
     </HydrationBoundary>

@@ -48,7 +48,7 @@ export async function GET(request: Request): Promise<Response> {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "/playground/sign-in",
+        Location: "/pg/sign-in",
       },
     });
   } catch (e) {
