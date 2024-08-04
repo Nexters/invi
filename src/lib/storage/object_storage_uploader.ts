@@ -9,7 +9,7 @@ const access_key = env.NCP_ACCESS_KEY;
 const secret_key = env.NCP_SECRET_KEY;
 const bucket_name = env.NCP_BUCKET_NAME;
 
-const s3Client = new S3Client({
+const objectStorageClient = new S3Client({
   endpoint: endpoint,
   region: region,
   credentials: {
@@ -19,10 +19,10 @@ const s3Client = new S3Client({
 });
 
 
-async function uploadToS3(file_path: string) {
+async function uploadToObjectStorage(file_path: string) {
   try {
     const folderName = "sample-folder/";
-    await s3Client.send(
+    await objectStorageClient.send(
       new PutObjectCommand({
         Bucket: bucket_name,
         Key: folderName,
@@ -32,7 +32,7 @@ async function uploadToS3(file_path: string) {
 
     const fileName = "static/테스트.txt";
     const fileStream = createReadStream(file_path);
-    await s3Client.send(
+    await objectStorageClient.send(
       new PutObjectCommand({
         Bucket: bucket_name,
         Key: fileName,
