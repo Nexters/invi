@@ -7,6 +7,7 @@ export type EditorElementType =
   | "text"
   | "section"
   | "image"
+  | "map"
   | null;
 
 export type EditorElement = {
@@ -16,7 +17,7 @@ export type EditorElement = {
   type: EditorElementType;
   content:
     | EditorElement[]
-    | { href?: string; innerText?: string; src?: string };
+    | { href?: string; innerText?: string; src?: string; address?: string };
 };
 
 export type EditorState = {

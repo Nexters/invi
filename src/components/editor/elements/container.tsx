@@ -95,6 +95,26 @@ export default function Container({ element }: Props) {
           },
         });
         break;
+      case "map":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: {
+                address: "",
+              },
+              id: nanoid(),
+              name: "map",
+              styles: {
+                color: "black",
+                ...defaultStyles,
+              },
+              type: "map",
+            },
+          },
+        });
+        break;
     }
   };
 

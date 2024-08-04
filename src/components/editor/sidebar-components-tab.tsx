@@ -1,5 +1,6 @@
 import React from "react";
 import ContainerPlaceholder from "~/components/editor/elements/container-placeholder";
+import MapPlaceholder from "~/components/editor/elements/map-placeholder";
 import TextPlaceholder from "~/components/editor/elements/text-placeholder";
 import TwoColumnsPlaceholder from "~/components/editor/elements/two-columns-placeholder";
 import type { EditorElementType } from "~/components/editor/type";
@@ -35,6 +36,12 @@ export default function SidebarComponentsTab(props: Props) {
       Component: <TextPlaceholder />,
       label: "Text",
       id: "text",
+      group: "elements",
+    },
+    {
+      Component: <MapPlaceholder />,
+      label: "map",
+      id: "map",
       group: "elements",
     },
   ];
