@@ -101,7 +101,11 @@ export default function Container({ element }: Props) {
           payload: {
             containerId: id,
             elementDetails: {
-              content: [],
+              content: {
+                //   latitude: 37.566828,
+                //     longitude: 126.9786567,
+                location: [37.566828, 126.9786567],
+              },
               id: nanoid(),
               name: "KaKao Map",
               styles: {

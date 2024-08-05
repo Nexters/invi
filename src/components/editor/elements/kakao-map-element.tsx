@@ -1,9 +1,8 @@
 "use client";
 
-import { Trash } from "lucide-react";
+import { Badge, Trash } from "lucide-react";
 import React, { useEffect, useRef } from "react";
 import { useKakaoAddress } from "~/components/editor/elements/kakao-map-context";
-import KakaoMapSetLocationButton from "~/components/editor/elements/kakao-map-set-location-button";
 import { useEditor } from "~/components/editor/provider";
 import type { EditorElement } from "~/components/editor/type";
 
@@ -33,8 +32,8 @@ export default function KakaoMapElement({
 
     const initializeMap = () => {
       const center = new window.kakao.maps.LatLng(
-        latitude ?? coordinate.latitude,
-        longitude ?? coordinate.longitude,
+        latitude ?? element.content.location[0],
+        longitude ?? element.content.location[1],
       );
 
       const mapInstance = new window.kakao.maps.Map(
@@ -62,8 +61,8 @@ export default function KakaoMapElement({
   useEffect(() => {
     if (mapInstanceRef.current) {
       const newCenter = new window.kakao.maps.LatLng(
-        latitude ?? coordinate.latitude,
-        longitude ?? coordinate.longitude,
+        element.content?.location[0],
+        element.content?.location[1],
       );
       mapInstanceRef.current.setCenter(newCenter);
 
@@ -71,10 +70,9 @@ export default function KakaoMapElement({
         markerRef.current.setPosition(newCenter);
       }
     }
-  }, [coordinate]);
+  }, [editor.state.selectedElement]);
 
   const handleDeleteElement = () => {
-    console.log(element);
     dispatch({
       type: "DELETE_ELEMENT",
       payload: { elementDetails: element },
@@ -96,9 +94,9 @@ export default function KakaoMapElement({
     <div className={"relative h-[250px] w-full"}>
       {isSelected && !editor.state.isPreviewMode && (
         <>
-          <div className="-left[0px] absolute -top-[42px] z-50 rounded-none rounded-t-lg">
-            <KakaoMapSetLocationButton />
-          </div>
+          <Badge className="absolute -left-[1px] -top-[23px] rounded-none rounded-t-lg">
+            {editor.state.selectedElement.name}
+          </Badge>
           <div className="absolute -right-[1px] -top-[25px] z-50 rounded-none rounded-t-lg bg-primary px-2.5 py-1 text-white">
             <Trash
               className="cursor-pointer"
