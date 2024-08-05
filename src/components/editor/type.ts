@@ -22,8 +22,8 @@ export type EditorElement = {
         href?: string;
         innerText?: string;
         src?: string;
-        location?: number[];
         address?: string;
+        location?: number[];
       };
 };
 

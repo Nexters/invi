@@ -26,14 +26,15 @@ export default function KakaoMapElement({
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
+  const elementContent = element.content as { location?: [number, number] };
 
   useEffect(() => {
     if (!mapRef.current) return;
 
     const initializeMap = () => {
       const center = new window.kakao.maps.LatLng(
-        latitude ?? element.content.location[0],
-        longitude ?? element.content.location[1],
+        latitude ?? elementContent.location![0],
+        longitude ?? elementContent.location![1],
       );
 
       const mapInstance = new window.kakao.maps.Map(
@@ -61,8 +62,8 @@ export default function KakaoMapElement({
   useEffect(() => {
     if (mapInstanceRef.current) {
       const newCenter = new window.kakao.maps.LatLng(
-        element.content?.location[0],
-        element.content?.location[1],
+        elementContent.location![0],
+        elementContent.location![1],
       );
       mapInstanceRef.current.setCenter(newCenter);
 
