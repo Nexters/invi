@@ -62,21 +62,16 @@ export default function SidebarSettingsTab(props: Props) {
     });
   };
 
-  const handleChangeCustomValues = (e: any) => {
-    const settingProperty = e.target.id;
-    let value = e.target.value;
-    const styleObject = {
-      [settingProperty]: value,
-    };
-
+  const handleAddressInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: "UPDATE_ELEMENT",
       payload: {
         elementDetails: {
           ...editor.state.selectedElement,
+          type: "map",
           content: {
             ...editor.state.selectedElement.content,
-            ...styleObject,
+            address: e.target.value,
           },
         },
       },
@@ -116,7 +111,13 @@ export default function SidebarSettingsTab(props: Props) {
     <Accordion
       type="multiple"
       className="w-full border-t"
-      defaultValue={["Typography", "Dimensions", "Decorations", "Flexbox"]}
+      defaultValue={[
+        "Map",
+        "Typography",
+        "Dimensions",
+        "Decorations",
+        "Flexbox",
+      ]}
     >
       <AccordionItem value="Custom">
         <AccordionTrigger className="px-6">Custom</AccordionTrigger>
@@ -131,6 +132,22 @@ export default function SidebarSettingsTab(props: Props) {
           )}
         </AccordionContent>
       </AccordionItem>
+      {!Array.isArray(editor.state.selectedElement.content) &&
+        editor.state.selectedElement.type === "map" && (
+          <>
+            <AccordionItem value="Map" className="py-2">
+              <AccordionTrigger className="px-6 py-2">주소</AccordionTrigger>
+              <AccordionContent className="flex flex-col justify-center gap-2 px-6 py-1">
+                <Input
+                  id="address"
+                  placeholder="Enter your address"
+                  onChange={handleAddressInputChange}
+                  value={editor.state.selectedElement.content.address}
+                />
+              </AccordionContent>
+            </AccordionItem>
+          </>
+        )}
       <AccordionItem value="Typography">
         <AccordionTrigger className="px-6">Typography</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-2 px-6">

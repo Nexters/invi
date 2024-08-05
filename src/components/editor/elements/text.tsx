@@ -1,8 +1,9 @@
 "use client";
-import { Badge, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import React from "react";
 import { useEditor } from "~/components/editor/provider";
 import type { EditorElement } from "~/components/editor/type";
+import { Badge } from "~/components/ui/badge";
 import { cn } from "~/lib/utils";
 
 type Props = {

@@ -8,6 +8,7 @@ export type EditorElementType =
   | "section"
   | "image"
   | "kakaoMap"
+  | "map"
   | null;
 
 export type EditorElement = {
@@ -18,6 +19,7 @@ export type EditorElement = {
   content:
     | EditorElement[]
     | { href?: string; innerText?: string; src?: string; location?: number[] };
+    | { href?: string; innerText?: string; src?: string; address?: string };
 };
 
 export type EditorState = {
