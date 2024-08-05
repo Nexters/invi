@@ -18,8 +18,13 @@ export type EditorElement = {
   type: EditorElementType;
   content:
     | EditorElement[]
-    | { href?: string; innerText?: string; src?: string; location?: number[] };
-    | { href?: string; innerText?: string; src?: string; address?: string };
+    | {
+        href?: string;
+        innerText?: string;
+        src?: string;
+        location?: number[];
+        address?: string;
+      };
 };
 
 export type EditorState = {
