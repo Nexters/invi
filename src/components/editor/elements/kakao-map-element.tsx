@@ -2,7 +2,6 @@
 
 import { Badge, Trash } from "lucide-react";
 import React, { useEffect, useRef } from "react";
-import { useKakaoAddress } from "~/components/editor/elements/kakao-map-context";
 import { useEditor } from "~/components/editor/provider";
 import type { EditorElement } from "~/components/editor/type";
 
@@ -22,7 +21,6 @@ export default function KakaoMapElement({
 }: Props) {
   const { dispatch, editor } = useEditor();
   const isSelected = editor.state.selectedElement.id === element.id;
-  const { coordinate } = useKakaoAddress();
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
@@ -79,7 +77,6 @@ export default function KakaoMapElement({
       payload: { elementDetails: element },
     });
   };
-  const styles = element.styles;
 
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
