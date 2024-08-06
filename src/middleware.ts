@@ -7,9 +7,7 @@ export const config = {
 
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
-  const hostname = request.headers
-    .get("host")!
-    .replace(".localhost:3000", `.${process.env.ROOT_DOMAIN}`);
+  const hostname = request.headers.get("host")!;
   const searchParams = request.nextUrl.searchParams.toString();
 
   const path = `${url.pathname}${
@@ -17,6 +15,8 @@ export function middleware(request: NextRequest) {
   }`;
 
   const subDomain = hostname.split(".")[0];
+  console.log("subDomain", subDomain, "hostname", hostname);
+
   switch (true) {
     case subDomain !== hostname:
       return NextResponse.rewrite(
