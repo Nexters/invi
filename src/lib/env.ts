@@ -21,6 +21,12 @@ export const env = createEnv({
     KAKAO_MAP_BASE_URL: z.string(),
     KAKAO_MAP_API_KEY: z.string(),
     DAUMCDN_POSTOCDE_URL: z.string(),
+    /* ---- NCP ---- */
+    NCP_ENDPOINT: z.string(),
+    NCP_REGION: z.string(),
+    NCP_ACCESS_KEY: z.string(),
+    NCP_SECRET_KEY: z.string(),
+    NCP_BUCKET_NAME: z.string(),
   },
   client: {},
   experimental__runtimeEnv: {},
