@@ -22,6 +22,7 @@
     "db:check": "drizzle-kit check"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.624.0",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@neondatabase/serverless": "^0.9.4",
     "@radix-ui/react-accordion": "^1.2.0",
