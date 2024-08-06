@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const hostname = request.headers
     .get("host")!
-    .replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
+    .replace(".localhost:3000", `.${process.env.ROOT_DOMAIN}`);
   const searchParams = request.nextUrl.searchParams.toString();
 
   const path = `${url.pathname}${
@@ -17,10 +17,8 @@ export function middleware(request: NextRequest) {
   }`;
 
   const subDomain = hostname.split(".")[0];
-
   switch (true) {
     case subDomain !== hostname:
-      console.log(`/pg/${subDomain}${path}`);
       return NextResponse.rewrite(
         new URL(`/pg/${subDomain}${path}`, request.url),
       );
