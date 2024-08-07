@@ -32,7 +32,7 @@ export default function EditorSidebar() {
           )}
         >
           <TabsList className="flex w-full flex-col items-center gap-1 p-2">
-            <TabsTrigger value="Components" asChild>
+            <TabsTrigger value="Elements" asChild>
               <Button
                 size="icon"
                 variant="ghost"
@@ -74,13 +74,13 @@ export default function EditorSidebar() {
               <SidebarSettingsTab />
             </TabsContent>
             <TabsContent
-              value="Components"
+              value="Elements"
               className="focus-visible:outline-none"
             >
               <SheetHeader className="p-6">
-                <SheetTitle>Components</SheetTitle>
+                <SheetTitle>도구상자</SheetTitle>
                 <SheetDescription>
-                  You can drag and drop components on the canvas
+                  도구상자의 항목들을 작업 공간에 끌어다 놓을 수 있습니다.
                 </SheetDescription>
               </SheetHeader>
               <SidebarElementsTab />
