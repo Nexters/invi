@@ -9,8 +9,10 @@ import {
 } from "~/components/ui/sheet";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { PlusIcon, SettingsIcon } from "lucide-react";
+import { PlusIcon, SettingsIcon, WrenchIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useEditor } from "~/components/editor/provider";
+import SidebarElementSettingsTab from "~/components/editor/sidebar-element-settings-tab";
 import SidebarElementsTab from "~/components/editor/sidebar-elements-tab";
 import SidebarSettingsTab from "~/components/editor/sidebar-settings-tab";
 import { Button } from "~/components/ui/button";
@@ -20,10 +22,19 @@ type Props = {};
 
 export default function EditorSidebar() {
   const { editor } = useEditor();
+  const isSelected =
+    editor.state.selectedElement.id &&
+    editor.state.selectedElement.id !== "__body";
+
+  const [tabValue, setTabValue] = useState("Elements");
+
+  useEffect(() => {
+    setTabValue(isSelected ? "Element Settings" : "Elements");
+  }, [isSelected]);
 
   return (
     <Sheet open={true} modal={false}>
-      <Tabs className="w-full" defaultValue="Components">
+      <Tabs className="w-full" value={tabValue} onValueChange={setTabValue}>
         <SheetContent
           side="right"
           className={cn(
@@ -50,6 +61,17 @@ export default function EditorSidebar() {
                 <SettingsIcon />
               </Button>
             </TabsTrigger>
+            {isSelected && (
+              <TabsTrigger value="Element Settings" asChild>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="data-[state=active]:bg-secondary"
+                >
+                  <WrenchIcon />
+                </Button>
+              </TabsTrigger>
+            )}
           </TabsList>
         </SheetContent>
         <SheetContent
@@ -84,6 +106,18 @@ export default function EditorSidebar() {
                 </SheetDescription>
               </SheetHeader>
               <SidebarSettingsTab />
+            </TabsContent>
+            <TabsContent
+              value="Element Settings"
+              className="focus-visible:outline-none"
+            >
+              <SheetHeader className="p-6">
+                <SheetTitle>
+                  {editor.state.selectedElement.name} 설정
+                </SheetTitle>
+                <SheetDescription></SheetDescription>
+              </SheetHeader>
+              <SidebarElementSettingsTab />
             </TabsContent>
           </div>
         </SheetContent>

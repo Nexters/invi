@@ -22,6 +22,7 @@ export default function EditorMain() {
 
   return (
     <div
+      id="editor-main"
       className={cn(
         "ml-[10px] mr-[392px] animate-zoom-in rounded-md bg-background transition-all",
         editor.state.isPreviewMode && "m-0 overflow-hidden p-0",
