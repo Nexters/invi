@@ -30,7 +30,7 @@ export default function EditorSidebar() {
 
   useEffect(() => {
     setTabValue(isSelected ? "Element Settings" : "Elements");
-  }, [isSelected]);
+  }, [editor.state.selectedElement.id, isSelected]);
 
   return (
     <Sheet open={true} modal={false}>
