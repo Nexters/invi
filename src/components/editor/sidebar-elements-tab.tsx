@@ -13,7 +13,7 @@ import {
 
 type Props = {};
 
-export default function SidebarComponentsTab(props: Props) {
+export default function SidebarElementsTab(props: Props) {
   const elements: {
     id: EditorElementType;
     label: string;
