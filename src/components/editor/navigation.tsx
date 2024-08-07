@@ -1,15 +1,20 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
+import { debounce, delay } from "es-toolkit";
 import {
   ArrowLeftIcon,
+  CheckIcon,
   DownloadIcon,
   EyeIcon,
   Laptop,
+  LoaderIcon,
   Redo2,
   Share2Icon,
   Smartphone,
   Tablet,
   Undo2,
+  XIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -64,13 +69,7 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
             <ArrowLeftIcon />
           </Link>
         </Button>
-        <div>
-          <input
-            defaultValue={"제목 없음"}
-            placeholder="제목을 입력해주세요."
-            className="flex h-9 w-full rounded-md px-3 text-lg font-medium transition ease-in-out placeholder:text-muted-foreground focus-visible:bg-secondary focus-visible:outline-none"
-          />
-        </div>
+        <TitleInput />
         <Tabs
           value={editor.state.device}
           onValueChange={(value) => {
@@ -125,5 +124,69 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
         </Button>
       </aside>
     </nav>
+  );
+}
+
+function TitleInput() {
+  const handleTitleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.trim();
+
+    if (!value) {
+      return;
+    }
+
+    mutation.mutate(event.target.value.trim());
+  };
+
+  const mutation = useMutation({
+    mutationFn: async (value: string) => {
+      await delay(1000);
+      // throw new Error("Failed to update title");
+    },
+    onError: () => {
+      toast.error("제목 수정에 실패했습니다.", {
+        description: "잠시 후 다시 시도해주세요.",
+      });
+    },
+    onSettled: () => {
+      delayMutation.mutate();
+    },
+  });
+
+  const delayMutation = useMutation({
+    mutationFn: () => {
+      return delay(700);
+    },
+  });
+
+  return (
+    <div className="relative rounded-md px-2 transition ease-in-out focus-within:bg-secondary">
+      <div className="flex items-center border-b">
+        <input
+          defaultValue={"제목 없음"}
+          onChange={debounce(handleTitleInput, 300)}
+          placeholder="제목을 입력해주세요."
+          className="h-9 w-full bg-transparent pl-1 pr-5 pt-0.5 text-lg font-medium placeholder:text-muted-foreground focus-visible:outline-none"
+        />
+        <LoaderIcon
+          className={cn(
+            "pointer-events-none absolute right-2 h-3 w-3 animate-spin opacity-0 transition",
+            mutation.isPending && "opacity-100",
+          )}
+        />
+        <div
+          className={cn(
+            "pointer-events-none absolute right-2 opacity-0 transition",
+            !mutation.isPending && delayMutation.isPending && "opacity-100",
+          )}
+        >
+          {mutation.isSuccess ? (
+            <CheckIcon className="h-3.5 w-3.5" />
+          ) : (
+            <XIcon className="h-3.5 w-3.5" />
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
