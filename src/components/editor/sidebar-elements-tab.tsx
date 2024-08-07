@@ -10,6 +10,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
+import {
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "~/components/ui/sheet";
 
 type Props = {};
 
@@ -52,6 +57,12 @@ export default function SidebarElementsTab(props: Props) {
       className="w-full"
       defaultValue={["Layout", "Elements"]}
     >
+      <SheetHeader className="p-6">
+        <SheetTitle>도구상자</SheetTitle>
+        <SheetDescription>
+          도구상자의 항목들을 작업 공간에 끌어다 놓을 수 있습니다.
+        </SheetDescription>
+      </SheetHeader>
       <AccordionItem value="Layout" className="border-y-[1px] px-6 py-0">
         <AccordionTrigger>Layout</AccordionTrigger>
         <AccordionContent className="flex flex-wrap gap-6">

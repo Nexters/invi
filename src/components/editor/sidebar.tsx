@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "~/components/ui/sheet";
+import { Sheet, SheetContent } from "~/components/ui/sheet";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { PlusIcon, SettingsIcon, WrenchIcon } from "lucide-react";
@@ -90,37 +84,18 @@ export default function EditorSidebar() {
               value={editorTabValue.ELEMENTS}
               className="focus-visible:outline-none"
             >
-              <SheetHeader className="p-6">
-                <SheetTitle>도구상자</SheetTitle>
-                <SheetDescription>
-                  도구상자의 항목들을 작업 공간에 끌어다 놓을 수 있습니다.
-                </SheetDescription>
-              </SheetHeader>
               <SidebarElementsTab />
             </TabsContent>
             <TabsContent
               value={editorTabValue.SETTINGS}
               className="focus-visible:outline-none"
             >
-              <SheetHeader className="p-6">
-                <SheetTitle>초대장 설정</SheetTitle>
-                <SheetDescription>
-                  초대장 전체 스타일을 정해보세요. 색상, 글꼴를 바꿔 나만의
-                  분위기를 만들 수 있어요.
-                </SheetDescription>
-              </SheetHeader>
               <SidebarSettingsTab />
             </TabsContent>
             <TabsContent
               value={editorTabValue.ELEMENT_SETTINGS}
               className="focus-visible:outline-none"
             >
-              <SheetHeader className="p-6">
-                <SheetTitle>
-                  {editor.state.selectedElement.name} 설정
-                </SheetTitle>
-                <SheetDescription></SheetDescription>
-              </SheetHeader>
               <SidebarElementSettingsTab />
             </TabsContent>
           </div>

@@ -33,6 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
 import { Slider } from "~/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
@@ -90,6 +91,9 @@ export default function SidebarElementSettingsTab(props: Props) {
         "Flexbox",
       ]}
     >
+      <SheetHeader className="p-6">
+        <SheetTitle>{editor.state.selectedElement.name} 설정</SheetTitle>
+      </SheetHeader>
       {!Array.isArray(editor.state.selectedElement.content) &&
         editor.state.selectedElement.type === "map" && (
           <>
