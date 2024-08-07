@@ -14,7 +14,7 @@ export default function SidebarSettingsTab(props: Props) {
   const { editor, dispatch } = useEditor();
 
   return (
-    <Accordion type="multiple" className="w-full border-t" defaultValue={[]}>
+    <Accordion type="multiple" className="w-full" defaultValue={[]}>
       <SheetHeader className="p-6">
         <SheetTitle>초대장 설정</SheetTitle>
         <SheetDescription>

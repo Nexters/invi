@@ -59,11 +59,7 @@ export default function SidebarElementSettingsTab(props: Props) {
   };
 
   return (
-    <Accordion
-      type="multiple"
-      className="w-full border-t"
-      defaultValue={["Map"]}
-    >
+    <Accordion type="multiple" className="w-full" defaultValue={["Map"]}>
       <SheetHeader className="p-6">
         <SheetTitle>{editor.state.selectedElement.name} 설정</SheetTitle>
       </SheetHeader>
@@ -71,7 +67,7 @@ export default function SidebarElementSettingsTab(props: Props) {
       {!Array.isArray(editor.state.selectedElement.content) &&
         editor.state.selectedElement.type === "map" && (
           <>
-            <AccordionItem value="Map" className="py-2">
+            <AccordionItem value="Map" className="border-0 border-t py-2">
               <AccordionTrigger className="px-6 py-2">주소</AccordionTrigger>
               <AccordionContent className="flex flex-col justify-center gap-2 px-6 py-1">
                 <Input
@@ -85,7 +81,7 @@ export default function SidebarElementSettingsTab(props: Props) {
           </>
         )}
 
-      <AccordionItem value="Advance" className="border-t bg-secondary/50">
+      <AccordionItem value="Advance" className="mt-auto border-t bg-muted/50">
         <AccordionTrigger className="px-6">고급 설정</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-2 p-0">
           <AdvanceMode />
