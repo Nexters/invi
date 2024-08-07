@@ -18,7 +18,25 @@ type Props = {};
 
 export default function EditorSidebar() {
   const { editor, dispatch } = useEditor();
-  const isSelected = isValidSelectEditorElement(editor.state.selectedElement);
+
+  const tabs = [
+    {
+      value: editorTabValue.ELEMENTS,
+      icon: <PlusIcon />,
+      content: <SidebarElementsTab />,
+    },
+    {
+      value: editorTabValue.SETTINGS,
+      icon: <SettingsIcon />,
+      content: <SidebarSettingsTab />,
+    },
+    {
+      value: editorTabValue.ELEMENT_SETTINGS,
+      icon: <WrenchIcon />,
+      content: <SidebarElementSettingsTab />,
+      isHidden: () => !isValidSelectEditorElement(editor.state.selectedElement),
+    },
+  ];
 
   return (
     <Sheet open={true} modal={false}>
@@ -40,35 +58,23 @@ export default function EditorSidebar() {
           )}
         >
           <TabsList className="flex w-full flex-col items-center gap-1 p-2">
-            <TabsTrigger value={editorTabValue.ELEMENTS} asChild>
-              <Button
-                size="icon"
-                variant="ghost"
-                className="data-[state=active]:bg-secondary"
-              >
-                <PlusIcon />
-              </Button>
-            </TabsTrigger>
-            <TabsTrigger value={editorTabValue.SETTINGS} asChild>
-              <Button
-                size="icon"
-                variant="ghost"
-                className="data-[state=active]:bg-secondary"
-              >
-                <SettingsIcon />
-              </Button>
-            </TabsTrigger>
-            {isSelected && (
-              <TabsTrigger value={editorTabValue.ELEMENT_SETTINGS} asChild>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="data-[state=active]:bg-secondary"
-                >
-                  <WrenchIcon />
-                </Button>
-              </TabsTrigger>
-            )}
+            {tabs.map((tab) => {
+              if (tab.isHidden?.() === true) {
+                return null;
+              }
+
+              return (
+                <TabsTrigger key={`${tab}-trigger`} value={tab.value} asChild>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="data-[state=active]:bg-secondary"
+                  >
+                    {tab.icon}
+                  </Button>
+                </TabsTrigger>
+              );
+            })}
           </TabsList>
         </SheetContent>
         <SheetContent
@@ -79,24 +85,17 @@ export default function EditorSidebar() {
           )}
         >
           <div className="grid h-full gap-4 overflow-auto pb-36">
-            <TabsContent
-              value={editorTabValue.ELEMENTS}
-              className="focus-visible:outline-none"
-            >
-              <SidebarElementsTab />
-            </TabsContent>
-            <TabsContent
-              value={editorTabValue.SETTINGS}
-              className="focus-visible:outline-none"
-            >
-              <SidebarSettingsTab />
-            </TabsContent>
-            <TabsContent
-              value={editorTabValue.ELEMENT_SETTINGS}
-              className="focus-visible:outline-none"
-            >
-              <SidebarElementSettingsTab />
-            </TabsContent>
+            {tabs.map((tab) => {
+              return (
+                <TabsContent
+                  key={`${tab.value}-content`}
+                  value={tab.value}
+                  className="focus-visible:outline-none"
+                >
+                  {tab.content}
+                </TabsContent>
+              );
+            })}
           </div>
         </SheetContent>
       </Tabs>
