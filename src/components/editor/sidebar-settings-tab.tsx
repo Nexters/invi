@@ -78,6 +78,35 @@ export default function SidebarSettingsTab(props: Props) {
     });
   };
 
+  const handleChangeKakaoMapLocationChange = (e: any) => {
+    new window.daum.Postcode({
+      oncomplete: (addressData: any) => {
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(
+          addressData.address,
+          (result: any, status: any) => {
+            const currentPositions = new window.kakao.maps.LatLng(
+              result[0].y,
+              result[0].x,
+            );
+            dispatch({
+              type: "UPDATE_ELEMENT",
+              payload: {
+                elementDetails: {
+                  ...editor.state.selectedElement,
+                  content: {
+                    ...editor.state.selectedElement.content,
+                    location: [currentPositions.Ma, currentPositions.La],
+                  },
+                },
+              },
+            });
+          },
+        );
+      },
+    }).open();
+  };
+
   return (
     <Accordion
       type="multiple"
@@ -90,6 +119,19 @@ export default function SidebarSettingsTab(props: Props) {
         "Flexbox",
       ]}
     >
+      <AccordionItem value="Custom">
+        <AccordionTrigger className="px-6">Custom</AccordionTrigger>
+        <AccordionContent className="px-6">
+          {editor.state.selectedElement.type === "kakaoMap" && (
+            <button
+              className={`h-full w-full rounded-xl border-none bg-[#5E8AFF] text-sm font-bold text-white disabled:bg-[#D5D7D9]`}
+              onClick={handleChangeKakaoMapLocationChange}
+            >
+              지도 위치 변경하기
+            </button>
+          )}
+        </AccordionContent>
+      </AccordionItem>
       {!Array.isArray(editor.state.selectedElement.content) &&
         editor.state.selectedElement.type === "map" && (
           <>
