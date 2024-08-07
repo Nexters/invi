@@ -64,6 +64,13 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
             <ArrowLeftIcon />
           </Link>
         </Button>
+        <div>
+          <input
+            defaultValue={"제목 없음"}
+            placeholder="제목을 입력해주세요."
+            className="flex h-9 w-full rounded-md px-3 text-lg font-medium transition ease-in-out placeholder:text-muted-foreground focus-visible:bg-secondary focus-visible:outline-none"
+          />
+        </div>
         <Tabs
           value={editor.state.device}
           onValueChange={(value) => {
