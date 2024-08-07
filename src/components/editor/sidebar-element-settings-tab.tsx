@@ -42,6 +42,62 @@ type Props = {};
 export default function SidebarElementSettingsTab(props: Props) {
   const { editor, dispatch } = useEditor();
 
+  const handleAddressInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: "UPDATE_ELEMENT",
+      payload: {
+        elementDetails: {
+          ...editor.state.selectedElement,
+          type: "map",
+          content: {
+            ...editor.state.selectedElement.content,
+            address: e.target.value,
+          },
+        },
+      },
+    });
+  };
+
+  return (
+    <Accordion
+      type="multiple"
+      className="w-full border-t"
+      defaultValue={["Map"]}
+    >
+      <SheetHeader className="p-6">
+        <SheetTitle>{editor.state.selectedElement.name} 설정</SheetTitle>
+      </SheetHeader>
+
+      {!Array.isArray(editor.state.selectedElement.content) &&
+        editor.state.selectedElement.type === "map" && (
+          <>
+            <AccordionItem value="Map" className="py-2">
+              <AccordionTrigger className="px-6 py-2">주소</AccordionTrigger>
+              <AccordionContent className="flex flex-col justify-center gap-2 px-6 py-1">
+                <Input
+                  id="address"
+                  placeholder="Enter your address"
+                  onChange={handleAddressInputChange}
+                  value={editor.state.selectedElement.content.address}
+                />
+              </AccordionContent>
+            </AccordionItem>
+          </>
+        )}
+
+      <AccordionItem value="Advance" className="border-t bg-secondary/50">
+        <AccordionTrigger className="px-6">고급 설정</AccordionTrigger>
+        <AccordionContent className="flex flex-col gap-2 p-0">
+          <AdvanceMode />
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+
+function AdvanceMode() {
+  const { editor, dispatch } = useEditor();
+
   const handleOnChanges = (e: any) => {
     const styleSettings = e.target.id;
     let value = e.target.value;
@@ -63,54 +119,9 @@ export default function SidebarElementSettingsTab(props: Props) {
     });
   };
 
-  const handleAddressInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: "UPDATE_ELEMENT",
-      payload: {
-        elementDetails: {
-          ...editor.state.selectedElement,
-          type: "map",
-          content: {
-            ...editor.state.selectedElement.content,
-            address: e.target.value,
-          },
-        },
-      },
-    });
-  };
-
   return (
-    <Accordion
-      type="multiple"
-      className="w-full border-t"
-      defaultValue={[
-        "Map",
-        "Typography",
-        "Dimensions",
-        "Decorations",
-        "Flexbox",
-      ]}
-    >
-      <SheetHeader className="p-6">
-        <SheetTitle>{editor.state.selectedElement.name} 설정</SheetTitle>
-      </SheetHeader>
-      {!Array.isArray(editor.state.selectedElement.content) &&
-        editor.state.selectedElement.type === "map" && (
-          <>
-            <AccordionItem value="Map" className="py-2">
-              <AccordionTrigger className="px-6 py-2">주소</AccordionTrigger>
-              <AccordionContent className="flex flex-col justify-center gap-2 px-6 py-1">
-                <Input
-                  id="address"
-                  placeholder="Enter your address"
-                  onChange={handleAddressInputChange}
-                  value={editor.state.selectedElement.content.address}
-                />
-              </AccordionContent>
-            </AccordionItem>
-          </>
-        )}
-      <AccordionItem value="Typography">
+    <Accordion type="multiple" className="w-full">
+      <AccordionItem value="Typography" className="border-t">
         <AccordionTrigger className="px-6">Typography</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-2 px-6">
           <div className="flex flex-col gap-1">
@@ -453,7 +464,7 @@ export default function SidebarElementSettingsTab(props: Props) {
           </div>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="Flexbox">
+      <AccordionItem value="Flexbox" className="border-none">
         <AccordionTrigger className="px-6">Flexbox</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-6 px-6">
           <div className="flex items-center gap-2">
