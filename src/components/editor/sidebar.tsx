@@ -61,19 +61,6 @@ export default function EditorSidebar() {
         >
           <div className="grid h-full gap-4 overflow-auto pb-36">
             <TabsContent
-              value="Settings"
-              className="focus-visible:outline-none"
-            >
-              <SheetHeader className="p-6">
-                <SheetTitle>Styles</SheetTitle>
-                <SheetDescription>
-                  Show your creativity! You can customize every component as you
-                  like.
-                </SheetDescription>
-              </SheetHeader>
-              <SidebarSettingsTab />
-            </TabsContent>
-            <TabsContent
               value="Elements"
               className="focus-visible:outline-none"
             >
@@ -84,6 +71,19 @@ export default function EditorSidebar() {
                 </SheetDescription>
               </SheetHeader>
               <SidebarElementsTab />
+            </TabsContent>
+            <TabsContent
+              value="Settings"
+              className="focus-visible:outline-none"
+            >
+              <SheetHeader className="p-6">
+                <SheetTitle>초대장 설정</SheetTitle>
+                <SheetDescription>
+                  초대장 전체 스타일을 정해보세요. 색상, 글꼴를 바꿔 나만의
+                  분위기를 만들 수 있어요.
+                </SheetDescription>
+              </SheetHeader>
+              <SidebarSettingsTab />
             </TabsContent>
           </div>
         </SheetContent>
