@@ -63,10 +63,10 @@ export default function Wrapper({
       {children}
       {!isRoot && isSelected && !editor.state.isPreviewMode && (
         <>
-          <Badge className="absolute -left-[1px] -top-[26px]">
+          <Badge className="absolute -left-[1px] -top-[26px] z-10">
             {editor.state.selectedElement.name}
           </Badge>
-          <div className="absolute -left-[28px] -top-[1px]">
+          <div className="absolute -left-[28px] -top-[1px] z-10">
             <div className="flex flex-col gap-0.5">
               <IconButton>
                 <GripVerticalIcon className="h-4 w-4" />
@@ -79,7 +79,7 @@ export default function Wrapper({
               </IconButton>
             </div>
           </div>
-          <div className="absolute -right-[28px] -top-[1px]">
+          <div className="absolute -right-[28px] -top-[1px] z-10">
             <div className="flex flex-col gap-0.5">
               <IconButton onClick={handleDeleteElement}>
                 <Trash2Icon className="h-4 w-4" />
