@@ -10,6 +10,7 @@ import SidebarElementSettingsTab from "~/components/editor/sidebar-element-setti
 import SidebarElementsTab from "~/components/editor/sidebar-elements-tab";
 import SidebarSettingsTab from "~/components/editor/sidebar-settings-tab";
 import type { EditorTabTypeValue } from "~/components/editor/type";
+import { isValidSelectEditorElement } from "~/components/editor/util";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
@@ -17,9 +18,7 @@ type Props = {};
 
 export default function EditorSidebar() {
   const { editor, dispatch } = useEditor();
-  const isSelected =
-    editor.state.selectedElement.id &&
-    editor.state.selectedElement.id !== "__body";
+  const isSelected = isValidSelectEditorElement(editor.state.selectedElement);
 
   return (
     <Sheet open={true} modal={false}>

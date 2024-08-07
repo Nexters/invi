@@ -1,4 +1,5 @@
 import {
+  emptyElement,
   initialEditor,
   initialEditorState,
 } from "~/components/editor/constant";
@@ -8,6 +9,7 @@ import type {
   EditorElement,
   EditorTabTypeValue,
 } from "~/components/editor/type";
+import { isValidSelectEditorElement } from "~/components/editor/util";
 
 export type EditorAction =
   | {
@@ -32,15 +34,7 @@ export type EditorAction =
   | {
       type: "CHANGE_CLICKED_ELEMENT";
       payload: {
-        elementDetails?:
-          | EditorElement
-          | {
-              id: "";
-              content: [];
-              name: "";
-              styles: {};
-              type: null;
-            };
+        elementDetails?: EditorElement;
       };
     }
   | {
@@ -226,22 +220,16 @@ export const editorReducer = (
       return deletedState;
 
     case "CHANGE_CLICKED_ELEMENT":
-      const validSelectedElement =
-        action.payload.elementDetails?.id &&
-        action.payload.elementDetails.id !== "__body";
+      const isSelected = isValidSelectEditorElement(
+        action.payload.elementDetails,
+      );
 
       const clickedState: Editor = {
         ...editor,
         state: {
           ...editor.state,
-          selectedElement: action.payload.elementDetails || {
-            id: "",
-            content: [],
-            name: "",
-            styles: {},
-            type: null,
-          },
-          currentTabValue: validSelectedElement
+          selectedElement: action.payload.elementDetails || emptyElement,
+          currentTabValue: isSelected
             ? "Element Settings"
             : editor.state.currentTabValue === "Element Settings"
               ? "Elements"
