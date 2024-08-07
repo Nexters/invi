@@ -10,31 +10,35 @@ import {
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { PlusIcon, SettingsIcon, WrenchIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { editorTabValue } from "~/components/editor/constant";
 import { useEditor } from "~/components/editor/provider";
 import SidebarElementSettingsTab from "~/components/editor/sidebar-element-settings-tab";
 import SidebarElementsTab from "~/components/editor/sidebar-elements-tab";
 import SidebarSettingsTab from "~/components/editor/sidebar-settings-tab";
+import type { EditorTabTypeValue } from "~/components/editor/type";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
 type Props = {};
 
 export default function EditorSidebar() {
-  const { editor } = useEditor();
+  const { editor, dispatch } = useEditor();
   const isSelected =
     editor.state.selectedElement.id &&
     editor.state.selectedElement.id !== "__body";
 
-  const [tabValue, setTabValue] = useState("Elements");
-
-  useEffect(() => {
-    setTabValue(isSelected ? "Element Settings" : "Elements");
-  }, [editor.state.selectedElement.id, isSelected]);
-
   return (
     <Sheet open={true} modal={false}>
-      <Tabs className="w-full" value={tabValue} onValueChange={setTabValue}>
+      <Tabs
+        className="w-full"
+        value={editor.state.currentTabValue}
+        onValueChange={(value) =>
+          dispatch({
+            type: "CHANGE_CURRENT_TAB_VALUE",
+            payload: { value: value as EditorTabTypeValue },
+          })
+        }
+      >
         <SheetContent
           side="right"
           className={cn(
@@ -43,7 +47,7 @@ export default function EditorSidebar() {
           )}
         >
           <TabsList className="flex w-full flex-col items-center gap-1 p-2">
-            <TabsTrigger value="Elements" asChild>
+            <TabsTrigger value={editorTabValue.ELEMENTS} asChild>
               <Button
                 size="icon"
                 variant="ghost"
@@ -52,7 +56,7 @@ export default function EditorSidebar() {
                 <PlusIcon />
               </Button>
             </TabsTrigger>
-            <TabsTrigger value="Settings" asChild>
+            <TabsTrigger value={editorTabValue.SETTINGS} asChild>
               <Button
                 size="icon"
                 variant="ghost"
@@ -62,7 +66,7 @@ export default function EditorSidebar() {
               </Button>
             </TabsTrigger>
             {isSelected && (
-              <TabsTrigger value="Element Settings" asChild>
+              <TabsTrigger value={editorTabValue.ELEMENT_SETTINGS} asChild>
                 <Button
                   size="icon"
                   variant="ghost"
@@ -83,7 +87,7 @@ export default function EditorSidebar() {
         >
           <div className="grid h-full gap-4 overflow-auto pb-36">
             <TabsContent
-              value="Elements"
+              value={editorTabValue.ELEMENTS}
               className="focus-visible:outline-none"
             >
               <SheetHeader className="p-6">
@@ -95,7 +99,7 @@ export default function EditorSidebar() {
               <SidebarElementsTab />
             </TabsContent>
             <TabsContent
-              value="Settings"
+              value={editorTabValue.SETTINGS}
               className="focus-visible:outline-none"
             >
               <SheetHeader className="p-6">
@@ -108,7 +112,7 @@ export default function EditorSidebar() {
               <SidebarSettingsTab />
             </TabsContent>
             <TabsContent
-              value="Element Settings"
+              value={editorTabValue.ELEMENT_SETTINGS}
               className="focus-visible:outline-none"
             >
               <SheetHeader className="p-6">

@@ -8,6 +8,12 @@ export const defaultStyles: React.CSSProperties = {
   opacity: "100%",
 };
 
+export const editorTabValue = {
+  ELEMENTS: "Elements",
+  SETTINGS: "Settings",
+  ELEMENT_SETTINGS: "Element Settings",
+} as const;
+
 export const initialEditorState: EditorState = {
   elements: [
     {
@@ -25,6 +31,7 @@ export const initialEditorState: EditorState = {
     styles: {},
     type: null,
   },
+  currentTabValue: editorTabValue.ELEMENTS,
   device: "Mobile",
   isPreviewMode: false,
   funnelPageId: "",

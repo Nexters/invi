@@ -6,6 +6,7 @@ import type {
   DeviceType,
   Editor,
   EditorElement,
+  EditorTabTypeValue,
 } from "~/components/editor/type";
 
 export type EditorAction =
@@ -40,6 +41,12 @@ export type EditorAction =
               styles: {};
               type: null;
             };
+      };
+    }
+  | {
+      type: "CHANGE_CURRENT_TAB_VALUE";
+      payload: {
+        value: EditorTabTypeValue;
       };
     }
   | {
@@ -219,7 +226,11 @@ export const editorReducer = (
       return deletedState;
 
     case "CHANGE_CLICKED_ELEMENT":
-      const clickedState = {
+      const validSelectedElement =
+        action.payload.elementDetails?.id &&
+        action.payload.elementDetails.id !== "__body";
+
+      const clickedState: Editor = {
         ...editor,
         state: {
           ...editor.state,
@@ -230,6 +241,11 @@ export const editorReducer = (
             styles: {},
             type: null,
           },
+          currentTabValue: validSelectedElement
+            ? "Element Settings"
+            : editor.state.currentTabValue === "Element Settings"
+              ? "Elements"
+              : editor.state.currentTabValue,
         },
         history: {
           ...editor.history,
@@ -241,6 +257,16 @@ export const editorReducer = (
         },
       };
       return clickedState;
+
+    case "CHANGE_CURRENT_TAB_VALUE":
+      return {
+        ...editor,
+        state: {
+          ...editor.state,
+          currentTabValue: action.payload.value,
+        },
+      };
+
     case "CHANGE_DEVICE":
       const changedDeviceState: Editor = {
         ...editor,
