@@ -27,7 +27,7 @@ export default function EditorSidebar() {
         <SheetContent
           side="right"
           className={cn(
-            "z-[80] mt-[85px] w-[50px] overflow-hidden p-0 shadow-none transition-all",
+            "z-40 mt-[85px] w-[50px] overflow-hidden p-0 shadow-none transition-all",
             editor.state.isPreviewMode && "hidden",
           )}
         >
@@ -55,7 +55,7 @@ export default function EditorSidebar() {
         <SheetContent
           side="right"
           className={cn(
-            "z-[40] mr-[62px] mt-[85px] h-full w-[320px] overflow-hidden border-r p-0 shadow-none transition-all",
+            "z-30 mr-[62px] mt-[85px] h-full w-[320px] overflow-hidden border-r p-0 shadow-none transition-all",
             editor.state.isPreviewMode && "hidden",
           )}
         >

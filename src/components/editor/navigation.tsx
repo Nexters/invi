@@ -137,9 +137,9 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
                 </Button>
               </DropdownMenuTrigger>
             </TooltipTrigger>
-            <TooltipContent className="z-[100]">더보기</TooltipContent>
+            <TooltipContent>더보기</TooltipContent>
           </Tooltip>
-          <DropdownMenuContent align="end" className="z-[100]">
+          <DropdownMenuContent align="end">
             <DropdownMenuItem>복제하기</DropdownMenuItem>
             <DropdownMenuItem className="text-destructive">
               삭제하기
