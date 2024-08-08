@@ -29,6 +29,20 @@
       "when": 1721539066271,
       "tag": "0003_peaceful_white_tiger",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1723089015733,
+      "tag": "0004_lying_swordsman",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1723090923481,
+      "tag": "0005_fine_argent",
+      "breakpoints": true
     }
   ]
 }
