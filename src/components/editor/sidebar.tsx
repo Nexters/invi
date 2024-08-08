@@ -64,7 +64,11 @@ export default function EditorSidebar() {
               }
 
               return (
-                <TabsTrigger key={`${tab}-trigger`} value={tab.value} asChild>
+                <TabsTrigger
+                  key={`${tab.value}-trigger`}
+                  value={tab.value}
+                  asChild
+                >
                   <Button
                     size="icon"
                     variant="ghost"
