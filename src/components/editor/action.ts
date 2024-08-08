@@ -1,4 +1,5 @@
 import {
+  emptyElement,
   initialEditor,
   initialEditorState,
 } from "~/components/editor/constant";
@@ -6,7 +7,9 @@ import type {
   DeviceType,
   Editor,
   EditorElement,
+  EditorTabTypeValue,
 } from "~/components/editor/type";
+import { isValidSelectEditorElement } from "~/components/editor/util";
 
 export type EditorAction =
   | {
@@ -31,15 +34,13 @@ export type EditorAction =
   | {
       type: "CHANGE_CLICKED_ELEMENT";
       payload: {
-        elementDetails?:
-          | EditorElement
-          | {
-              id: "";
-              content: [];
-              name: "";
-              styles: {};
-              type: null;
-            };
+        elementDetails?: EditorElement;
+      };
+    }
+  | {
+      type: "CHANGE_CURRENT_TAB_VALUE";
+      payload: {
+        value: EditorTabTypeValue;
       };
     }
   | {
@@ -219,17 +220,20 @@ export const editorReducer = (
       return deletedState;
 
     case "CHANGE_CLICKED_ELEMENT":
-      const clickedState = {
+      const isSelected = isValidSelectEditorElement(
+        action.payload.elementDetails,
+      );
+
+      const clickedState: Editor = {
         ...editor,
         state: {
           ...editor.state,
-          selectedElement: action.payload.elementDetails || {
-            id: "",
-            content: [],
-            name: "",
-            styles: {},
-            type: null,
-          },
+          selectedElement: action.payload.elementDetails || emptyElement,
+          currentTabValue: isSelected
+            ? "Element Settings"
+            : editor.state.currentTabValue === "Element Settings"
+              ? "Elements"
+              : editor.state.currentTabValue,
         },
         history: {
           ...editor.history,
@@ -241,6 +245,16 @@ export const editorReducer = (
         },
       };
       return clickedState;
+
+    case "CHANGE_CURRENT_TAB_VALUE":
+      return {
+        ...editor,
+        state: {
+          ...editor.state,
+          currentTabValue: action.payload.value,
+        },
+      };
+
     case "CHANGE_DEVICE":
       const changedDeviceState: Editor = {
         ...editor,

@@ -8,6 +8,20 @@ export const defaultStyles: React.CSSProperties = {
   opacity: "100%",
 };
 
+export const editorTabValue = {
+  ELEMENTS: "Elements",
+  SETTINGS: "Settings",
+  ELEMENT_SETTINGS: "Element Settings",
+} as const;
+
+export const emptyElement = {
+  id: "",
+  content: [],
+  name: "",
+  styles: {},
+  type: null,
+};
+
 export const initialEditorState: EditorState = {
   elements: [
     {
@@ -18,13 +32,8 @@ export const initialEditorState: EditorState = {
       type: "__body",
     },
   ],
-  selectedElement: {
-    id: "",
-    content: [],
-    name: "",
-    styles: {},
-    type: null,
-  },
+  selectedElement: emptyElement,
+  currentTabValue: editorTabValue.ELEMENTS,
   device: "Mobile",
   isPreviewMode: false,
   funnelPageId: "",
