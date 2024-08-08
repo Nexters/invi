@@ -24,6 +24,11 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { cn } from "~/lib/utils";
 
 type Props = {
@@ -124,11 +129,16 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
           <Share2Icon className="h-4 w-4" /> 공유
         </Button>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <EllipsisVerticalIcon className="h-5 w-5" />
-            </Button>
-          </DropdownMenuTrigger>
+          <Tooltip>
+            <TooltipTrigger>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <EllipsisVerticalIcon className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+            </TooltipTrigger>
+            <TooltipContent className="z-[100]">더보기</TooltipContent>
+          </Tooltip>
           <DropdownMenuContent align="end" className="z-[100]">
             <DropdownMenuItem>복제하기</DropdownMenuItem>
             <DropdownMenuItem className="text-destructive">
