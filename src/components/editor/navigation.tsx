@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { debounce, delay } from "es-toolkit";
+import { debounce, delay, random } from "es-toolkit";
 import {
   ArrowLeftIcon,
   CheckIcon,
@@ -141,7 +141,10 @@ function TitleInput() {
   const mutation = useMutation({
     mutationFn: async (value: string) => {
       await delay(1000);
-      // throw new Error("Failed to update title");
+
+      if (random(0, 1) > 0.5) {
+        throw new Error("Failed to update title");
+      }
     },
     onError: () => {
       toast.error("제목 수정에 오류가 발생되었습니다.", {
@@ -163,7 +166,7 @@ function TitleInput() {
     <div
       className={cn(
         "relative rounded-md px-2 transition ease-in-out focus-within:bg-secondary",
-        delayMutation.isPending && mutation.isError && "focus-within:bg-red-50",
+        mutation.isError && "focus-within:bg-red-50",
       )}
     >
       <div className="flex items-center border-b transition focus-within:border-transparent">
@@ -173,19 +176,18 @@ function TitleInput() {
           placeholder="제목을 입력해주세요."
           className="h-9 w-full bg-transparent pl-1 pr-5 pt-0.5 text-lg font-medium placeholder:text-muted-foreground focus-visible:outline-none"
         />
-        <LoaderIcon
-          className={cn(
-            "pointer-events-none absolute right-2 h-3 w-3 animate-spin opacity-0 transition",
-            mutation.isPending && "opacity-100",
-          )}
-        />
         <div
           className={cn(
             "pointer-events-none absolute right-2 opacity-0 transition",
-            !mutation.isPending && delayMutation.isPending && "opacity-100",
+            (mutation.isError ||
+              mutation.isPending ||
+              delayMutation.isPending) &&
+              "opacity-100",
           )}
         >
-          {mutation.isSuccess ? (
+          {mutation.isPending ? (
+            <LoaderIcon className="h-3 w-3 animate-spin" />
+          ) : mutation.isSuccess ? (
             <CheckIcon className="h-3.5 w-3.5" />
           ) : (
             <XIcon className="h-3.5 w-3.5 text-red-500" />
