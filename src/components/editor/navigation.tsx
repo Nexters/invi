@@ -17,6 +17,7 @@ import {
   XIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { useRef } from "react";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import type { DeviceType } from "~/components/editor/type";
@@ -128,6 +129,8 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
 }
 
 function TitleInput() {
+  const abortControllerRef = useRef<AbortController | null>(null);
+
   const handleTitleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim();
 
@@ -135,24 +138,42 @@ function TitleInput() {
       return;
     }
 
-    mutation.mutate(event.target.value.trim());
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    abortControllerRef.current = new AbortController();
+
+    mutation.mutate({
+      value: event.target.value.trim(),
+      signal: abortControllerRef.current.signal,
+    });
   };
 
   const mutation = useMutation({
-    mutationFn: async (value: string) => {
+    mutationFn: async ({
+      value,
+      signal,
+    }: {
+      value: string;
+      signal: AbortSignal;
+    }) => {
       await delay(1000);
+
+      if (signal.aborted) {
+        return;
+      }
 
       if (random(0, 1) > 0.5) {
         throw new Error("Failed to update title");
       }
+
+      delayMutation.mutate();
     },
     onError: () => {
       toast.error("제목 수정에 오류가 발생되었습니다.", {
         position: "bottom-left",
       });
-    },
-    onSettled: () => {
-      delayMutation.mutate();
     },
   });
 
