@@ -144,8 +144,8 @@ function TitleInput() {
       // throw new Error("Failed to update title");
     },
     onError: () => {
-      toast.error("제목 수정에 실패했습니다.", {
-        description: "잠시 후 다시 시도해주세요.",
+      toast.error("제목 수정에 오류가 발생되었습니다.", {
+        position: "bottom-left",
       });
     },
     onSettled: () => {
@@ -155,13 +155,18 @@ function TitleInput() {
 
   const delayMutation = useMutation({
     mutationFn: () => {
-      return delay(700);
+      return delay(1000);
     },
   });
 
   return (
-    <div className="relative rounded-md px-2 transition ease-in-out focus-within:bg-secondary">
-      <div className="flex items-center border-b">
+    <div
+      className={cn(
+        "relative rounded-md px-2 transition ease-in-out focus-within:bg-secondary",
+        delayMutation.isPending && mutation.isError && "focus-within:bg-red-50",
+      )}
+    >
+      <div className="flex items-center border-b transition focus-within:border-transparent">
         <input
           defaultValue={"제목 없음"}
           onChange={debounce(handleTitleInput, 300)}
@@ -183,7 +188,7 @@ function TitleInput() {
           {mutation.isSuccess ? (
             <CheckIcon className="h-3.5 w-3.5" />
           ) : (
-            <XIcon className="h-3.5 w-3.5" />
+            <XIcon className="h-3.5 w-3.5 text-red-500" />
           )}
         </div>
       </div>
