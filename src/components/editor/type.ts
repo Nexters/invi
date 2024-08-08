@@ -1,3 +1,5 @@
+import { editorTabValue } from "~/components/editor/constant";
+
 export type DeviceType = "Desktop" | "Mobile" | "Tablet";
 
 export type EditorElementType =
@@ -9,6 +11,9 @@ export type EditorElementType =
   | "image"
   | "map"
   | null;
+
+export type EditorTabTypeValue =
+  (typeof editorTabValue)[keyof typeof editorTabValue];
 
 export type EditorElement = {
   id: string;
@@ -23,6 +28,7 @@ export type EditorElement = {
 export type EditorState = {
   elements: EditorElement[];
   selectedElement: EditorElement;
+  currentTabValue: EditorTabTypeValue;
   device: DeviceType;
   isPreviewMode: boolean;
   funnelPageId: string;

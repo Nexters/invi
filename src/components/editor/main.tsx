@@ -22,29 +22,34 @@ export default function EditorMain() {
 
   return (
     <div
-      className={cn(
-        "ml-[10px] mr-[392px] animate-zoom-in rounded-md bg-background transition-all",
-        editor.state.isPreviewMode && "m-0 overflow-hidden p-0",
-        editor.state.device === "Desktop" && "h-full w-full",
-        editor.state.device === "Tablet" && "h-full w-[850px]",
-        editor.state.device === "Mobile" && "h-[800px] w-[420px]",
-      )}
+      className="flex flex-1 items-center justify-center"
       onClick={handleClick}
     >
-      {editor.state.isPreviewMode && (
-        <Button
-          variant={"ghost"}
-          size={"icon"}
-          className="fixed left-0 top-0 z-[100] h-6 w-6 p-[2px]"
-          onClick={handleUnpreview}
-        >
-          <EyeOff />
-        </Button>
-      )}
-      {Array.isArray(editor.state.elements) &&
-        editor.state.elements.map((childElement) => (
-          <Recursive key={childElement.id} element={childElement} />
-        ))}
+      <div
+        id="editor-main"
+        className={cn(
+          "ml-[10px] mr-[392px] animate-zoom-in rounded-md bg-background transition-all",
+          editor.state.isPreviewMode && "m-0 overflow-hidden p-0",
+          editor.state.device === "Desktop" && "h-full w-full",
+          editor.state.device === "Tablet" && "h-full w-[850px]",
+          editor.state.device === "Mobile" && "h-[800px] w-[420px]",
+        )}
+      >
+        {editor.state.isPreviewMode && (
+          <Button
+            variant={"ghost"}
+            size={"icon"}
+            className="fixed left-0 top-0 z-[100] h-6 w-6 p-[2px]"
+            onClick={handleUnpreview}
+          >
+            <EyeOff />
+          </Button>
+        )}
+        {Array.isArray(editor.state.elements) &&
+          editor.state.elements.map((childElement) => (
+            <Recursive key={childElement.id} element={childElement} />
+          ))}
+      </div>
     </div>
   );
 }
