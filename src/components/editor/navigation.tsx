@@ -3,6 +3,7 @@
 import {
   ArrowLeftIcon,
   DownloadIcon,
+  EllipsisVerticalIcon,
   EyeIcon,
   Laptop,
   Redo2,
@@ -16,6 +17,12 @@ import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import type { DeviceType } from "~/components/editor/type";
 import { Button } from "~/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { cn } from "~/lib/utils";
 
@@ -116,6 +123,19 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
         <Button onClick={handleOnSave} className="gap-1">
           <Share2Icon className="h-4 w-4" /> 공유
         </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <EllipsisVerticalIcon className="h-5 w-5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="z-[100]">
+            <DropdownMenuItem>복제하기</DropdownMenuItem>
+            <DropdownMenuItem className="text-destructive">
+              삭제하기
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </aside>
     </nav>
   );
