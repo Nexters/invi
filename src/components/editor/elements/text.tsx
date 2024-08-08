@@ -1,6 +1,6 @@
 "use client";
 
-import Wrapper from "~/components/editor/elements/wrapper";
+import ElementWrapper from "~/components/editor/elements/element-wrapper";
 import { useEditor } from "~/components/editor/provider";
 import type { EditorElement } from "~/components/editor/type";
 
@@ -12,7 +12,7 @@ export default function Text({ element }: Props) {
   const { dispatch, editor } = useEditor();
 
   return (
-    <Wrapper element={element}>
+    <ElementWrapper element={element}>
       <span
         className="outline-none"
         contentEditable={!editor.state.isPreviewMode}
@@ -33,6 +33,6 @@ export default function Text({ element }: Props) {
       >
         {!Array.isArray(element.content) && element.content.innerText}
       </span>
-    </Wrapper>
+    </ElementWrapper>
   );
 }

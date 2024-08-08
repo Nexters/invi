@@ -15,7 +15,7 @@ type Props = React.ComponentProps<"div"> & {
   element: EditorElement;
 };
 
-export default function Wrapper({
+export default function ElementWrapper({
   element,
   children,
   className,

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { toast } from "sonner";
-import Wrapper from "~/components/editor/elements/wrapper";
+import ElementWrapper from "~/components/editor/elements/element-wrapper";
 import type { EditorElement } from "~/components/editor/type";
 
 type MapType = "naver" | "kakao";
@@ -46,7 +46,7 @@ const MapShareComponents = ({ element }: Props) => {
   };
 
   return (
-    <Wrapper element={element}>
+    <ElementWrapper element={element}>
       <article className="flex gap-x-3">
         <button onClick={() => openMap("naver", address)}>
           <Image src="/naver-map.png" alt="naver-map" width={42} height={42} />
@@ -58,7 +58,7 @@ const MapShareComponents = ({ element }: Props) => {
           <Image src="/copy.png" alt="copy" width={42} height={42} />
         </button>
       </article>
-    </Wrapper>
+    </ElementWrapper>
   );
 };
 

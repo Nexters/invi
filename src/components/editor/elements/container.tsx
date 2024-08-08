@@ -3,7 +3,7 @@
 import { nanoid } from "nanoid";
 import React from "react";
 import { defaultStyles } from "~/components/editor/constant";
-import Wrapper from "~/components/editor/elements/wrapper";
+import ElementWrapper from "~/components/editor/elements/element-wrapper";
 import { useEditor } from "~/components/editor/provider";
 import type {
   EditorElement,
@@ -123,7 +123,7 @@ export default function Container({ element }: Props) {
   };
 
   return (
-    <Wrapper
+    <ElementWrapper
       element={element}
       className={cn(
         "group relative h-fit w-full max-w-full p-4 transition-all",
@@ -137,6 +137,6 @@ export default function Container({ element }: Props) {
         content.map((childElement) => (
           <Recursive key={childElement.id} element={childElement} />
         ))}
-    </Wrapper>
+    </ElementWrapper>
   );
 }
