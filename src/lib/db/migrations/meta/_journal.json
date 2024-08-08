@@ -43,6 +43,13 @@
       "when": 1723090923481,
       "tag": "0005_fine_argent",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1723091693284,
+      "tag": "0006_condemned_randall",
+      "breakpoints": true
     }
   ]
 }

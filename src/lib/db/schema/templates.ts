@@ -2,7 +2,7 @@ import { json, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const templates = pgTable("template", {
   id: text("id").primaryKey(),
-  name: text("name").notNull(),
+  title: text("title").notNull(),
   description: text("description"),
   customFields: json("custum_fields"),
   createdAt: timestamp("created_at", {
