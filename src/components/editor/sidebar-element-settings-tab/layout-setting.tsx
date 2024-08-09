@@ -130,25 +130,13 @@ function FlexToggleGroup() {
       className="gap-[1px] rounded-sm ring-border ring-offset-1 hover:ring-1"
       defaultValue="flex-col"
     >
-      <ToggleGroupItem
-        className="aspect-square h-7 w-7 rounded-sm p-0"
-        value="flex-col"
-        aria-label="Vertical layout"
-      >
+      <ToggleGroupItem size="xs" value="flex-col" aria-label="Vertical layout">
         <ArrowDownIcon size={13} />
       </ToggleGroupItem>
-      <ToggleGroupItem
-        className="aspect-square h-7 w-7 rounded-sm p-0"
-        value="flex"
-        aria-label="Horizontal layout"
-      >
+      <ToggleGroupItem size="xs" value="flex" aria-label="Horizontal layout">
         <ArrowRightIcon size={13} />
       </ToggleGroupItem>
-      <ToggleGroupItem
-        className="aspect-square h-7 w-7 rounded-sm p-0"
-        value="flex-wrap"
-        aria-label="Wrap"
-      >
+      <ToggleGroupItem size="xs" value="flex-wrap" aria-label="Wrap">
         <CornerDownLeftIcon size={13} />
       </ToggleGroupItem>
     </ToggleGroup>
@@ -211,7 +199,7 @@ export default function LayoutSetting() {
         )}
         <div className="col-span-1 row-span-1">
           <Toggle
-            className="aspect-square h-7 w-7 rounded-sm p-0"
+            size="xs"
             pressed={isPaddingIndividual}
             onPressedChange={setIsPaddingIndividual}
           >
