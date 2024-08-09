@@ -29,7 +29,7 @@ export type EditorElement = {
   };
 }[EditorElementType];
 
-export type InferElementType<K extends EditorElementType> = Extract<
+export type InferEditorElement<K extends EditorElementType> = Extract<
   EditorElement,
   { type: K }
 >;

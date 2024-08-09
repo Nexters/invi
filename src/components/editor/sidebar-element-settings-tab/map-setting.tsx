@@ -1,10 +1,10 @@
 "use client";
 
 import { useEditor } from "~/components/editor/provider";
-import type { InferElementType } from "~/components/editor/type";
+import type { InferEditorElement } from "~/components/editor/type";
 import { Input } from "~/components/ui/input";
 
-type Props = { element: InferElementType<"map"> };
+type Props = { element: InferEditorElement<"map"> };
 
 export default function MapSetting({ element }: Props) {
   const { dispatch } = useEditor();
