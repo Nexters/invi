@@ -1,8 +1,4 @@
-import {
-  emptyElement,
-  initialEditor,
-  initialEditorState,
-} from "~/components/editor/constant";
+import { emptyElement, initialEditor } from "~/components/editor/constant";
 import type {
   DeviceType,
   Editor,
@@ -49,17 +45,9 @@ export type EditorAction =
         device: DeviceType;
       };
     }
-  | {
-      type: "TOGGLE_PREVIEW_MODE";
-    }
+  | { type: "TOGGLE_PREVIEW_MODE" }
   | { type: "REDO" }
-  | { type: "UNDO" }
-  | {
-      type: "LOAD_DATA";
-      payload: {
-        elements: EditorElement[];
-      };
-    };
+  | { type: "UNDO" };
 
 const addAnElement = (
   editorArray: EditorElement[],
@@ -300,15 +288,6 @@ export const editorReducer = (
         return undoState;
       }
       return editor;
-
-    case "LOAD_DATA":
-      return {
-        ...initialEditor,
-        state: {
-          ...initialEditor.state,
-          elements: action.payload.elements || initialEditorState.elements,
-        },
-      };
 
     default:
       return editor;
