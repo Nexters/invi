@@ -6,6 +6,9 @@ export async function GET(): Promise<Response> {
   if (result.error) {
     return new Response(null, {
       status: 401,
+      headers: {
+        Location: "/",
+      },
     });
   }
 
