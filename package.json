@@ -51,6 +51,7 @@
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.31.3",
     "es-hangul": "^1.4.2",
+    "es-toolkit": "^1.13.1",
     "ky": "^1.4.0",
     "lucia": "^3.2.0",
     "lucide-react": "^0.414.0",
