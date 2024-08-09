@@ -31,7 +31,6 @@ export type EditorState = {
   currentTabValue: EditorTabTypeValue;
   device: DeviceType;
   isPreviewMode: boolean;
-  funnelPageId: string;
 };
 
 export type EditorHistory = {

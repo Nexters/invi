@@ -36,7 +36,6 @@ export const initialEditorState: EditorState = {
   currentTabValue: editorTabValue.ELEMENTS,
   device: "Mobile",
   isPreviewMode: false,
-  funnelPageId: "",
 };
 
 export const initialEditorHistory: EditorHistory = {

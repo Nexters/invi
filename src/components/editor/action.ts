@@ -59,12 +59,6 @@ export type EditorAction =
       payload: {
         elements: EditorElement[];
       };
-    }
-  | {
-      type: "SET_FUNNELPAGE_ID";
-      payload: {
-        funnelPageId: string;
-      };
     };
 
 const addAnElement = (
@@ -315,29 +309,6 @@ export const editorReducer = (
           elements: action.payload.elements || initialEditorState.elements,
         },
       };
-
-    case "SET_FUNNELPAGE_ID":
-      const { funnelPageId } = action.payload;
-      const updatedEditorStateWithFunnelPageId = {
-        ...editor.state,
-        funnelPageId,
-      };
-
-      const updatedHistoryWithFunnelPageId = [
-        ...editor.history.history.slice(0, editor.history.currentIndex + 1),
-        { ...updatedEditorStateWithFunnelPageId }, // Save a copy of the updated state
-      ];
-
-      const funnelPageIdState = {
-        ...editor,
-        state: updatedEditorStateWithFunnelPageId,
-        history: {
-          ...editor.history,
-          history: updatedHistoryWithFunnelPageId,
-          currentIndex: updatedHistoryWithFunnelPageId.length - 1,
-        },
-      };
-      return funnelPageIdState;
 
     default:
       return editor;
