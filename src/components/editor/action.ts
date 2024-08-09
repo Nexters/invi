@@ -19,6 +19,7 @@ type EditorActionMap = {
   UPDATE_ELEMENT: {
     elementDetails: EditorElement;
   };
+  UPDATE_ELEMENT_STYLE: React.CSSProperties;
   DELETE_ELEMENT: {
     elementDetails: EditorElement;
   };
@@ -136,6 +137,18 @@ const actionHandlers: {
       ...editor.state,
       elements: newElements,
       selectedElement: newSelectedElement,
+    });
+  },
+
+  UPDATE_ELEMENT_STYLE: (editor, payload) => {
+    return actionHandlers.UPDATE_ELEMENT(editor, {
+      elementDetails: {
+        ...editor.state.selectedElement,
+        styles: {
+          ...editor.state.selectedElement.styles,
+          ...payload,
+        },
+      },
     });
   },
 
