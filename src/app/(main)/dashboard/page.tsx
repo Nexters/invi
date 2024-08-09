@@ -41,7 +41,8 @@ export default async function Page() {
               <div className="group relative overflow-hidden rounded-xl border border-border">
                 <div className="h-full w-full">
                   <Link
-                    href={`/`}
+                    // TODO: 초대장 생성 > 초대장의 편집 페이지로 이동
+                    href={`/pg/editor`}
                     className="flex h-full flex-col bg-muted p-0.5"
                   >
                     <div className="flex-1 overflow-hidden rounded-xl border border-border bg-background p-3">
