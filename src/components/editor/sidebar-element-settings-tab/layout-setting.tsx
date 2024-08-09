@@ -145,8 +145,8 @@ export default function LayoutSetting() {
   const [toggle, setToggle] = useState(false);
 
   return (
-    <div className="px-6 py-4">
-      <p className="mb-3 text-sm font-medium">레이아웃 설정</p>
+    <div className="border-t px-6 py-4">
+      <h4 className="mb-3 text-sm font-medium">레이아웃 설정</h4>
       <div className="grid w-full grid-cols-9 gap-1">
         <div className="col-span-4 row-span-1 flex items-start">
           <ToggleGroup

@@ -10,21 +10,23 @@ type Props = {};
 
 export default function SidebarElementSettingsTab(props: Props) {
   const { editor } = useEditor();
+  const { selectedElement } = editor.state;
 
   return (
     <div className="w-full">
-      <SheetHeader className="border-b p-6">
-        <SheetTitle>{editor.state.selectedElement.name} 설정</SheetTitle>
+      <SheetHeader className="p-6">
+        <SheetTitle>{selectedElement.name} 설정</SheetTitle>
       </SheetHeader>
 
-      {!Array.isArray(editor.state.selectedElement.content) &&
-        editor.state.selectedElement.type === "map" && (
+      {!Array.isArray(selectedElement.content) &&
+        selectedElement.type === "map" && (
           <>
-            <MapSetting element={editor.state.selectedElement} />
+            <MapSetting element={selectedElement} />
+            <LayoutSetting />
           </>
         )}
 
-      {editor.state.selectedElement.type === "container" && (
+      {selectedElement.type === "container" && (
         <>
           <LayoutSetting />
         </>
