@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
+import TitleInput from "~/components/editor/title-input";
 import type { DeviceType } from "~/components/editor/type";
 import { useAlertDialogStore } from "~/components/global-alert";
 import { Button } from "~/components/ui/button";
@@ -84,6 +85,7 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
             <ArrowLeftIcon />
           </Link>
         </Button>
+        <TitleInput />
         <Tabs
           value={editor.state.device}
           onValueChange={(value) => {
