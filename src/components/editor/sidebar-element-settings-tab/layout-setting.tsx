@@ -11,6 +11,7 @@ import {
   type LucideProps,
 } from "lucide-react";
 import { useState } from "react";
+import { IconInput } from "~/components/editor/ui/input";
 import {
   GapIcon,
   PaddingBottomIcon,
@@ -154,25 +155,6 @@ function FlexToggleGroup() {
   );
 }
 
-function LayoutInput({
-  id,
-  icon,
-  ...props
-}: { icon: React.ReactNode } & React.ComponentProps<"input">) {
-  return (
-    <div className="-ml-0.5 mr-2 flex h-7 items-center gap-2 rounded-sm px-1.5 py-0.5 ring-border focus-within:bg-secondary hover:ring-1">
-      <label htmlFor={id}>{icon}</label>
-      <input
-        type="number"
-        id={id}
-        defaultValue={10}
-        {...props}
-        className="f-full w-full flex-1 bg-transparent text-sm focus-visible:outline-none"
-      />
-    </div>
-  );
-}
-
 export default function LayoutSetting() {
   const [isPaddingIndividual, setIsPaddingIndividual] = useState(false);
 
@@ -187,24 +169,49 @@ export default function LayoutSetting() {
           <AlignInput />
         </div>
         <div className="col-span-4 row-span-1">
-          <LayoutInput id="gap_input" icon={<GapIcon />} />
+          <IconInput
+            id="gap_input"
+            type="number"
+            defaultValue={10}
+            icon={<GapIcon />}
+          />
         </div>
         {!isPaddingIndividual ? (
           <>
             <div className="col-span-4 row-span-1">
-              <LayoutInput id="px-input" icon={<PaddingLeftRightIcon />} />
+              <IconInput
+                id="px-input"
+                type="number"
+                defaultValue={10}
+                icon={<PaddingLeftRightIcon />}
+              />
             </div>
             <div className="col-span-4 row-span-1">
-              <LayoutInput id="py_input" icon={<PaddingTopBottomIcon />} />
+              <IconInput
+                id="py_input"
+                type="number"
+                defaultValue={10}
+                icon={<PaddingTopBottomIcon />}
+              />
             </div>
           </>
         ) : (
           <>
             <div className="col-span-4 row-span-1">
-              <LayoutInput id="pl_input" icon={<PaddingLeftIcon />} />
+              <IconInput
+                id="pl_input"
+                type="number"
+                defaultValue={10}
+                icon={<PaddingLeftIcon />}
+              />
             </div>
             <div className="col-span-4 row-span-1">
-              <LayoutInput id="pt_input" icon={<PaddingTopIcon />} />
+              <IconInput
+                id="pt_input"
+                type="number"
+                defaultValue={10}
+                icon={<PaddingTopIcon />}
+              />
             </div>
           </>
         )}
@@ -220,10 +227,20 @@ export default function LayoutSetting() {
         {isPaddingIndividual && (
           <>
             <div className="col-span-4 row-span-1">
-              <LayoutInput id="pr_input" icon={<PaddingRightIcon />} />
+              <IconInput
+                id="pr_input"
+                type="number"
+                defaultValue={10}
+                icon={<PaddingRightIcon />}
+              />
             </div>
             <div className="col-span-4 row-span-1">
-              <LayoutInput id="pb_input" icon={<PaddingBottomIcon />} />
+              <IconInput
+                id="pb_input"
+                type="number"
+                defaultValue={10}
+                icon={<PaddingBottomIcon />}
+              />
             </div>
           </>
         )}
