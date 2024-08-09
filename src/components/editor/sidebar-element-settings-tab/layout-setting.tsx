@@ -133,23 +133,33 @@ function FlexToggleGroup() {
       defaultValue="flex-col"
     >
       <TooltipSimple text="Vertical layout">
-        <ToggleGroupItem
-          size="xs"
-          value="flex-col"
-          aria-label="Vertical layout"
-        >
-          <ArrowDownIcon size={13} />
-        </ToggleGroupItem>
+        <div>
+          <ToggleGroupItem
+            size="xs"
+            value="flex-col"
+            aria-label="Vertical layout"
+          >
+            <ArrowDownIcon size={13} />
+          </ToggleGroupItem>
+        </div>
       </TooltipSimple>
       <TooltipSimple text="Horizontal layout">
-        <ToggleGroupItem size="xs" value="flex" aria-label="Horizontal layout">
-          <ArrowRightIcon size={13} />
-        </ToggleGroupItem>
+        <div>
+          <ToggleGroupItem
+            size="xs"
+            value="flex"
+            aria-label="Horizontal layout"
+          >
+            <ArrowRightIcon size={13} />
+          </ToggleGroupItem>
+        </div>
       </TooltipSimple>
       <TooltipSimple text="Wrap">
-        <ToggleGroupItem size="xs" value="flex-wrap" aria-label="Wrap">
-          <CornerDownLeftIcon size={13} />
-        </ToggleGroupItem>
+        <div>
+          <ToggleGroupItem size="xs" value="flex-wrap" aria-label="Wrap">
+            <CornerDownLeftIcon size={13} />
+          </ToggleGroupItem>
+        </div>
       </TooltipSimple>
     </ToggleGroup>
   );
@@ -216,13 +226,17 @@ export default function LayoutSetting() {
           </>
         )}
         <div className="col-span-1 row-span-1">
-          <Toggle
-            size="xs"
-            pressed={isPaddingIndividual}
-            onPressedChange={setIsPaddingIndividual}
-          >
-            <PaddingIndividualIcon />
-          </Toggle>
+          <TooltipSimple text="Individual padding">
+            <div>
+              <Toggle
+                size="xs"
+                pressed={isPaddingIndividual}
+                onPressedChange={setIsPaddingIndividual}
+              >
+                <PaddingIndividualIcon />
+              </Toggle>
+            </div>
+          </TooltipSimple>
         </div>
         {isPaddingIndividual && (
           <>

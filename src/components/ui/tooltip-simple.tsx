@@ -16,13 +16,12 @@ export type TooltipSimpleProps = React.ComponentPropsWithoutRef<
 export default function TooltipSimple({
   text,
   children,
-  asChild,
   side = "bottom",
   ...props
 }: TooltipSimpleProps) {
   return (
     <Tooltip>
-      <TooltipTrigger asChild={asChild}>{children}</TooltipTrigger>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
       <Portal>
         <TooltipContent side={side} {...props}>
           {text}
