@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { lucia } from "~/lib/auth/lucia";
 
-export type Auth = ReturnType<typeof lucia.validateSession>;
+export type Auth = Awaited<ReturnType<typeof lucia.validateSession>>;
 
 export const getAuth = async (): Promise<Auth> => {
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
