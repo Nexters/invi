@@ -21,6 +21,7 @@ import {
   PaddingTopBottomIcon,
   PaddingTopIcon,
 } from "~/components/ui/icons";
+import { Toggle } from "~/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 import { cn } from "~/lib/utils";
 
@@ -122,6 +123,38 @@ function AlignInput() {
   );
 }
 
+function FlexToggleGroup() {
+  return (
+    <ToggleGroup
+      type="single"
+      className="gap-[1px] rounded-sm ring-border ring-offset-1 hover:ring-1"
+      defaultValue="flex-col"
+    >
+      <ToggleGroupItem
+        className="aspect-square h-7 w-7 rounded-sm p-0"
+        value="flex-col"
+        aria-label="Vertical layout"
+      >
+        <ArrowDownIcon size={13} />
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        className="aspect-square h-7 w-7 rounded-sm p-0"
+        value="flex"
+        aria-label="Horizontal layout"
+      >
+        <ArrowRightIcon size={13} />
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        className="aspect-square h-7 w-7 rounded-sm p-0"
+        value="flex-wrap"
+        aria-label="Wrap"
+      >
+        <CornerDownLeftIcon size={13} />
+      </ToggleGroupItem>
+    </ToggleGroup>
+  );
+}
+
 function LayoutInput({
   id,
   icon,
@@ -142,40 +175,14 @@ function LayoutInput({
 }
 
 export default function LayoutSetting() {
-  const [toggle, setToggle] = useState(false);
+  const [isPaddingIndividual, setIsPaddingIndividual] = useState(false);
 
   return (
     <div className="border-t px-6 py-4">
       <h4 className="mb-3 text-sm font-medium">레이아웃 설정</h4>
       <div className="grid w-full grid-cols-9 gap-1">
         <div className="col-span-4 row-span-1 flex items-start">
-          <ToggleGroup
-            type="single"
-            className="gap-[1px] rounded-sm ring-border ring-offset-1 hover:ring-1"
-            defaultValue="flex-col"
-          >
-            <ToggleGroupItem
-              className="aspect-square h-7 w-7 rounded-sm p-0"
-              value="flex-col"
-              aria-label="Vertical layout"
-            >
-              <ArrowDownIcon size={13} />
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              className="aspect-square h-7 w-7 rounded-sm p-0"
-              value="flex"
-              aria-label="Horizontal layout"
-            >
-              <ArrowRightIcon size={13} />
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              className="aspect-square h-7 w-7 rounded-sm p-0"
-              value="flex-wrap"
-              aria-label="Wrap"
-            >
-              <CornerDownLeftIcon size={13} />
-            </ToggleGroupItem>
-          </ToggleGroup>
+          <FlexToggleGroup />
         </div>
         <div className="col-span-5 row-span-2 flex items-start">
           <AlignInput />
@@ -183,7 +190,7 @@ export default function LayoutSetting() {
         <div className="col-span-4 row-span-1">
           <LayoutInput id="gap_input" icon={<GapIcon />} />
         </div>
-        {!toggle ? (
+        {!isPaddingIndividual ? (
           <>
             <div className="col-span-4 row-span-1">
               <LayoutInput id="px-input" icon={<PaddingLeftRightIcon />} />
@@ -203,14 +210,15 @@ export default function LayoutSetting() {
           </>
         )}
         <div className="col-span-1 row-span-1">
-          <button
-            className="flex h-7 items-center justify-center"
-            onClick={() => setToggle(!toggle)}
+          <Toggle
+            className="aspect-square h-7 w-7 rounded-sm p-0"
+            pressed={isPaddingIndividual}
+            onPressedChange={setIsPaddingIndividual}
           >
             <PaddingIndividualIcon />
-          </button>
+          </Toggle>
         </div>
-        {toggle && (
+        {isPaddingIndividual && (
           <>
             <div className="col-span-4 row-span-1">
               <LayoutInput id="pr_input" icon={<PaddingRightIcon />} />
