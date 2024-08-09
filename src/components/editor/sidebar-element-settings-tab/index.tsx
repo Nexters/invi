@@ -62,12 +62,7 @@ export default function SidebarElementSettingsTab(props: Props) {
         </>
       )}
 
-      <AccordionItem value="Advance" className="mt-auto border-t bg-muted/50">
-        <AccordionTrigger className="px-6">고급 설정</AccordionTrigger>
-        <AccordionContent className="flex flex-col gap-2 p-0">
-          <AdvanceSetting />
-        </AccordionContent>
-      </AccordionItem>
+      <AdvanceSetting />
     </Accordion>
   );
 }
