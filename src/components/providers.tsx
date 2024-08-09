@@ -3,6 +3,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { ReactNode } from "react";
+import { GlobalAlert } from "~/components/global-alert";
+import { Toaster } from "~/components/ui/sonner";
 import { TooltipProvider } from "~/components/ui/tooltip";
 
 function makeQueryClient() {
@@ -41,6 +43,8 @@ export default function Providers({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>{children}</TooltipProvider>
+      <Toaster />
+      <GlobalAlert />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

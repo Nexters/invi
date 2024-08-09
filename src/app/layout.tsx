@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Providers from "~/components/providers";
 import { pretendard } from "~/lib/fonts";
 import "./globals.css";
 
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={pretendard.className}>{children}</body>
+      <body className={pretendard.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
