@@ -28,27 +28,27 @@ export default function SidebarElementsTab(props: Props) {
     group: "layout" | "elements";
   }[] = [
     {
-      Component: <ContainerPlaceholder />,
-      label: "Container",
       id: "container",
+      label: "Container",
+      Component: <ContainerPlaceholder />,
       group: "layout",
     },
     {
-      Component: <TwoColumnsPlaceholder />,
-      label: "2 Columns",
       id: "2Col",
+      label: "2 Columns",
+      Component: <TwoColumnsPlaceholder />,
       group: "layout",
     },
     {
-      Component: <TextPlaceholder />,
-      label: "Text",
       id: "text",
+      label: "Text",
+      Component: <TextPlaceholder />,
       group: "elements",
     },
     {
-      Component: <MapPlaceholder />,
-      label: "map",
       id: "map",
+      label: "map",
+      Component: <MapPlaceholder />,
       group: "elements",
     },
   ];
