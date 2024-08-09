@@ -139,7 +139,7 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
           <Share2Icon className="h-4 w-4" /> 공유
         </Button>
         <DropdownMenu>
-          <TooltipSimple text="더보기">
+          <TooltipSimple text="더보기" asChild>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
                 <EllipsisVerticalIcon className="h-5 w-5" />

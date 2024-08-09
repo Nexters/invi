@@ -23,6 +23,7 @@ import {
 } from "~/components/ui/icons";
 import { Toggle } from "~/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
+import TooltipSimple from "~/components/ui/tooltip-simple";
 import { cn } from "~/lib/utils";
 
 const alignConfig = {
@@ -130,15 +131,25 @@ function FlexToggleGroup() {
       className="gap-[1px] rounded-sm ring-border ring-offset-1 hover:ring-1"
       defaultValue="flex-col"
     >
-      <ToggleGroupItem size="xs" value="flex-col" aria-label="Vertical layout">
-        <ArrowDownIcon size={13} />
-      </ToggleGroupItem>
-      <ToggleGroupItem size="xs" value="flex" aria-label="Horizontal layout">
-        <ArrowRightIcon size={13} />
-      </ToggleGroupItem>
-      <ToggleGroupItem size="xs" value="flex-wrap" aria-label="Wrap">
-        <CornerDownLeftIcon size={13} />
-      </ToggleGroupItem>
+      <TooltipSimple text="Vertical layout">
+        <ToggleGroupItem
+          size="xs"
+          value="flex-col"
+          aria-label="Vertical layout"
+        >
+          <ArrowDownIcon size={13} />
+        </ToggleGroupItem>
+      </TooltipSimple>
+      <TooltipSimple text="Horizontal layout">
+        <ToggleGroupItem size="xs" value="flex" aria-label="Horizontal layout">
+          <ArrowRightIcon size={13} />
+        </ToggleGroupItem>
+      </TooltipSimple>
+      <TooltipSimple text="Wrap">
+        <ToggleGroupItem size="xs" value="flex-wrap" aria-label="Wrap">
+          <CornerDownLeftIcon size={13} />
+        </ToggleGroupItem>
+      </TooltipSimple>
     </ToggleGroup>
   );
 }
