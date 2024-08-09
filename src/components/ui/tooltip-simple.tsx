@@ -7,17 +7,26 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 
-export type TooltipSimpleProps = {
+export type TooltipSimpleProps = React.ComponentPropsWithoutRef<
+  typeof TooltipContent
+> & {
   text: string;
-  children: React.ReactNode;
 };
 
-export default function TooltipSimple({ text, children }: TooltipSimpleProps) {
+export default function TooltipSimple({
+  text,
+  children,
+  asChild,
+  side = "bottom",
+  ...props
+}: TooltipSimpleProps) {
   return (
     <Tooltip>
-      <TooltipTrigger asChild>{children}</TooltipTrigger>
+      <TooltipTrigger asChild={asChild}>{children}</TooltipTrigger>
       <Portal>
-        <TooltipContent>{text}</TooltipContent>
+        <TooltipContent side={side} {...props}>
+          {text}
+        </TooltipContent>
       </Portal>
     </Tooltip>
   );
