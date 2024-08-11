@@ -5,12 +5,6 @@ export type DeviceType = "Desktop" | "Mobile" | "Tablet";
 export type EditorTabTypeValue =
   (typeof editorTabValue)[keyof typeof editorTabValue];
 
-type BaseEditorElement = {
-  id: string;
-  name: string;
-  styles: React.CSSProperties;
-};
-
 type EditorElementContentMap = {
   __body: EditorElement[];
   container: EditorElement[];
@@ -18,13 +12,17 @@ type EditorElementContentMap = {
   text: { innerText: string };
   image: { src: string; alt?: string };
   map: { address: string };
+  empty: [];
 };
 
 export type EditorElementType = keyof EditorElementContentMap;
 
 export type EditorElement = {
-  [K in EditorElementType]: BaseEditorElement & {
+  [K in EditorElementType]: {
     type: K;
+    id: string;
+    name: string;
+    styles: React.CSSProperties;
     content: EditorElementContentMap[K];
   };
 }[EditorElementType];

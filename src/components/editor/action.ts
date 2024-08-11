@@ -81,7 +81,7 @@ const traverseElements = (
         {
           ...updatedElement,
           content: traverseElements(updatedElement.content, callback),
-        },
+        } as EditorElement,
       ];
     }
 
@@ -108,7 +108,7 @@ const actionHandlers: {
         return {
           ...element,
           content: [...element.content, payload.elementDetails],
-        };
+        } as EditorElement;
       }
       return element;
     });
@@ -177,7 +177,7 @@ const actionHandlers: {
 
     return updateEditorHistory(editor, {
       ...editor.state,
-      selectedElement: payload.elementDetails || emptyElement,
+      selectedElement: payload.elementDetails ?? emptyElement,
       currentTabValue: newTabValue,
     });
   },
