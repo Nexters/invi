@@ -1,5 +1,6 @@
 "use server";
 
+import { eq } from "drizzle-orm";
 import { db } from "~/lib/db";
 import { invitations } from "~/lib/db/schema/invitations";
 
@@ -26,7 +27,7 @@ async function updateInvitation(params: UpdateInvitationParams) {
         ...updates,
         updatedAt: new Date(),
       })
-      .where(invitations.id.eq(id));
+      .where(eq(invitations.id, id));
   } catch (error) {
     console.error("Error updating invitation:", error);
     throw new Error("Could not update invitation");
