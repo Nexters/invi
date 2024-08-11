@@ -43,3 +43,16 @@ async function updateTemplate(params: UpdateTemplateParams) {
     throw new Error("Could not update template");
   }
 }
+
+async function deleteTemplate(id: string): Promise<void> {
+  if (!id) {
+    throw new Error("ID is required to delete a template");
+  }
+
+  try {
+    await db.delete(templates).where(eq(templates.id, id));
+  } catch (error) {
+    console.error("Error deleting template:", error);
+    throw new Error("Could not delete template");
+  }
+}
