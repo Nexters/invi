@@ -1,8 +1,15 @@
 "use server";
 import { eq } from "drizzle-orm";
+import { nanoid } from "nanoid";
 
 import { db } from "~/lib/db";
 import { templates } from "~/lib/db/schema/templates";
+
+type CreateTemplateParams = {
+  title: string;
+  description?: string;
+  customFields?: Record<string, any>; // JSON data
+};
 
 type UpdateTemplateParams = {
   id: string;
@@ -54,5 +61,27 @@ async function deleteTemplate(id: string): Promise<void> {
   } catch (error) {
     console.error("Error deleting template:", error);
     throw new Error("Could not delete template");
+  }
+}
+
+async function createTemplate(params: CreateTemplateParams): Promise<void> {
+  const { title, description, customFields } = params;
+
+  const id = nanoid();
+
+  const currentTimestamp = new Date();
+
+  try {
+    await db.insert(templates).values({
+      id,
+      title,
+      description,
+      customFields,
+      createdAt: currentTimestamp,
+      updatedAt: currentTimestamp,
+    });
+  } catch (error) {
+    console.error("Error creating template:", error);
+    throw new Error("Could not create template");
   }
 }
