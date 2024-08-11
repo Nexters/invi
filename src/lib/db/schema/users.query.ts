@@ -3,6 +3,7 @@
 import { eq } from "drizzle-orm";
 import { generateId } from "lucia";
 import { db } from "~/lib/db";
+import { sessions } from "~/lib/db/schema/auth";
 import { users, type UserInsert } from "~/lib/db/schema/users";
 
 export async function createUser(data: Omit<UserInsert, "id">) {
@@ -49,5 +50,15 @@ export async function deleteUser(id: string): Promise<void> {
   } catch (error) {
     console.error("Error deleting user:", error);
     throw new Error("Could not delete user");
+  }
+}
+
+export async function logout(userId: string) {
+  try {
+    db.delete(sessions).where(eq(sessions.userId, userId));
+    console.log(`User ${userId} logged out successfully.`);
+  } catch (error) {
+    console.error("Error logging out user:", error);
+    throw new Error("Could not log out user");
   }
 }
