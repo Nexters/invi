@@ -20,7 +20,13 @@ async function updateInvitation(params: UpdateInvitationParams) {
   }
 
   try {
-    await db.update(invitations).set(updates).where(invitations.id.eq(id));
+    await db
+      .update(invitations)
+      .set({
+        ...updates,
+        updatedAt: new Date(),
+      })
+      .where(invitations.id.eq(id));
   } catch (error) {
     console.error("Error updating invitation:", error);
     throw new Error("Could not update invitation");
