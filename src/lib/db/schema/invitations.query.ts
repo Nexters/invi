@@ -1,6 +1,6 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 import { db } from "~/lib/db";
 import { invitations } from "~/lib/db/schema/invitations";
 
@@ -31,5 +31,19 @@ async function updateInvitation(params: UpdateInvitationParams) {
   } catch (error) {
     console.error("Error updating invitation:", error);
     throw new Error("Could not update invitation");
+  }
+}
+
+async function existsByEventUrl(event_url: string) {
+  try {
+    const result = await db
+      .select({ count: count() })
+      .from(invitations)
+      .where(eq(invitations.eventUrl, event_url));
+
+    return result[0].count > 0;
+  } catch (error) {
+    console.error("Error checking existence by event_url:", error);
+    throw new Error("Could not check existence by event_url");
   }
 }
