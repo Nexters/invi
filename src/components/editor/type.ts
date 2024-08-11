@@ -2,28 +2,35 @@ import { editorTabValue } from "~/components/editor/constant";
 
 export type DeviceType = "Desktop" | "Mobile" | "Tablet";
 
-export type EditorElementType =
-  | "__body"
-  | "container"
-  | "2Col"
-  | "text"
-  | "section"
-  | "image"
-  | "map"
-  | null;
-
 export type EditorTabTypeValue =
   (typeof editorTabValue)[keyof typeof editorTabValue];
 
-export type EditorElement = {
-  id: string;
-  styles: React.CSSProperties;
-  name: string;
-  type: EditorElementType;
-  content:
-    | EditorElement[]
-    | { href?: string; innerText?: string; src?: string; address?: string };
+type EditorElementContentMap = {
+  __body: EditorElement[];
+  container: EditorElement[];
+  "2Col": EditorElement[];
+  text: { innerText: string };
+  image: { src: string; alt?: string };
+  map: { address: string };
+  empty: [];
 };
+
+export type EditorElementType = keyof EditorElementContentMap;
+
+export type EditorElement = {
+  [K in EditorElementType]: {
+    type: K;
+    id: string;
+    name: string;
+    styles: React.CSSProperties;
+    content: EditorElementContentMap[K];
+  };
+}[EditorElementType];
+
+export type InferEditorElement<K extends EditorElementType> = Extract<
+  EditorElement,
+  { type: K }
+>;
 
 export type EditorState = {
   elements: EditorElement[];
@@ -31,7 +38,6 @@ export type EditorState = {
   currentTabValue: EditorTabTypeValue;
   device: DeviceType;
   isPreviewMode: boolean;
-  funnelPageId: string;
 };
 
 export type EditorHistory = {

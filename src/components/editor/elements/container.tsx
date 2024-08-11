@@ -42,11 +42,11 @@ export default function Container({ element }: Props) {
           payload: {
             containerId: id,
             elementDetails: {
-              content: [],
+              type: "container",
               id: nanoid(),
               name: "Container",
               styles: { ...defaultStyles },
-              type: "container",
+              content: [],
             },
           },
         });
@@ -57,26 +57,26 @@ export default function Container({ element }: Props) {
           payload: {
             containerId: id,
             elementDetails: {
-              content: [
-                {
-                  content: [],
-                  id: nanoid(),
-                  name: "Container",
-                  styles: { ...defaultStyles, width: "100%" },
-                  type: "container",
-                },
-                {
-                  content: [],
-                  id: nanoid(),
-                  name: "Container",
-                  styles: { ...defaultStyles, width: "100%" },
-                  type: "container",
-                },
-              ],
+              type: "2Col",
               id: nanoid(),
               name: "Two Columns",
               styles: { ...defaultStyles, display: "flex" },
-              type: "2Col",
+              content: [
+                {
+                  type: "container",
+                  id: nanoid(),
+                  name: "Container",
+                  styles: { ...defaultStyles, width: "100%" },
+                  content: [],
+                },
+                {
+                  type: "container",
+                  id: nanoid(),
+                  name: "Container",
+                  styles: { ...defaultStyles, width: "100%" },
+                  content: [],
+                },
+              ],
             },
           },
         });
@@ -87,14 +87,14 @@ export default function Container({ element }: Props) {
           payload: {
             containerId: id,
             elementDetails: {
-              content: { innerText: "Text Element" },
+              type: "text",
               id: nanoid(),
               name: "Text",
               styles: {
                 color: "black",
                 ...defaultStyles,
               },
-              type: "text",
+              content: { innerText: "Text Element" },
             },
           },
         });
@@ -105,16 +105,16 @@ export default function Container({ element }: Props) {
           payload: {
             containerId: id,
             elementDetails: {
-              content: {
-                address: "",
-              },
+              type: "map",
               id: nanoid(),
               name: "map",
               styles: {
                 color: "black",
                 ...defaultStyles,
               },
-              type: "map",
+              content: {
+                address: "",
+              },
             },
           },
         });

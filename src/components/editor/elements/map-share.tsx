@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { toast } from "sonner";
 import ElementWrapper from "~/components/editor/elements/element-wrapper";
-import type { EditorElement } from "~/components/editor/type";
+import type { InferEditorElement } from "~/components/editor/type";
 
 type MapType = "naver" | "kakao";
 type MapUrls = Record<MapType, string>;
 
 type Props = {
-  element: EditorElement;
+  element: InferEditorElement<"map">;
 };
 
 const MapShareComponents = ({ element }: Props) => {
