@@ -2,10 +2,10 @@
 
 import ElementWrapper from "~/components/editor/elements/element-wrapper";
 import { useEditor } from "~/components/editor/provider";
-import type { EditorElement } from "~/components/editor/type";
+import type { InferEditorElement } from "~/components/editor/type";
 
 type Props = {
-  element: EditorElement;
+  element: InferEditorElement<"text">;
 };
 
 export default function Text({ element }: Props) {
