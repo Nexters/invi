@@ -6,6 +6,8 @@ import type {
 
 export const defaultStyles: React.CSSProperties = {
   display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   gap: 10,
   paddingTop: 10,
   paddingRight: 10,

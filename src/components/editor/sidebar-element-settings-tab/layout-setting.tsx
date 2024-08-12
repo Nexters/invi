@@ -107,18 +107,36 @@ const alignConfig = {
   },
 } as const;
 
-function AlignInput() {
+function AlignInput({
+  value,
+  onChangeValue,
+}: {
+  value: { justifyContent?: string; alignItems?: string };
+  onChangeValue: (value: {
+    justifyContent: string;
+    alignItems: string;
+  }) => void;
+}) {
   return (
     <div className="grid grid-cols-3 grid-rows-3 rounded-sm border text-muted-foreground">
       {Object.keys(alignConfig).map((key) => {
         const alignKey = key as keyof typeof alignConfig;
         const { Icon } = alignConfig[alignKey];
-        const isSelected = alignKey === "center_center";
+        const [alignItemValue, justifyValue] = alignKey.split("_");
+        const isSelected =
+          value.alignItems === alignItemValue &&
+          value.justifyContent === justifyValue;
 
         return (
           <div
             key={alignKey}
             className="group relative flex h-5 w-5 items-center justify-center"
+            onClick={() =>
+              onChangeValue({
+                alignItems: alignItemValue,
+                justifyContent: justifyValue,
+              })
+            }
           >
             <DotIcon
               size={14}
@@ -221,7 +239,21 @@ function FlexBoxSection() {
         <FlexToggleGroup element={element} />
       </div>
       <div className="col-span-4 row-span-2 flex items-start">
-        <AlignInput />
+        <AlignInput
+          value={{
+            alignItems: element.styles.alignItems,
+            justifyContent: element.styles.justifyContent,
+          }}
+          onChangeValue={(value) => {
+            dispatch({
+              type: "UPDATE_ELEMENT_STYLE",
+              payload: {
+                alignItems: value.alignItems,
+                justifyContent: value.justifyContent,
+              },
+            });
+          }}
+        />
       </div>
       <div className="col-span-4 row-span-1">
         <IconInput
@@ -231,7 +263,7 @@ function FlexBoxSection() {
           onChange={(e) =>
             dispatch({
               type: "UPDATE_ELEMENT_STYLE",
-              payload: { gap: e.target.value },
+              payload: { gap: e.target.valueAsNumber },
             })
           }
           icon={<GapIcon />}
