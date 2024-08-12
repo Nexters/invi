@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useEditor } from "~/components/editor/provider";
-import type { EditorElement } from "~/components/editor/type";
 import { IconInput } from "~/components/editor/ui/input";
 import {
   GapIcon,
@@ -157,16 +156,23 @@ function AlignInput({
   );
 }
 
-function FlexToggleGroup({ element }: { element: EditorElement }) {
-  const { dispatch } = useEditor();
-
-  const value = useMemo(() => {
-    if (element.styles.flexWrap === "wrap") {
+function FlexToggleGroup({
+  value,
+  onChangeValue,
+}: {
+  value: { flexWrap?: string; flexDirection?: string };
+  onChangeValue: (value: {
+    flexWrap: "wrap" | "nowrap";
+    flexDirection: "row" | "column";
+  }) => void;
+}) {
+  const toggleValue = useMemo(() => {
+    if (value.flexWrap === "wrap") {
       return "wrap";
     }
 
-    return element.styles.flexDirection ?? "row";
-  }, [element.styles]);
+    return value.flexDirection ?? "row";
+  }, [value]);
 
   const onValueChange = (newValue: "wrap" | "row" | "column") => {
     if (!newValue) {
@@ -174,22 +180,16 @@ function FlexToggleGroup({ element }: { element: EditorElement }) {
     }
 
     if (newValue === "wrap") {
-      dispatch({
-        type: "UPDATE_ELEMENT_STYLE",
-        payload: {
-          flexWrap: "wrap",
-          flexDirection: "row",
-        },
+      onChangeValue({
+        flexWrap: "wrap",
+        flexDirection: "row",
       });
       return;
     }
 
-    dispatch({
-      type: "UPDATE_ELEMENT_STYLE",
-      payload: {
-        flexWrap: "nowrap",
-        flexDirection: newValue,
-      },
+    onChangeValue({
+      flexWrap: "nowrap",
+      flexDirection: newValue,
     });
   };
 
@@ -197,7 +197,7 @@ function FlexToggleGroup({ element }: { element: EditorElement }) {
     <ToggleGroup
       type="single"
       className="flex gap-[1px] rounded-sm ring-border ring-offset-1 hover:ring-1"
-      value={value}
+      value={toggleValue}
       onValueChange={onValueChange}
     >
       <TooltipSimple text="Vertical layout">
@@ -236,7 +236,21 @@ function FlexBoxSection() {
   return (
     <div className="grid w-full grid-cols-9 gap-1">
       <div className="col-span-4 row-span-1 flex items-start">
-        <FlexToggleGroup element={element} />
+        <FlexToggleGroup
+          value={{
+            flexDirection: element.styles.flexDirection,
+            flexWrap: element.styles.flexWrap,
+          }}
+          onChangeValue={(value) => {
+            dispatch({
+              type: "UPDATE_ELEMENT_STYLE",
+              payload: {
+                flexDirection: value.flexDirection,
+                flexWrap: value.flexWrap,
+              },
+            });
+          }}
+        />
       </div>
       <div className="col-span-4 row-span-2 flex items-start">
         <AlignInput
