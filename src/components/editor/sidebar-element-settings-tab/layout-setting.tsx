@@ -29,6 +29,16 @@ import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 import TooltipSimple from "~/components/ui/tooltip-simple";
 import { cn } from "~/lib/utils";
 
+export default function LayoutSetting() {
+  return (
+    <div className="border-t px-6 py-4">
+      <h4 className="mb-3 text-sm font-medium">레이아웃 설정</h4>
+      <FlexBoxSection />
+      <PaddingSection />
+    </div>
+  );
+}
+
 const alignConfig = {
   start_start: {
     style: {
@@ -199,109 +209,130 @@ function FlexToggleGroup({ element }: { element: EditorElement }) {
   );
 }
 
-export default function LayoutSetting() {
+function FlexBoxSection() {
+  const { editor, dispatch } = useEditor();
+  const element = editor.state.selectedElement;
+
+  return (
+    <div className="grid w-full grid-cols-9 gap-1">
+      <div className="col-span-4 row-span-1 flex items-start">
+        <FlexToggleGroup element={element} />
+      </div>
+      <div className="col-span-5 row-span-2 flex items-start">
+        <AlignInput />
+      </div>
+      <div className="col-span-4 row-span-1">
+        <IconInput
+          id="gap_input"
+          type="number"
+          value={element.styles.gap}
+          onChange={(e) =>
+            dispatch({
+              type: "UPDATE_ELEMENT_STYLE",
+              payload: { gap: e.target.value },
+            })
+          }
+          icon={<GapIcon />}
+        />
+      </div>
+    </div>
+  );
+}
+
+function PaddingSection() {
   const [isPaddingIndividual, setIsPaddingIndividual] = useState(false);
 
   const { editor, dispatch } = useEditor();
   const element = editor.state.selectedElement;
 
   return (
-    <div className="border-t px-6 py-4">
-      <h4 className="mb-3 text-sm font-medium">레이아웃 설정</h4>
-      <div className="grid w-full grid-cols-9 gap-1">
-        <div className="col-span-4 row-span-1 flex items-start">
-          <FlexToggleGroup element={element} />
-        </div>
-        <div className="col-span-5 row-span-2 flex items-start">
-          <AlignInput />
-        </div>
-        <div className="col-span-4 row-span-1">
-          <IconInput
-            id="gap_input"
-            type="number"
-            value={element.styles.gap}
-            onChange={(e) =>
-              dispatch({
-                type: "UPDATE_ELEMENT_STYLE",
-                payload: { gap: e.target.value },
-              })
-            }
-            icon={<GapIcon />}
-          />
-        </div>
-        {!isPaddingIndividual ? (
-          <>
-            <div className="col-span-4 row-span-1">
-              <IconInput
-                id="px-input"
-                type="number"
-                defaultValue={10}
-                icon={<PaddingLeftRightIcon />}
-              />
-            </div>
-            <div className="col-span-4 row-span-1">
-              <IconInput
-                id="py_input"
-                type="number"
-                defaultValue={10}
-                icon={<PaddingTopBottomIcon />}
-              />
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="col-span-4 row-span-1">
-              <IconInput
-                id="pl_input"
-                type="number"
-                defaultValue={10}
-                icon={<PaddingLeftIcon />}
-              />
-            </div>
-            <div className="col-span-4 row-span-1">
-              <IconInput
-                id="pt_input"
-                type="number"
-                defaultValue={10}
-                icon={<PaddingTopIcon />}
-              />
-            </div>
-          </>
-        )}
-        <div className="col-span-1 row-span-1">
-          <TooltipSimple text="Individual padding">
-            <div>
-              <Toggle
-                size="xs"
-                pressed={isPaddingIndividual}
-                onPressedChange={setIsPaddingIndividual}
-              >
-                <PaddingIndividualIcon />
-              </Toggle>
-            </div>
-          </TooltipSimple>
-        </div>
-        {isPaddingIndividual && (
-          <>
-            <div className="col-span-4 row-span-1">
-              <IconInput
-                id="pr_input"
-                type="number"
-                defaultValue={10}
-                icon={<PaddingRightIcon />}
-              />
-            </div>
-            <div className="col-span-4 row-span-1">
-              <IconInput
-                id="pb_input"
-                type="number"
-                defaultValue={10}
-                icon={<PaddingBottomIcon />}
-              />
-            </div>
-          </>
-        )}
+    <div className="grid w-full grid-cols-9 gap-1">
+      {!isPaddingIndividual ? (
+        <>
+          <div className="col-span-4 row-span-1">
+            <IconInput
+              id="px-input"
+              type="number"
+              value={element.styles.paddingLeft}
+              onChange={(e) => {
+                const newValue = +e.target.value;
+                dispatch({
+                  type: "UPDATE_ELEMENT_STYLE",
+                  payload: { paddingLeft: newValue, paddingRight: newValue },
+                });
+              }}
+              icon={<PaddingLeftRightIcon />}
+            />
+          </div>
+          <div className="col-span-4 row-span-1">
+            <IconInput
+              id="py_input"
+              type="number"
+              value={element.styles.paddingTop}
+              onChange={(e) => {
+                const newValue = +e.target.value;
+                dispatch({
+                  type: "UPDATE_ELEMENT_STYLE",
+                  payload: { paddingTop: newValue, paddingBottom: newValue },
+                });
+              }}
+              icon={<PaddingTopBottomIcon />}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="col-span-4 row-span-1">
+            <IconInput
+              id="pl_input"
+              type="number"
+              defaultValue={10}
+              icon={<PaddingLeftIcon />}
+            />
+          </div>
+          <div className="col-span-4 row-span-1">
+            <IconInput
+              id="pt_input"
+              type="number"
+              defaultValue={10}
+              icon={<PaddingTopIcon />}
+            />
+          </div>
+        </>
+      )}
+      <div className="col-span-1 row-span-1">
+        <TooltipSimple text="Individual padding">
+          <div>
+            <Toggle
+              size="xs"
+              pressed={isPaddingIndividual}
+              onPressedChange={setIsPaddingIndividual}
+            >
+              <PaddingIndividualIcon />
+            </Toggle>
+          </div>
+        </TooltipSimple>
       </div>
+      {isPaddingIndividual && (
+        <>
+          <div className="col-span-4 row-span-1">
+            <IconInput
+              id="pr_input"
+              type="number"
+              defaultValue={10}
+              icon={<PaddingRightIcon />}
+            />
+          </div>
+          <div className="col-span-4 row-span-1">
+            <IconInput
+              id="pb_input"
+              type="number"
+              defaultValue={10}
+              icon={<PaddingBottomIcon />}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }
