@@ -102,8 +102,6 @@ export default function Container({ element }: Props) {
             containerId: id,
             elementDetails: {
               content: {
-                //   latitude: 37.566828,
-                //     longitude: 126.9786567,
                 location: [37.566828, 126.9786567],
               },
               id: nanoid(),
