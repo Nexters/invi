@@ -242,10 +242,21 @@ function FlexBoxSection() {
 }
 
 function PaddingSection() {
-  const [isPaddingIndividual, setIsPaddingIndividual] = useState(false);
-
   const { editor, dispatch } = useEditor();
   const element = editor.state.selectedElement;
+
+  const [isPaddingIndividual, setIsPaddingIndividual] = useState(false);
+
+  const togglePaddingIndividual = (isIndividual: boolean) => {
+    dispatch({
+      type: "UPDATE_ELEMENT_STYLE",
+      payload: {
+        paddingRight: element.styles.paddingRight,
+        paddingBottom: element.styles.paddingTop,
+      },
+    });
+    setIsPaddingIndividual(isIndividual);
+  };
 
   return (
     <div className="grid w-full grid-cols-9 gap-1">
@@ -320,7 +331,7 @@ function PaddingSection() {
             <Toggle
               size="xs"
               pressed={isPaddingIndividual}
-              onPressedChange={setIsPaddingIndividual}
+              onPressedChange={togglePaddingIndividual}
             >
               <PaddingIndividualIcon />
             </Toggle>
