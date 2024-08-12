@@ -31,8 +31,10 @@ import { cn } from "~/lib/utils";
 
 export default function LayoutSetting() {
   return (
-    <div className="border-t px-6 py-4">
-      <h4 className="mb-3 text-sm font-medium">레이아웃 설정</h4>
+    <div className="space-y-1 border-t px-6 py-4">
+      <div className="flex h-10 items-center">
+        <h4 className="text-sm font-medium">레이아웃 설정</h4>
+      </div>
       <FlexBoxSection />
       <PaddingSection />
     </div>
@@ -218,7 +220,7 @@ function FlexBoxSection() {
       <div className="col-span-4 row-span-1 flex items-start">
         <FlexToggleGroup element={element} />
       </div>
-      <div className="col-span-5 row-span-2 flex items-start">
+      <div className="col-span-4 row-span-2 flex items-start">
         <AlignInput />
       </div>
       <div className="col-span-4 row-span-1">
@@ -255,7 +257,7 @@ function PaddingSection() {
               type="number"
               value={element.styles.paddingLeft}
               onChange={(e) => {
-                const newValue = +e.target.value;
+                const newValue = e.target.valueAsNumber;
                 dispatch({
                   type: "UPDATE_ELEMENT_STYLE",
                   payload: { paddingLeft: newValue, paddingRight: newValue },
@@ -270,7 +272,7 @@ function PaddingSection() {
               type="number"
               value={element.styles.paddingTop}
               onChange={(e) => {
-                const newValue = +e.target.value;
+                const newValue = e.target.valueAsNumber;
                 dispatch({
                   type: "UPDATE_ELEMENT_STYLE",
                   payload: { paddingTop: newValue, paddingBottom: newValue },
@@ -286,7 +288,13 @@ function PaddingSection() {
             <IconInput
               id="pl_input"
               type="number"
-              defaultValue={10}
+              value={element.styles.paddingLeft}
+              onChange={(e) => {
+                dispatch({
+                  type: "UPDATE_ELEMENT_STYLE",
+                  payload: { paddingLeft: e.target.valueAsNumber },
+                });
+              }}
               icon={<PaddingLeftIcon />}
             />
           </div>
@@ -294,7 +302,13 @@ function PaddingSection() {
             <IconInput
               id="pt_input"
               type="number"
-              defaultValue={10}
+              value={element.styles.paddingTop}
+              onChange={(e) => {
+                dispatch({
+                  type: "UPDATE_ELEMENT_STYLE",
+                  payload: { paddingTop: e.target.valueAsNumber },
+                });
+              }}
               icon={<PaddingTopIcon />}
             />
           </div>
@@ -319,7 +333,13 @@ function PaddingSection() {
             <IconInput
               id="pr_input"
               type="number"
-              defaultValue={10}
+              value={element.styles.paddingRight}
+              onChange={(e) => {
+                dispatch({
+                  type: "UPDATE_ELEMENT_STYLE",
+                  payload: { paddingRight: e.target.valueAsNumber },
+                });
+              }}
               icon={<PaddingRightIcon />}
             />
           </div>
@@ -327,7 +347,13 @@ function PaddingSection() {
             <IconInput
               id="pb_input"
               type="number"
-              defaultValue={10}
+              value={element.styles.paddingBottom}
+              onChange={(e) => {
+                dispatch({
+                  type: "UPDATE_ELEMENT_STYLE",
+                  payload: { paddingBottom: e.target.valueAsNumber },
+                });
+              }}
               icon={<PaddingBottomIcon />}
             />
           </div>
