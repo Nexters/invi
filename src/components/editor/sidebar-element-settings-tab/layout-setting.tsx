@@ -10,7 +10,9 @@ import {
   DotIcon,
   type LucideProps,
 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useEditor } from "~/components/editor/provider";
+import type { EditorElement } from "~/components/editor/type";
 import { IconInput } from "~/components/editor/ui/input";
 import {
   GapIcon,
@@ -125,18 +127,54 @@ function AlignInput() {
   );
 }
 
-function FlexToggleGroup() {
+function FlexToggleGroup({ element }: { element: EditorElement }) {
+  const { dispatch } = useEditor();
+
+  const value = useMemo(() => {
+    if (element.styles.flexWrap === "wrap") {
+      return "wrap";
+    }
+
+    return element.styles.flexDirection ?? "row";
+  }, [element.styles]);
+
+  const onValueChange = (newValue: "wrap" | "row" | "column") => {
+    if (!newValue) {
+      return;
+    }
+
+    if (newValue === "wrap") {
+      dispatch({
+        type: "UPDATE_ELEMENT_STYLE",
+        payload: {
+          flexWrap: "wrap",
+          flexDirection: "row",
+        },
+      });
+      return;
+    }
+
+    dispatch({
+      type: "UPDATE_ELEMENT_STYLE",
+      payload: {
+        flexWrap: "nowrap",
+        flexDirection: newValue,
+      },
+    });
+  };
+
   return (
     <ToggleGroup
       type="single"
-      className="gap-[1px] rounded-sm ring-border ring-offset-1 hover:ring-1"
-      defaultValue="flex-col"
+      className="flex gap-[1px] rounded-sm ring-border ring-offset-1 hover:ring-1"
+      value={value}
+      onValueChange={onValueChange}
     >
       <TooltipSimple text="Vertical layout">
         <div>
           <ToggleGroupItem
             size="xs"
-            value="flex-col"
+            value="column"
             aria-label="Vertical layout"
           >
             <ArrowDownIcon size={13} />
@@ -145,18 +183,14 @@ function FlexToggleGroup() {
       </TooltipSimple>
       <TooltipSimple text="Horizontal layout">
         <div>
-          <ToggleGroupItem
-            size="xs"
-            value="flex"
-            aria-label="Horizontal layout"
-          >
+          <ToggleGroupItem size="xs" value="row" aria-label="Horizontal layout">
             <ArrowRightIcon size={13} />
           </ToggleGroupItem>
         </div>
       </TooltipSimple>
       <TooltipSimple text="Wrap">
         <div>
-          <ToggleGroupItem size="xs" value="flex-wrap" aria-label="Wrap">
+          <ToggleGroupItem size="xs" value="wrap" aria-label="Wrap">
             <CornerDownLeftIcon size={13} />
           </ToggleGroupItem>
         </div>
@@ -168,12 +202,15 @@ function FlexToggleGroup() {
 export default function LayoutSetting() {
   const [isPaddingIndividual, setIsPaddingIndividual] = useState(false);
 
+  const { editor } = useEditor();
+  const element = editor.state.selectedElement;
+
   return (
     <div className="border-t px-6 py-4">
       <h4 className="mb-3 text-sm font-medium">레이아웃 설정</h4>
       <div className="grid w-full grid-cols-9 gap-1">
         <div className="col-span-4 row-span-1 flex items-start">
-          <FlexToggleGroup />
+          <FlexToggleGroup element={element} />
         </div>
         <div className="col-span-5 row-span-2 flex items-start">
           <AlignInput />

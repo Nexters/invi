@@ -45,7 +45,7 @@ export default function Container({ element }: Props) {
               type: "container",
               id: nanoid(),
               name: "Container",
-              styles: { ...defaultStyles },
+              styles: { ...defaultStyles, display: "flex" },
               content: [],
             },
           },
