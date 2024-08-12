@@ -202,7 +202,7 @@ function FlexToggleGroup({ element }: { element: EditorElement }) {
 export default function LayoutSetting() {
   const [isPaddingIndividual, setIsPaddingIndividual] = useState(false);
 
-  const { editor } = useEditor();
+  const { editor, dispatch } = useEditor();
   const element = editor.state.selectedElement;
 
   return (
@@ -219,7 +219,13 @@ export default function LayoutSetting() {
           <IconInput
             id="gap_input"
             type="number"
-            defaultValue={10}
+            value={element.styles.gap}
+            onChange={(e) =>
+              dispatch({
+                type: "UPDATE_ELEMENT_STYLE",
+                payload: { gap: e.target.value },
+              })
+            }
             icon={<GapIcon />}
           />
         </div>
