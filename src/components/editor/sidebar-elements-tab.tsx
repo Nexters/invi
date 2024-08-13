@@ -1,8 +1,10 @@
 import React from "react";
-import ContainerPlaceholder from "~/components/editor/elements/container-placeholder";
-import MapPlaceholder from "~/components/editor/elements/map-placeholder";
-import TextPlaceholder from "~/components/editor/elements/text-placeholder";
-import TwoColumnsPlaceholder from "~/components/editor/elements/two-columns-placeholder";
+import {
+  ContainerPlaceholder,
+  MapPlaceholder,
+  TextPlaceholder,
+  TwoColumnsPlaceholder,
+} from "~/components/editor/placeholders";
 import type { EditorElementType } from "~/components/editor/type";
 import {
   Accordion,
@@ -10,10 +12,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
+import {
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "~/components/ui/sheet";
 
 type Props = {};
 
-export default function SidebarComponentsTab(props: Props) {
+export default function SidebarElementsTab(props: Props) {
   const elements: {
     id: EditorElementType;
     label: string;
@@ -21,27 +28,27 @@ export default function SidebarComponentsTab(props: Props) {
     group: "layout" | "elements";
   }[] = [
     {
-      Component: <ContainerPlaceholder />,
-      label: "Container",
       id: "container",
+      label: "Container",
+      Component: <ContainerPlaceholder />,
       group: "layout",
     },
     {
-      Component: <TwoColumnsPlaceholder />,
-      label: "2 Columns",
       id: "2Col",
+      label: "2 Columns",
+      Component: <TwoColumnsPlaceholder />,
       group: "layout",
     },
     {
-      Component: <TextPlaceholder />,
-      label: "Text",
       id: "text",
+      label: "Text",
+      Component: <TextPlaceholder />,
       group: "elements",
     },
     {
-      Component: <MapPlaceholder />,
-      label: "map",
       id: "map",
+      label: "map",
+      Component: <MapPlaceholder />,
       group: "elements",
     },
   ];
@@ -52,9 +59,15 @@ export default function SidebarComponentsTab(props: Props) {
       className="w-full"
       defaultValue={["Layout", "Elements"]}
     >
-      <AccordionItem value="Layout" className="border-y-[1px] px-6 py-0">
-        <AccordionTrigger>Layout</AccordionTrigger>
-        <AccordionContent className="flex flex-wrap gap-6">
+      <SheetHeader className="p-6">
+        <SheetTitle>도구상자</SheetTitle>
+        <SheetDescription>
+          도구상자의 항목들을 작업 공간에 끌어다 놓을 수 있습니다.
+        </SheetDescription>
+      </SheetHeader>
+      <AccordionItem value="Layout" className="border-y-[1px]">
+        <AccordionTrigger className="px-6">Layout</AccordionTrigger>
+        <AccordionContent className="flex flex-wrap gap-6 px-6">
           {elements
             .filter((element) => element.group === "layout")
             .map((element) => (
@@ -70,9 +83,9 @@ export default function SidebarComponentsTab(props: Props) {
             ))}
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="Elements" className="px-6 py-0">
-        <AccordionTrigger>Elements</AccordionTrigger>
-        <AccordionContent className="flex flex-wrap gap-6">
+      <AccordionItem value="Elements">
+        <AccordionTrigger className="px-6">Elements</AccordionTrigger>
+        <AccordionContent className="flex flex-wrap gap-6 px-6">
           {elements
             .filter((element) => element.group === "elements")
             .map((element) => (

@@ -3,6 +3,7 @@
 import {
   ArrowLeftIcon,
   DownloadIcon,
+  EllipsisVerticalIcon,
   EyeIcon,
   Laptop,
   Redo2,
@@ -14,9 +15,18 @@ import {
 import Link from "next/link";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
+import TitleInput from "~/components/editor/title-input";
 import type { DeviceType } from "~/components/editor/type";
+import { useAlertDialogStore } from "~/components/global-alert";
 import { Button } from "~/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import TooltipSimple from "~/components/ui/tooltip-simple";
 import { cn } from "~/lib/utils";
 
 type Props = {
@@ -25,6 +35,7 @@ type Props = {
 
 export default function EditorNavigation({ backLink = "./" }: Props) {
   const { editor, dispatch } = useEditor();
+  const { openDialog } = useAlertDialogStore();
 
   const handlePreviewClick = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
@@ -51,6 +62,16 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
     }
   };
 
+  const handleOnDelete = () => {
+    openDialog({
+      title: "초대장을 삭제하시겠습니까?",
+      description: "이 작업을 되돌릴 수 없습니다.",
+      confirmText: "확인",
+      cancelText: "취소",
+      onConfirm: () => {},
+    });
+  };
+
   return (
     <nav
       className={cn(
@@ -64,6 +85,7 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
             <ArrowLeftIcon />
           </Link>
         </Button>
+        <TitleInput />
         <Tabs
           value={editor.state.device}
           onValueChange={(value) => {
@@ -116,6 +138,24 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
         <Button onClick={handleOnSave} className="gap-1">
           <Share2Icon className="h-4 w-4" /> 공유
         </Button>
+        <DropdownMenu>
+          <TooltipSimple text="더보기">
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <EllipsisVerticalIcon className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+          </TooltipSimple>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem>복제하기</DropdownMenuItem>
+            <DropdownMenuItem
+              className="text-destructive"
+              onClick={handleOnDelete}
+            >
+              삭제하기
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </aside>
     </nav>
   );

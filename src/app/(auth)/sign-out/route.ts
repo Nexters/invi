@@ -6,6 +6,9 @@ export async function GET(): Promise<Response> {
   if (result.error) {
     return new Response(null, {
       status: 401,
+      headers: {
+        Location: "/",
+      },
     });
   }
 
@@ -22,7 +25,7 @@ export async function GET(): Promise<Response> {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: "/pg/sign-in",
+      Location: "/dashboard",
     },
   });
 }

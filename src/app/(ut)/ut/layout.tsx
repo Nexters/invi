@@ -1,7 +1,7 @@
 import Script from "next/script";
 import BottomSheet from "~/app/(playground)/pg/bottom-sheet/_components/bottom-sheet";
 import { Toaster } from "~/components/ui/sonner";
-import { pretendard } from "~/lib/fonts";
+import "./style.css";
 
 export default function UTPageLayout({
   children,
@@ -9,16 +9,14 @@ export default function UTPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className="bg-[#1A1A1A]">
-      <body className={pretendard.className}>
-        {children}
-        <BottomSheet />
-        <Toaster />
-        <Script
-          type="text/javascript"
-          src="https://developers.kakao.com/sdk/js/kakao.js"
-        />
-      </body>
-    </html>
+    <>
+      {children}
+      <BottomSheet />
+      <Toaster />
+      <Script
+        type="text/javascript"
+        src="https://developers.kakao.com/sdk/js/kakao.js"
+      />
+    </>
   );
 }
