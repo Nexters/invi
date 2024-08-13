@@ -5,6 +5,14 @@ import type {
 } from "~/components/editor/type";
 
 export const defaultStyles: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 10,
+  paddingTop: 10,
+  paddingRight: 10,
+  paddingBottom: 10,
+  paddingLeft: 10,
   backgroundPosition: "center",
   objectFit: "cover",
   backgroundRepeat: "no-repeat",
