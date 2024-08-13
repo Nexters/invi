@@ -8,7 +8,7 @@ export const invitations = pgTable("invitation", {
   title: text("title").notNull(),
   description: text("description"),
   eventDate: timestamp("event_date", { mode: "date" }),
-  eventUrl: text("event_url"),
+  eventUrl: text("event_url").unique(),
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "date",
