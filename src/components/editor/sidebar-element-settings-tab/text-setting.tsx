@@ -43,32 +43,40 @@ export default function TextSetting() {
         <div className="col-span-8">
           <IconInput
             id="fontFamily"
-            onChange={handleOnChanges}
             value={element.styles.fontFamily ?? "Pretendard"}
+            onChange={handleOnChanges}
             icon={<FontFamilyIcon />}
           />
         </div>
         <div className="col-span-4">
           <IconInput
             id="fontWeight"
+            value={element.styles.fontWeight ?? "normal"}
             onChange={handleOnChanges}
-            value={element.styles.fontWeight}
             icon={<FontBoldIcon />}
           />
         </div>
         <div className="col-span-4">
           <IconInput
             id="fontSize"
-            onChange={handleOnChanges}
-            value={element.styles.fontSize}
+            type="number"
+            value={element.styles.fontSize ?? 16}
+            onChange={(e) => {
+              dispatch({
+                type: "UPDATE_ELEMENT_STYLE",
+                payload: {
+                  fontSize: e.target.valueAsNumber,
+                },
+              });
+            }}
             icon={<FontSizeIcon />}
           />
         </div>
         <div className="col-span-4">
           <IconInput
             id="color"
+            value={element.styles.color ?? "inherit"}
             onChange={handleOnChanges}
-            value={element.styles.color}
             icon={
               <div
                 className="h-3.5 w-3.5 rounded ring-1 ring-border"

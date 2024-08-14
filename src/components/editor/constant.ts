@@ -22,10 +22,7 @@ export const containerDefaultStyles: React.CSSProperties = {
 
 export const textDefaultStyles: React.CSSProperties = {
   ...defaultStyles,
-  color: "black",
   textAlign: "left",
-  fontWeight: "normal",
-  fontSize: "16px",
 };
 
 export const editorTabValue = {
