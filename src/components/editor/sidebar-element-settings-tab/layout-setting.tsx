@@ -1,5 +1,6 @@
 "use client";
 
+import { HeightIcon, WidthIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useEditor } from "~/components/editor/provider";
 import AlignInputBox from "~/components/editor/ui/align-input-box";
@@ -24,8 +25,45 @@ export default function LayoutSetting() {
       <div className="flex h-10 items-center">
         <h4 className="text-sm font-medium">레이아웃 설정</h4>
       </div>
+      <WidthHeightSection />
       <FlexBoxSection />
       <PaddingSection />
+    </div>
+  );
+}
+
+function WidthHeightSection() {
+  const { editor, dispatch } = useEditor();
+  const element = editor.state.selectedElement;
+
+  return (
+    <div className="grid w-full grid-cols-9 gap-1">
+      <div className="col-span-4 row-span-1">
+        <IconInput
+          id="width_input"
+          value={element.styles.width}
+          onChange={(e) =>
+            dispatch({
+              type: "UPDATE_ELEMENT_STYLE",
+              payload: { width: e.target.value },
+            })
+          }
+          icon={<WidthIcon />}
+        />
+      </div>
+      <div className="col-span-4 row-span-1">
+        <IconInput
+          id="height_input"
+          value={element.styles.height}
+          onChange={(e) =>
+            dispatch({
+              type: "UPDATE_ELEMENT_STYLE",
+              payload: { height: e.target.value },
+            })
+          }
+          icon={<HeightIcon />}
+        />
+      </div>
     </div>
   );
 }
