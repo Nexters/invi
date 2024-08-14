@@ -65,7 +65,7 @@ export default function SidebarElementsTab(props: Props) {
           도구상자의 항목들을 작업 공간에 끌어다 놓을 수 있습니다.
         </SheetDescription>
       </SheetHeader>
-      <AccordionItem value="Layout" className="border-y-[1px]">
+      <AccordionItem value="Layout" className="select-none border-y-[1px]">
         <AccordionTrigger className="px-6">Layout</AccordionTrigger>
         <AccordionContent className="flex flex-wrap gap-6 px-6">
           {elements
@@ -83,7 +83,7 @@ export default function SidebarElementsTab(props: Props) {
             ))}
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="Elements">
+      <AccordionItem value="Elements" className="select-none">
         <AccordionTrigger className="px-6">Elements</AccordionTrigger>
         <AccordionContent className="flex flex-wrap gap-6 px-6">
           {elements
