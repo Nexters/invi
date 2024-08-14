@@ -21,7 +21,7 @@ import TooltipSimple from "~/components/ui/tooltip-simple";
 
 export default function LayoutSetting() {
   return (
-    <div className="space-y-1 border-t px-6 py-4">
+    <div className="space-y-1 border-t p-6 pt-4">
       <div className="flex h-10 items-center">
         <h4 className="text-sm font-medium">레이아웃 설정</h4>
       </div>
