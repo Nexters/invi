@@ -8,22 +8,26 @@ export const config = {
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const hostname = request.headers.get("host")!;
-  const searchParams = request.nextUrl.searchParams.toString();
+  const searchParams = url.searchParams.toString();
+  const path = `${url.pathname}${searchParams ? `?${searchParams}` : ""}`;
 
-  const path = `${url.pathname}${
-    searchParams.length > 0 ? `?${searchParams}` : ""
-  }`;
+  const isSubdomain = (str: string) =>
+    !["www", "invi", "localhost"].includes(str);
 
-  const subDomain = hostname.split(".")[0];
-  console.log("subDomain", subDomain, "hostname", hostname);
+  const hostnameParts = hostname.split(".");
+  const potentialSubdomain = hostnameParts[0];
 
-  switch (true) {
-    case subDomain !== hostname:
-      return NextResponse.rewrite(
-        new URL(`/pg/${subDomain}${path}`, request.url),
-      );
+  let subdomain: string | null = null;
 
-    default:
-      return NextResponse.rewrite(new URL(`${path}`, request.url));
+  if (isSubdomain(potentialSubdomain)) {
+    subdomain = potentialSubdomain;
+  }
+
+  if (subdomain) {
+    return NextResponse.rewrite(
+      new URL(`/pg/${subdomain}${path}`, request.url),
+    );
+  } else {
+    return NextResponse.rewrite(new URL(path, request.url));
   }
 }
