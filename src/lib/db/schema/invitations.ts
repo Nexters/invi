@@ -4,11 +4,11 @@ import { users } from "~/lib/db/schema/users";
 export const invitations = pgTable("invitation", {
   id: text("id").primaryKey(),
   userId: text("user_id").references(() => users.id),
-  customFields: json("custom_fields"),
+  customFields: json("custom_fields").notNull().$type<Record<string, any>>(),
   title: text("title").notNull(),
   description: text("description"),
   eventDate: timestamp("event_date", { mode: "date" }),
-  eventUrl: text("event_url"),
+  eventUrl: text("event_url").unique(),
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "date",
