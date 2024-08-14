@@ -1,6 +1,18 @@
-import type { EditorHistory, EditorState } from "~/components/editor/type";
+import type {
+  EditorElement,
+  EditorHistory,
+  EditorState,
+} from "~/components/editor/type";
 
 export const defaultStyles: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 10,
+  paddingTop: 10,
+  paddingRight: 10,
+  paddingBottom: 10,
+  paddingLeft: 10,
   backgroundPosition: "center",
   objectFit: "cover",
   backgroundRepeat: "no-repeat",
@@ -19,8 +31,8 @@ export const emptyElement = {
   content: [],
   name: "",
   styles: {},
-  type: null,
-};
+  type: "empty",
+} satisfies EditorElement;
 
 export const initialEditorState: EditorState = {
   elements: [
@@ -36,7 +48,6 @@ export const initialEditorState: EditorState = {
   currentTabValue: editorTabValue.ELEMENTS,
   device: "Mobile",
   isPreviewMode: false,
-  funnelPageId: "",
 };
 
 export const initialEditorHistory: EditorHistory = {

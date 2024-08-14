@@ -41,21 +41,12 @@ export default function AdvanceSetting() {
 
   const handleOnChanges = (e: any) => {
     const styleSettings = e.target.id;
-    let value = e.target.value;
-    const styleObject = {
-      [styleSettings]: value,
-    };
+    const styleValue = e.target.value;
 
     dispatch({
-      type: "UPDATE_ELEMENT",
+      type: "UPDATE_ELEMENT_STYLE",
       payload: {
-        elementDetails: {
-          ...editor.state.selectedElement,
-          styles: {
-            ...editor.state.selectedElement.styles,
-            ...styleObject,
-          },
-        },
+        [styleSettings]: styleValue,
       },
     });
   };
