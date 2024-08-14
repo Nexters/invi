@@ -34,16 +34,16 @@ async function updateInvitation(params: UpdateInvitationParams) {
   }
 }
 
-async function existsByEventUrl(event_url: string) {
+async function existsByEventUrl(eventUrl: string) {
   try {
     const result = await db
       .select({ count: count() })
       .from(invitations)
-      .where(eq(invitations.eventUrl, event_url));
+      .where(eq(invitations.eventUrl, eventUrl));
 
     return result[0].count > 0;
   } catch (error) {
-    console.error("Error checking existence by event_url:", error);
-    throw new Error("Could not check existence by event_url");
+    console.error("Error checking existence by event url:", error);
+    throw new Error("Could not check existence by event url");
   }
 }
