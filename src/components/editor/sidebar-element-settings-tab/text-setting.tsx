@@ -71,7 +71,7 @@ export default function TextSetting() {
             value={element.styles.color}
             icon={
               <div
-                className="h-3.5 w-3.5"
+                className="h-3.5 w-3.5 rounded ring-1 ring-border"
                 style={{ background: element.styles.color }}
               />
             }
