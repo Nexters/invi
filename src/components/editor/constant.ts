@@ -4,9 +4,7 @@ import type {
   EditorState,
 } from "~/components/editor/type";
 
-const defaultStyles: React.CSSProperties = {
-  opacity: "100%",
-};
+const defaultStyles: React.CSSProperties = {};
 
 export const containerDefaultStyles: React.CSSProperties = {
   ...defaultStyles,
