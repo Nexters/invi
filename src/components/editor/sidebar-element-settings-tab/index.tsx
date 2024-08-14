@@ -4,6 +4,7 @@ import { useEditor } from "~/components/editor/provider";
 import AdvanceSetting from "~/components/editor/sidebar-element-settings-tab/advance-setting";
 import LayoutSetting from "~/components/editor/sidebar-element-settings-tab/layout-setting";
 import MapSetting from "~/components/editor/sidebar-element-settings-tab/map-setting";
+import TextSetting from "~/components/editor/sidebar-element-settings-tab/text-setting";
 import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
 
 type Props = {};
@@ -25,6 +26,12 @@ export default function SidebarElementSettingsTab(props: Props) {
             <LayoutSetting />
           </>
         )}
+
+      {selectedElement.type === "text" && (
+        <>
+          <TextSetting />
+        </>
+      )}
 
       {selectedElement.type === "container" && (
         <>

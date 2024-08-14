@@ -2,7 +2,10 @@
 
 import { nanoid } from "nanoid";
 import React from "react";
-import { defaultStyles } from "~/components/editor/constant";
+import {
+  containerDefaultStyles,
+  textDefaultStyles,
+} from "~/components/editor/constant";
 import ElementWrapper from "~/components/editor/elements/element-wrapper";
 import { useEditor } from "~/components/editor/provider";
 import type {
@@ -45,7 +48,7 @@ export default function Container({ element }: Props) {
               type: "container",
               id: nanoid(),
               name: "Container",
-              styles: { ...defaultStyles, width: "100%", height: "auto" },
+              styles: containerDefaultStyles,
               content: [],
             },
           },
@@ -60,20 +63,20 @@ export default function Container({ element }: Props) {
               type: "2Col",
               id: nanoid(),
               name: "Two Columns",
-              styles: { ...defaultStyles, display: "flex" },
+              styles: { ...containerDefaultStyles },
               content: [
                 {
                   type: "container",
                   id: nanoid(),
                   name: "Container",
-                  styles: { ...defaultStyles, width: "100%" },
+                  styles: { ...containerDefaultStyles, width: "100%" },
                   content: [],
                 },
                 {
                   type: "container",
                   id: nanoid(),
                   name: "Container",
-                  styles: { ...defaultStyles, width: "100%" },
+                  styles: { ...containerDefaultStyles, width: "100%" },
                   content: [],
                 },
               ],
@@ -90,10 +93,7 @@ export default function Container({ element }: Props) {
               type: "text",
               id: nanoid(),
               name: "Text",
-              styles: {
-                color: "black",
-                ...defaultStyles,
-              },
+              styles: textDefaultStyles,
               content: { innerText: "Text Element" },
             },
           },
@@ -110,7 +110,7 @@ export default function Container({ element }: Props) {
               name: "map",
               styles: {
                 color: "black",
-                ...defaultStyles,
+                ...containerDefaultStyles,
               },
               content: {
                 address: "",
