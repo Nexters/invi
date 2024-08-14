@@ -9,7 +9,6 @@ import {
 } from "~/components/ui/accordion";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Slider } from "~/components/ui/slider";
 
 export default function AdvanceSetting() {
   const { editor, dispatch } = useEditor();
@@ -32,46 +31,6 @@ export default function AdvanceSetting() {
         <AccordionTrigger className="px-6">고급 설정</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-2 p-0">
           <div className="flex flex-col gap-6 px-6 py-4">
-            <div>
-              <Label className="text-muted-foreground">Border Radius</Label>
-              <div className="flex items-center justify-end">
-                <small className="">
-                  {typeof editor.state.selectedElement.styles?.borderRadius ===
-                  "number"
-                    ? editor.state.selectedElement.styles?.borderRadius
-                    : parseFloat(
-                        (
-                          editor.state.selectedElement.styles?.borderRadius ||
-                          "0"
-                        ).replace("px", ""),
-                      ) || 0}
-                  px
-                </small>
-              </div>
-              <Slider
-                onValueChange={(e) => {
-                  handleOnChanges({
-                    target: {
-                      id: "borderRadius",
-                      value: `${e[0]}px`,
-                    },
-                  });
-                }}
-                defaultValue={[
-                  typeof editor.state.selectedElement.styles?.borderRadius ===
-                  "number"
-                    ? editor.state.selectedElement.styles?.borderRadius
-                    : parseFloat(
-                        (
-                          editor.state.selectedElement.styles?.borderRadius ||
-                          "0"
-                        ).replace("%", ""),
-                      ) || 0,
-                ]}
-                max={100}
-                step={1}
-              />
-            </div>
             <div className="flex flex-col gap-1">
               <Label className="text-muted-foreground">Background Color</Label>
               <div className="flex overflow-clip rounded-md border focus-within:ring-1 focus-within:ring-ring">

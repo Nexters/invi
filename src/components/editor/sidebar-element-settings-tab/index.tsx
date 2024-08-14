@@ -2,6 +2,7 @@
 
 import { useEditor } from "~/components/editor/provider";
 import AdvanceSetting from "~/components/editor/sidebar-element-settings-tab/advance-setting";
+import BorderSetting from "~/components/editor/sidebar-element-settings-tab/border-setting";
 import LayoutSetting from "~/components/editor/sidebar-element-settings-tab/layout-setting";
 import MapSetting from "~/components/editor/sidebar-element-settings-tab/map-setting";
 import TextSetting from "~/components/editor/sidebar-element-settings-tab/text-setting";
@@ -36,6 +37,7 @@ export default function SidebarElementSettingsTab(props: Props) {
       {selectedElement.type === "container" && (
         <>
           <LayoutSetting />
+          <BorderSetting />
         </>
       )}
 
