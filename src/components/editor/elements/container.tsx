@@ -94,7 +94,7 @@ export default function Container({ element }: Props) {
               id: nanoid(),
               name: "Text",
               styles: textDefaultStyles,
-              content: { innerText: "Text Element" },
+              content: { innerText: "여기에 내용을 입력하세요." },
             },
           },
         });
