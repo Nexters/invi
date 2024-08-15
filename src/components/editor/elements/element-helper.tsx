@@ -37,7 +37,7 @@ export default function ElementHelper() {
   };
 
   return (
-    document.body &&
+    typeof window !== "undefined" &&
     createPortal(
       !editor.state.isPreviewMode && elementRef?.current && (
         <div
