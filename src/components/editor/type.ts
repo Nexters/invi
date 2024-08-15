@@ -35,6 +35,7 @@ export type InferEditorElement<K extends EditorElementType> = Extract<
 export type EditorState = {
   elements: EditorElement[];
   selectedElement: EditorElement;
+  selectedElementRef?: React.RefObject<HTMLDivElement>;
   currentTabValue: EditorTabTypeValue;
   device: DeviceType;
   isPreviewMode: boolean;

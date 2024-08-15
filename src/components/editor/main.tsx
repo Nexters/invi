@@ -1,6 +1,7 @@
 "use client";
 
 import { EyeOff } from "lucide-react";
+import ElementHelper from "~/components/editor/elements/element-helper";
 import Recursive from "~/components/editor/elements/recursive";
 import { useEditor } from "~/components/editor/provider";
 import { Button } from "~/components/ui/button";
@@ -28,7 +29,7 @@ export default function EditorMain() {
       <div
         id="editor-main"
         className={cn(
-          "ml-[10px] mr-[392px] animate-zoom-in rounded-md bg-background transition-all",
+          "ml-[10px] mr-[392px] animate-zoom-in bg-background transition-all",
           editor.state.isPreviewMode && "m-0 overflow-hidden p-0",
           editor.state.device === "Desktop" && "h-full w-full",
           editor.state.device === "Tablet" && "h-full w-[850px]",
@@ -50,6 +51,7 @@ export default function EditorMain() {
             <Recursive key={childElement.id} element={childElement} />
           ))}
       </div>
+      <ElementHelper />
     </div>
   );
 }
