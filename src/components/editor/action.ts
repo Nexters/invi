@@ -35,7 +35,6 @@ type EditorActionMap = {
     elementDetails: EditorElement;
   };
   CHANGE_CLICKED_ELEMENT: {
-    elementRef?: React.RefObject<HTMLDivElement>;
     elementDetails?: EditorElement;
   };
   CHANGE_CURRENT_TAB_VALUE: {
@@ -320,7 +319,6 @@ const actionHandlers: {
     return updateEditorHistory(editor, {
       ...editor.state,
       selectedElement: payload.elementDetails ?? emptyElement,
-      selectedElementRef: payload.elementRef,
       currentTabValue: newTabValue,
     });
   },

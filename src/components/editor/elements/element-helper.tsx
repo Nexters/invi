@@ -7,10 +7,10 @@ import {
   GripVerticalIcon,
   Trash2Icon,
 } from "lucide-react";
-import { useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useResizeObserver } from "usehooks-ts";
 import { useEditor } from "~/components/editor/provider";
+import { isValidSelectEditorElement } from "~/components/editor/util";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
@@ -18,13 +18,30 @@ import { cn } from "~/lib/utils";
 export default function ElementHelper() {
   const { editor, dispatch } = useEditor();
   const element = editor.state.selectedElement;
-  const elementRef = editor.state.selectedElementRef;
 
-  const emptyRef = useRef<HTMLDivElement>(null);
-  const { width, height } = useResizeObserver({
-    ref: elementRef ?? emptyRef,
-    box: "border-box",
-  });
+  const [layerStyle, setLayerStyle] = useState<React.CSSProperties>({});
+
+  const updateLayerStyle = useCallback((id: string) => {
+    const el = document.querySelector(`[data-element-id="${id}"]`);
+
+    if (!el) {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      const { top, left, width, height } = el.getBoundingClientRect();
+      setLayerStyle({ top, left, width, height });
+    });
+
+    resizeObserver.observe(el, { box: "border-box" });
+    return () => {
+      resizeObserver.unobserve(el);
+    };
+  }, []);
+
+  useEffect(() => {
+    return updateLayerStyle(element.id);
+  }, [element.id, updateLayerStyle]);
 
   const handleMoveUp = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -34,6 +51,7 @@ export default function ElementHelper() {
         elementId: element.id,
       },
     });
+    updateLayerStyle(element.id);
   };
 
   const handleMoveDown = (e: React.MouseEvent) => {
@@ -44,6 +62,7 @@ export default function ElementHelper() {
         elementId: element.id,
       },
     });
+    updateLayerStyle(element.id);
   };
 
   const handleDeleteElement = () => {
@@ -58,14 +77,9 @@ export default function ElementHelper() {
   return (
     typeof window !== "undefined" &&
     createPortal(
-      !editor.state.isPreviewMode && elementRef?.current && (
+      !editor.state.isPreviewMode && isValidSelectEditorElement(element) && (
         <div
-          style={{
-            top: elementRef.current.getBoundingClientRect().top,
-            left: elementRef.current.getBoundingClientRect().left,
-            width,
-            height,
-          }}
+          style={layerStyle}
           className={cn(
             "fixed z-50",
             !editor.state.isPreviewMode && "ring-1 ring-primary",

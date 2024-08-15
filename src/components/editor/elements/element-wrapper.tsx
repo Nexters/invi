@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useEditor } from "~/components/editor/provider";
 import type { EditorElement } from "~/components/editor/type";
 import { cn } from "~/lib/utils";
@@ -16,15 +15,12 @@ export default function ElementWrapper({
   const { editor, dispatch } = useEditor();
   const isRoot = element.type === "__body";
 
-  const rootRef = useRef<HTMLDivElement>(null);
-
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
 
     dispatch({
       type: "CHANGE_CLICKED_ELEMENT",
       payload: {
-        elementRef: rootRef,
         elementDetails: element,
       },
     });
@@ -33,7 +29,7 @@ export default function ElementWrapper({
   return (
     <div
       {...props}
-      ref={rootRef}
+      data-element-id={element.id}
       style={element.styles}
       className={cn(
         "relative w-full transition-all",
