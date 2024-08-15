@@ -304,6 +304,7 @@ const actionHandlers: {
     return updateEditorHistory(editor, {
       ...editor.state,
       elements: newElements,
+      selectedElement: emptyElement,
     });
   },
 
