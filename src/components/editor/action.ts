@@ -16,6 +16,17 @@ type EditorActionMap = {
     containerId: string;
     elementDetails: EditorElement;
   };
+  MOVE_ELEMENT: {
+    elementId: string;
+    newParentId: string;
+    newIndex: number;
+  };
+  MOVE_ELEMENT_UP: {
+    elementId: string;
+  };
+  MOVE_ELEMENT_DOWN: {
+    elementId: string;
+  };
   UPDATE_ELEMENT: {
     elementDetails: EditorElement;
   };
@@ -90,6 +101,63 @@ const traverseElements = (
   }, []);
 };
 
+const findElementAndParent = (
+  elements: EditorElement[],
+  elementId: string,
+): [EditorElement | null, EditorElement | null, number] => {
+  for (const el of elements) {
+    if (el.id === elementId) {
+      return [el, null, -1];
+    }
+    if (Array.isArray(el.content)) {
+      const index = el.content.findIndex((child) => child.id === elementId);
+      if (index !== -1) {
+        return [el.content[index], el, index];
+      }
+      const [foundEl, foundParent, foundIndex] = findElementAndParent(
+        el.content,
+        elementId,
+      );
+      if (foundEl) {
+        return [foundEl, foundParent, foundIndex];
+      }
+    }
+  }
+  return [null, null, -1];
+};
+
+const removeElementFromParent = (
+  elements: EditorElement[],
+  elementId: string,
+): [EditorElement[], EditorElement | null] => {
+  let removedElement: EditorElement | null = null;
+  const newElements = elements.map((el) => {
+    if (Array.isArray(el.content)) {
+      const index = el.content.findIndex((child) => child.id === elementId);
+      if (index !== -1) {
+        removedElement = el.content[index];
+        return {
+          ...el,
+          content: [
+            ...el.content.slice(0, index),
+            ...el.content.slice(index + 1),
+          ],
+        };
+      }
+      const [newContent, removed] = removeElementFromParent(
+        el.content,
+        elementId,
+      );
+      if (removed) {
+        removedElement = removed;
+        return { ...el, content: newContent };
+      }
+    }
+    return el;
+  }) as EditorElement[];
+  return [newElements, removedElement];
+};
+
 /**
  * Action Handlers
  */
@@ -117,6 +185,79 @@ const actionHandlers: {
     return updateEditorHistory(editor, {
       ...editor.state,
       elements: newElements,
+    });
+  },
+
+  MOVE_ELEMENT: (editor, payload) => {
+    const { elementId, newParentId, newIndex } = payload;
+
+    const [elements, removedElement] = removeElementFromParent(
+      editor.state.elements,
+      elementId,
+    );
+    if (!removedElement) return editor;
+
+    const insertElement = (els: EditorElement[]): EditorElement[] => {
+      return els.map((el) => {
+        if (el.id === newParentId && Array.isArray(el.content)) {
+          const newContent = [...el.content];
+          newContent.splice(newIndex, 0, removedElement);
+          return { ...el, content: newContent };
+        }
+        if (Array.isArray(el.content)) {
+          return { ...el, content: insertElement(el.content) };
+        }
+        return el;
+      }) as EditorElement[];
+    };
+
+    const newElements = insertElement(elements);
+
+    return updateEditorHistory(editor, {
+      ...editor.state,
+      elements: newElements,
+    });
+  },
+
+  MOVE_ELEMENT_UP: (editor, payload) => {
+    const { elementId } = payload;
+    const [element, parent, currentIndex] = findElementAndParent(
+      editor.state.elements,
+      elementId,
+    );
+    if (
+      !element ||
+      !parent ||
+      !Array.isArray(parent.content) ||
+      currentIndex <= 0
+    )
+      return editor;
+
+    return actionHandlers.MOVE_ELEMENT(editor, {
+      elementId,
+      newParentId: parent.id,
+      newIndex: currentIndex - 1,
+    });
+  },
+
+  MOVE_ELEMENT_DOWN: (editor, payload) => {
+    const { elementId } = payload;
+    const [element, parent, currentIndex] = findElementAndParent(
+      editor.state.elements,
+      elementId,
+    );
+    if (
+      !element ||
+      !parent ||
+      !Array.isArray(parent.content) ||
+      currentIndex === parent.content.length - 1
+    )
+      return editor;
+
+    return actionHandlers.MOVE_ELEMENT(editor, {
+      elementId,
+      newParentId: parent.id,
+      newIndex: currentIndex + 1,
     });
   },
 

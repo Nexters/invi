@@ -7,14 +7,13 @@ import {
   GripVerticalIcon,
   Trash2Icon,
 } from "lucide-react";
+import { useRef } from "react";
 import { createPortal } from "react-dom";
+import { useResizeObserver } from "usehooks-ts";
 import { useEditor } from "~/components/editor/provider";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
-
-import { useRef } from "react";
-import { useResizeObserver } from "usehooks-ts";
 
 export default function ElementHelper() {
   const { editor, dispatch } = useEditor();
@@ -26,6 +25,26 @@ export default function ElementHelper() {
     ref: elementRef ?? emptyRef,
     box: "border-box",
   });
+
+  const handleMoveUp = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    dispatch({
+      type: "MOVE_ELEMENT_UP",
+      payload: {
+        elementId: element.id,
+      },
+    });
+  };
+
+  const handleMoveDown = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    dispatch({
+      type: "MOVE_ELEMENT_DOWN",
+      payload: {
+        elementId: element.id,
+      },
+    });
+  };
 
   const handleDeleteElement = () => {
     dispatch({
@@ -60,10 +79,10 @@ export default function ElementHelper() {
               <IconButton>
                 <GripVerticalIcon className="h-4 w-4" />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={handleMoveUp}>
                 <ArrowUpIcon className="h-4 w-4" />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={handleMoveDown}>
                 <ArrowDownIcon className="h-4 w-4" />
               </IconButton>
             </div>
