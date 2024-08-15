@@ -4,7 +4,7 @@ import {
   FontSizeIcon,
 } from "@radix-ui/react-icons";
 import { useEditor } from "~/components/editor/provider";
-import { IconInput } from "~/components/editor/ui/input";
+import { EditorInput } from "~/components/editor/ui/input";
 import TextAlignToggleGroup from "~/components/editor/ui/text-align-toggle-group";
 
 export default function TextSetting() {
@@ -41,23 +41,23 @@ export default function TextSetting() {
           />
         </div>
         <div className="col-span-8">
-          <IconInput
+          <EditorInput
             id="fontFamily"
             value={element.styles.fontFamily ?? "Pretendard"}
             onChange={handleOnChanges}
-            icon={<FontFamilyIcon />}
+            componentPrefix={<FontFamilyIcon />}
           />
         </div>
         <div className="col-span-4">
-          <IconInput
+          <EditorInput
             id="fontWeight"
             value={element.styles.fontWeight ?? "normal"}
             onChange={handleOnChanges}
-            icon={<FontBoldIcon />}
+            componentPrefix={<FontBoldIcon />}
           />
         </div>
         <div className="col-span-4">
-          <IconInput
+          <EditorInput
             id="fontSize"
             type="number"
             value={element.styles.fontSize ?? 16}
@@ -69,15 +69,15 @@ export default function TextSetting() {
                 },
               });
             }}
-            icon={<FontSizeIcon />}
+            componentPrefix={<FontSizeIcon />}
           />
         </div>
         <div className="col-span-4">
-          <IconInput
+          <EditorInput
             id="color"
             value={element.styles.color ?? "inherit"}
             onChange={handleOnChanges}
-            icon={
+            componentPrefix={
               <div
                 className="h-3.5 w-3.5 rounded ring-1 ring-border"
                 style={{ background: element.styles.color }}

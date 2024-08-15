@@ -1,7 +1,7 @@
 "use client";
 
 import { useEditor } from "~/components/editor/provider";
-import { IconInput } from "~/components/editor/ui/input";
+import { EditorInput } from "~/components/editor/ui/input";
 
 export default function BackgroundSetting() {
   const { editor, dispatch } = useEditor();
@@ -14,7 +14,7 @@ export default function BackgroundSetting() {
       </div>
       <div className="grid">
         <div className="col-span-4">
-          <IconInput
+          <EditorInput
             id="backgroundColor"
             value={element.styles.backgroundColor ?? "transparent"}
             onChange={(e) => {
@@ -23,7 +23,7 @@ export default function BackgroundSetting() {
                 payload: { backgroundColor: e.target.value },
               });
             }}
-            icon={
+            componentPrefix={
               <div
                 className="h-3.5 w-3.5 rounded ring-1 ring-border"
                 style={{ backgroundColor: element.styles.backgroundColor }}
