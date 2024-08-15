@@ -16,7 +16,7 @@ type Props = { element: EditorElement };
 
 export default function Container({ element }: Props) {
   const { id, content, type } = element;
-  const { dispatch } = useEditor();
+  const { editor, dispatch } = useEditor();
   const isRoot = type === "__body";
 
   const handleDragStart = (e: React.DragEvent) => {
@@ -126,8 +126,11 @@ export default function Container({ element }: Props) {
     <ElementWrapper
       element={element}
       className={cn(
-        "group relative h-fit w-full max-w-full p-4 transition-all",
-        isRoot && "h-full overflow-visible",
+        "h-fit w-full max-w-full",
+        isRoot && "h-full overflow-y-auto",
+        !isRoot &&
+          !editor.state.isPreviewMode &&
+          "ring-1 ring-muted hover:ring-border",
       )}
       onDrop={handleDrop}
       onDragStart={handleDragStart}

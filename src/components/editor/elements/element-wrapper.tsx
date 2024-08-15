@@ -36,7 +36,7 @@ export default function ElementWrapper({
       ref={rootRef}
       style={element.styles}
       className={cn(
-        "relative w-full p-1 transition-all",
+        "relative w-full transition-all",
         !editor.state.isPreviewMode && "ring-border hover:ring-1",
         className,
       )}
