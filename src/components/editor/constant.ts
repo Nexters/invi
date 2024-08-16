@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import type {
+  Editor,
   EditorConfig,
   EditorElement,
   EditorHistory,
@@ -62,16 +63,16 @@ export const initialEditorHistory: EditorHistory = {
   currentIndex: 0,
 };
 
-export const initialEditor = {
+export const initialEditor: Editor = {
   state: initialEditorState,
   history: initialEditorHistory,
 };
 
 const tempId = nanoid(8);
 
-export const initialEditorConfig = {
+export const initialEditorConfig: EditorConfig = {
   backLink: "./",
   invitationId: tempId,
   invitationTitle: "제목 없음",
   invitationSubdomain: tempId,
-} satisfies EditorConfig;
+};
