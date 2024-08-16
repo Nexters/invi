@@ -22,10 +22,14 @@ export type EditorProps = {
   editorConfig?: Partial<EditorConfig>;
 };
 
+export type EditorProviderProps = EditorProps & {
+  children: React.ReactNode;
+};
+
 export default function EditorProvider({
   children,
   editorConfig,
-}: EditorProps & { children: React.ReactNode }) {
+}: EditorProviderProps) {
   const [editor, dispatch] = useReducer(editorReducer, initialEditor);
 
   return (
