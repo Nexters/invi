@@ -11,8 +11,9 @@ export function middleware(request: NextRequest) {
   const searchParams = url.searchParams.toString();
   const path = `${url.pathname}${searchParams ? `?${searchParams}` : ""}`;
 
-  const isSubdomain = (str: string) =>
-    !["www", "invi", "localhost"].includes(str);
+  const isSubdomain = (str: string) => {
+    return !str.startsWith("localhost:") && !["www", "invi"].includes(str);
+  };
 
   const hostnameParts = hostname.split(".");
   const potentialSubdomain = hostnameParts[0];
