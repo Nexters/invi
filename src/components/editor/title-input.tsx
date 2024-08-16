@@ -5,9 +5,12 @@ import { debounce, delay, random } from "es-toolkit";
 import { CheckIcon, LoaderIcon, XIcon } from "lucide-react";
 import { useRef } from "react";
 import { toast } from "sonner";
+import { useEditor } from "~/components/editor/provider";
 import { cn } from "~/lib/utils";
 
 export default function TitleInput() {
+  const { editorConfig } = useEditor();
+
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const handleTitleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +74,7 @@ export default function TitleInput() {
     >
       <div className="flex items-center border-b transition focus-within:border-transparent">
         <input
-          defaultValue={"제목 없음"}
+          defaultValue={editorConfig.invitationTitle}
           onChange={debounce(handleTitleInput, 300)}
           placeholder="제목을 입력해주세요."
           className="h-9 w-full bg-transparent pl-1 pr-5 pt-0.5 text-lg font-medium placeholder:text-muted-foreground focus-visible:outline-none"

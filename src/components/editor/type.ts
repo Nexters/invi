@@ -52,4 +52,7 @@ export type Editor = {
 
 export type EditorConfig = {
   backLink: string;
+  invitationId: string;
+  invitationTitle: string;
+  invitationSubdomain: string;
 };
