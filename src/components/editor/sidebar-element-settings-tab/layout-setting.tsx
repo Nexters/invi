@@ -1,10 +1,11 @@
 "use client";
 
+import { HeightIcon, WidthIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useEditor } from "~/components/editor/provider";
 import AlignInputBox from "~/components/editor/ui/align-input-box";
 import FlexToggleGroup from "~/components/editor/ui/flex-toggle-group";
-import { IconInput } from "~/components/editor/ui/input";
+import { EditorInput } from "~/components/editor/ui/input";
 import {
   GapIcon,
   PaddingBottomIcon,
@@ -20,12 +21,49 @@ import TooltipSimple from "~/components/ui/tooltip-simple";
 
 export default function LayoutSetting() {
   return (
-    <div className="space-y-1 border-t px-6 py-4">
+    <div className="space-y-1 border-t p-6 pt-4">
       <div className="flex h-10 items-center">
         <h4 className="text-sm font-medium">레이아웃 설정</h4>
       </div>
+      <WidthHeightSection />
       <FlexBoxSection />
       <PaddingSection />
+    </div>
+  );
+}
+
+function WidthHeightSection() {
+  const { editor, dispatch } = useEditor();
+  const element = editor.state.selectedElement;
+
+  return (
+    <div className="grid w-full grid-cols-9 gap-1">
+      <div className="col-span-4 row-span-1">
+        <EditorInput
+          id="width_input"
+          value={element.styles.width}
+          onChange={(e) =>
+            dispatch({
+              type: "UPDATE_ELEMENT_STYLE",
+              payload: { width: e.target.value },
+            })
+          }
+          componentPrefix={<WidthIcon />}
+        />
+      </div>
+      <div className="col-span-4 row-span-1">
+        <EditorInput
+          id="height_input"
+          value={element.styles.height}
+          onChange={(e) =>
+            dispatch({
+              type: "UPDATE_ELEMENT_STYLE",
+              payload: { height: e.target.value },
+            })
+          }
+          componentPrefix={<HeightIcon />}
+        />
+      </div>
     </div>
   );
 }
@@ -71,7 +109,7 @@ function FlexBoxSection() {
         />
       </div>
       <div className="col-span-4 row-span-1">
-        <IconInput
+        <EditorInput
           id="gap_input"
           type="number"
           value={element.styles.gap}
@@ -81,7 +119,7 @@ function FlexBoxSection() {
               payload: { gap: e.target.valueAsNumber },
             })
           }
-          icon={<GapIcon />}
+          componentPrefix={<GapIcon />}
         />
       </div>
     </div>
@@ -110,7 +148,7 @@ function PaddingSection() {
       {!isPaddingIndividual ? (
         <>
           <div className="col-span-4 row-span-1">
-            <IconInput
+            <EditorInput
               id="px-input"
               type="number"
               value={element.styles.paddingLeft}
@@ -121,11 +159,11 @@ function PaddingSection() {
                   payload: { paddingLeft: newValue, paddingRight: newValue },
                 });
               }}
-              icon={<PaddingLeftRightIcon />}
+              componentPrefix={<PaddingLeftRightIcon />}
             />
           </div>
           <div className="col-span-4 row-span-1">
-            <IconInput
+            <EditorInput
               id="py_input"
               type="number"
               value={element.styles.paddingTop}
@@ -136,14 +174,14 @@ function PaddingSection() {
                   payload: { paddingTop: newValue, paddingBottom: newValue },
                 });
               }}
-              icon={<PaddingTopBottomIcon />}
+              componentPrefix={<PaddingTopBottomIcon />}
             />
           </div>
         </>
       ) : (
         <>
           <div className="col-span-4 row-span-1">
-            <IconInput
+            <EditorInput
               id="pl_input"
               type="number"
               value={element.styles.paddingLeft}
@@ -153,11 +191,11 @@ function PaddingSection() {
                   payload: { paddingLeft: e.target.valueAsNumber },
                 });
               }}
-              icon={<PaddingLeftIcon />}
+              componentPrefix={<PaddingLeftIcon />}
             />
           </div>
           <div className="col-span-4 row-span-1">
-            <IconInput
+            <EditorInput
               id="pt_input"
               type="number"
               value={element.styles.paddingTop}
@@ -167,7 +205,7 @@ function PaddingSection() {
                   payload: { paddingTop: e.target.valueAsNumber },
                 });
               }}
-              icon={<PaddingTopIcon />}
+              componentPrefix={<PaddingTopIcon />}
             />
           </div>
         </>
@@ -188,7 +226,7 @@ function PaddingSection() {
       {isPaddingIndividual && (
         <>
           <div className="col-span-4 row-span-1">
-            <IconInput
+            <EditorInput
               id="pr_input"
               type="number"
               value={element.styles.paddingRight}
@@ -198,11 +236,11 @@ function PaddingSection() {
                   payload: { paddingRight: e.target.valueAsNumber },
                 });
               }}
-              icon={<PaddingRightIcon />}
+              componentPrefix={<PaddingRightIcon />}
             />
           </div>
           <div className="col-span-4 row-span-1">
-            <IconInput
+            <EditorInput
               id="pb_input"
               type="number"
               value={element.styles.paddingBottom}
@@ -212,7 +250,7 @@ function PaddingSection() {
                   payload: { paddingBottom: e.target.valueAsNumber },
                 });
               }}
-              icon={<PaddingBottomIcon />}
+              componentPrefix={<PaddingBottomIcon />}
             />
           </div>
         </>

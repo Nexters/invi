@@ -4,7 +4,10 @@ import type {
   EditorState,
 } from "~/components/editor/type";
 
-export const defaultStyles: React.CSSProperties = {
+const defaultStyles: React.CSSProperties = {};
+
+export const containerDefaultStyles: React.CSSProperties = {
+  ...defaultStyles,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -13,11 +16,13 @@ export const defaultStyles: React.CSSProperties = {
   paddingRight: 10,
   paddingBottom: 10,
   paddingLeft: 10,
-  backgroundPosition: "center",
-  objectFit: "cover",
-  backgroundRepeat: "no-repeat",
+  width: "100%",
+  height: "auto",
+};
+
+export const textDefaultStyles: React.CSSProperties = {
+  ...defaultStyles,
   textAlign: "left",
-  opacity: "100%",
 };
 
 export const editorTabValue = {

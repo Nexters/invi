@@ -26,7 +26,7 @@ export default function MapSetting({ element }: Props) {
   };
 
   return (
-    <div className="border-t px-6 py-4">
+    <div className="border-t p-6 pt-4">
       <h4 className="mb-3 text-sm font-medium">주소</h4>
       <div>
         <Input
