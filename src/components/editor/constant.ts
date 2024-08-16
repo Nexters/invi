@@ -1,4 +1,5 @@
 import type {
+  EditorConfig,
   EditorElement,
   EditorHistory,
   EditorState,
@@ -64,3 +65,7 @@ export const initialEditor = {
   state: initialEditorState,
   history: initialEditorHistory,
 };
+
+export const initialEditorConfig = {
+  backLink: "./",
+} satisfies EditorConfig;

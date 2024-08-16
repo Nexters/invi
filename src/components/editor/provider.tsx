@@ -2,28 +2,30 @@
 
 import { createContext, useContext, useReducer, type Dispatch } from "react";
 import { editorReducer, type EditorAction } from "~/components/editor/action";
-import { initialEditor } from "~/components/editor/constant";
-import type { Editor } from "~/components/editor/type";
+import {
+  initialEditor,
+  initialEditorConfig,
+} from "~/components/editor/constant";
+import type { Editor, EditorConfig } from "~/components/editor/type";
 
 export const EditorContext = createContext<{
   editor: Editor;
+  editorConfig: EditorConfig;
   dispatch: Dispatch<EditorAction>;
-  pageDetails: any;
 }>({
   editor: initialEditor,
+  editorConfig: initialEditorConfig,
   dispatch: () => undefined,
-  pageDetails: null,
 });
 
-export type EditorProviderProps = {
-  pageDetails: any;
+export type EditorProps = {
+  editorConfig?: Partial<EditorConfig>;
 };
 
-export default function EditorProvider(
-  props: {
-    children: React.ReactNode;
-  } & EditorProviderProps,
-) {
+export default function EditorProvider({
+  children,
+  editorConfig,
+}: EditorProps & { children: React.ReactNode }) {
   const [editor, dispatch] = useReducer(editorReducer, initialEditor);
 
   return (
@@ -31,10 +33,10 @@ export default function EditorProvider(
       value={{
         editor,
         dispatch,
-        pageDetails: props.pageDetails,
+        editorConfig: { ...initialEditorConfig, ...editorConfig },
       }}
     >
-      {props.children}
+      {children}
     </EditorContext.Provider>
   );
 }

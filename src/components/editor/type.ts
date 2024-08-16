@@ -49,3 +49,7 @@ export type Editor = {
   state: EditorState;
   history: EditorHistory;
 };
+
+export type EditorConfig = {
+  backLink: string;
+};

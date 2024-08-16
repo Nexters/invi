@@ -29,12 +29,8 @@ import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import TooltipSimple from "~/components/ui/tooltip-simple";
 import { cn } from "~/lib/utils";
 
-type Props = {
-  backLink?: string;
-};
-
-export default function EditorNavigation({ backLink = "./" }: Props) {
-  const { editor, dispatch } = useEditor();
+export default function EditorNavigation() {
+  const { editor, editorConfig, dispatch } = useEditor();
   const { openDialog } = useAlertDialogStore();
 
   const handlePreviewClick = () => {
@@ -81,7 +77,7 @@ export default function EditorNavigation({ backLink = "./" }: Props) {
     >
       <aside className="flex items-center gap-6">
         <Button asChild variant="ghost" size="icon">
-          <Link href={backLink}>
+          <Link href={editorConfig.backLink}>
             <ArrowLeftIcon />
           </Link>
         </Button>
