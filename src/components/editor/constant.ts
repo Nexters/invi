@@ -25,6 +25,11 @@ export const textDefaultStyles: React.CSSProperties = {
   textAlign: "left",
 };
 
+export const kakaoMapDefaultStyles: React.CSSProperties = {
+  ...defaultStyles,
+  textAlign: "center",
+};
+
 export const editorTabValue = {
   ELEMENTS: "Elements",
   SETTINGS: "Settings",

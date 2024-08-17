@@ -1,11 +1,10 @@
 import React from "react";
-import {
+import KakaoMapPlaceholder, {
   ContainerPlaceholder,
   MapPlaceholder,
   TextPlaceholder,
   TwoColumnsPlaceholder,
 } from "~/components/editor/placeholders";
-import KakaoMapPlaceholder from "~/components/editor/elements/kakao-map-placeholder";
 import type { EditorElementType } from "~/components/editor/type";
 import {
   Accordion,
@@ -47,9 +46,9 @@ export default function SidebarElementsTab(props: Props) {
       group: "elements",
     },
     {
-      Component: <KakaoMapPlaceholder />,
       label: "KaKao Map",
       id: "kakaoMap",
+      Component: <KakaoMapPlaceholder />,
       group: "elements",
     },
     {

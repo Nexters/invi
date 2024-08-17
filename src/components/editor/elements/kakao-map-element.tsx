@@ -1,13 +1,11 @@
 "use client";
 
-import { Trash } from "lucide-react";
 import React, { useEffect, useRef } from "react";
 import { useEditor } from "~/components/editor/provider";
-import type { EditorElement } from "~/components/editor/type";
-import { Badge } from "~/components/ui/badge";
+import type { InferEditorElement } from "~/components/editor/type";
 
 type Props = {
-  element: EditorElement;
+  element: InferEditorElement<"kakaoMap">;
   level?: number;
   addCenterPin?: boolean;
   latitude?: number;
@@ -25,15 +23,15 @@ export default function KakaoMapElement({
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
-  const elementContent = element.content as { location?: [number, number] };
+  const elementContent = element.content;
 
   useEffect(() => {
     if (!mapRef.current) return;
 
     const initializeMap = () => {
       const center = new window.kakao.maps.LatLng(
-        latitude ?? elementContent.location![0],
-        longitude ?? elementContent.location![1],
+        latitude ?? elementContent.location.latitude,
+        longitude ?? elementContent.location.longitude,
       );
 
       const mapInstance = new window.kakao.maps.Map(
@@ -61,8 +59,8 @@ export default function KakaoMapElement({
   useEffect(() => {
     if (mapInstanceRef.current) {
       const newCenter = new window.kakao.maps.LatLng(
-        elementContent.location![0],
-        elementContent.location![1],
+        elementContent.location.latitude,
+        elementContent.location.longitude,
       );
       mapInstanceRef.current.setCenter(newCenter);
 
@@ -91,20 +89,6 @@ export default function KakaoMapElement({
   //WE ARE NOT ADDING DRAG DROP
   return (
     <div className={"relative h-[250px] w-full"}>
-      {isSelected && !editor.state.isPreviewMode && (
-        <>
-          <Badge className="absolute -left-[1px] -top-[23px] rounded-none rounded-t-lg">
-            {editor.state.selectedElement.name}
-          </Badge>
-          <div className="absolute -right-[1px] -top-[25px] z-50 rounded-none rounded-t-lg bg-primary px-2.5 py-1 text-white">
-            <Trash
-              className="cursor-pointer"
-              size={16}
-              onClick={handleDeleteElement}
-            />
-          </div>
-        </>
-      )}
       <div style={{ height: "250px" }} onClick={handleOnClickBody}>
         <div ref={mapRef} style={{ width: "100%", height: "100%" }} />
       </div>

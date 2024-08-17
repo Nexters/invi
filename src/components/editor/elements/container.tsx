@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import React from "react";
 import {
   containerDefaultStyles,
+  kakaoMapDefaultStyles,
   textDefaultStyles,
 } from "~/components/editor/constant";
 import ElementWrapper from "~/components/editor/elements/element-wrapper";
@@ -106,17 +107,17 @@ export default function Container({ element }: Props) {
             containerId: id,
             elementDetails: {
               content: {
-                location: [37.566828, 126.9786567],
-                address: "",
+                location: {
+                  latitude: 37.566828,
+                  longitude: 126.9786567,
+                },
+                address: "서울 중구 세종대로 110 서울특별시청",
                 isMapUse: true,
                 isShareUse: true,
               },
               id: nanoid(),
               name: "KaKao Map",
-              styles: {
-                width: "100%",
-                ...defaultStyles,
-              },
+              styles: kakaoMapDefaultStyles,
               type: "kakaoMap",
             },
           },

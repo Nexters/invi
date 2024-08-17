@@ -7,7 +7,7 @@ type MapType = "naver" | "kakao";
 type MapUrls = Record<MapType, string>;
 
 type Props = {
-  element: InferEditorElement<"map">;
+  element: InferEditorElement<"kakaoMap">;
 };
 
 const MapShareComponents = ({ element }: Props) => {

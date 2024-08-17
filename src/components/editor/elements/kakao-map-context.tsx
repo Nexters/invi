@@ -6,11 +6,12 @@ import { createContext, useContext, useState } from "react";
 export interface Coordinate {
   latitude: number;
   longitude: number;
+  address: string;
 }
 
 interface KakaoAddressContextType {
   coordinate: Coordinate;
-  setCoordinate: (latitude: number, longitude: number) => void;
+  setCoordinate: (latitude: number, longitude: number, address: string) => void;
 }
 
 const KakaoAddressContext = createContext<KakaoAddressContextType | undefined>(
@@ -21,11 +22,15 @@ export function KakaoAddressProvider({ children }: { children: ReactNode }) {
   const [coordinate, setCoordinateState] = useState<Coordinate>({
     latitude: 37.566828,
     longitude: 126.9786567,
-    address: "",
+    address: "서울 중구 세종대로 110 서울특별시청",
   });
 
-  const setCoordinate = (latitude: number, longitude: number) => {
-    setCoordinateState({ latitude, longitude });
+  const setCoordinate = (
+    latitude: number,
+    longitude: number,
+    address: string,
+  ) => {
+    setCoordinateState({ latitude, longitude, address });
   };
 
   return (

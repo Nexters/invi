@@ -30,6 +30,7 @@ type EditorActionMap = {
   UPDATE_ELEMENT: {
     elementDetails: EditorElement;
   };
+
   UPDATE_ELEMENT_STYLE: React.CSSProperties;
   DELETE_ELEMENT: {
     elementDetails: EditorElement;

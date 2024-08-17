@@ -41,7 +41,7 @@ export default function ElementHelper() {
 
   useEffect(() => {
     return updateLayerStyle(element.id);
-  }, [element.id, updateLayerStyle]);
+  }, [element.id, updateLayerStyle, element.content]);
 
   const handleMoveUp = (e: React.MouseEvent) => {
     e.stopPropagation();
