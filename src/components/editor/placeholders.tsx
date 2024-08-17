@@ -60,3 +60,11 @@ export function ContainerPlaceholder() {
     </Placeholder>
   );
 }
+
+export default function KakaoMapPlaceholder() {
+  return (
+    <Placeholder type="kakaoMap">
+      <MapIcon size={40} className="text-muted-foreground" />
+    </Placeholder>
+  );
+}

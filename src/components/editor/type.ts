@@ -11,6 +11,15 @@ type EditorElementContentMap = {
   "2Col": EditorElement[];
   text: { innerText: string };
   image: { src: string; alt?: string };
+  kakaoMap: {
+    address: string;
+    location: {
+      latitude: number;
+      longitude: number;
+    };
+    isMapUse: boolean;
+    isShareUse: boolean;
+  };
   map: { address: string };
   empty: [];
 };
