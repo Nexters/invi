@@ -1,4 +1,4 @@
-import { MapIcon, TypeIcon } from "lucide-react";
+import { ImageIcon, MapIcon, TypeIcon } from "lucide-react";
 import type { EditorElementType } from "~/components/editor/type";
 import { cn } from "~/lib/utils";
 
@@ -57,6 +57,14 @@ export function ContainerPlaceholder() {
   return (
     <Placeholder type="container">
       <div className="h-full w-full rounded-sm border-[1px] border-dashed border-muted-foreground/50 bg-muted" />
+    </Placeholder>
+  );
+}
+
+export function ImagePlaceholder() {
+  return (
+    <Placeholder type="image">
+      <ImageIcon size={40} className="text-muted-foreground" />
     </Placeholder>
   );
 }

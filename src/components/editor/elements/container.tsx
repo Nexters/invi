@@ -99,6 +99,21 @@ export default function Container({ element }: Props) {
           },
         });
         break;
+      case "image":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              type: "image",
+              id: nanoid(),
+              name: "Image",
+              styles: {},
+              content: { src: "test" },
+            },
+          },
+        });
+        break;
       case "map":
         dispatch({
           type: "ADD_ELEMENT",

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   ContainerPlaceholder,
+  ImagePlaceholder,
   MapPlaceholder,
   TextPlaceholder,
   TwoColumnsPlaceholder,
@@ -43,6 +44,12 @@ export default function SidebarElementsTab(props: Props) {
       id: "text",
       label: "Text",
       Component: <TextPlaceholder />,
+      group: "elements",
+    },
+    {
+      id: "image",
+      label: "Image",
+      Component: <ImagePlaceholder />,
       group: "elements",
     },
     {
