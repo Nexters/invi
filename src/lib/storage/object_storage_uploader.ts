@@ -19,28 +19,17 @@ const objectStorageClient = new S3Client({
 });
 
 
-async function uploadToObjectStorage(file_path: string) {
+async function uploadToObjectStorage(filePath: string) {
   try {
-    const folderName = "sample-folder/";
+    const fileStream = createReadStream(filePath);
     await objectStorageClient.send(
       new PutObjectCommand({
         Bucket: bucket_name,
-        Key: folderName,
-      })
-    );
-    console.log(`Folder created: ${folderName}`);
-
-    const fileName = "static/테스트.txt";
-    const fileStream = createReadStream(file_path);
-    await objectStorageClient.send(
-      new PutObjectCommand({
-        Bucket: bucket_name,
-        Key: fileName,
+        Key: filePath,
         ACL: "public-read",
         Body: fileStream as Readable,
       })
     );
-    console.log(`File uploaded: ${fileName}`);
   } catch (error) {
     console.error("Error:", error);
   }
