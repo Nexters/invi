@@ -22,6 +22,7 @@ type EditorElementContentMap = {
   };
   map: { address: string };
   blank: {};
+  empty: {};
 };
 
 export type EditorElementType = keyof EditorElementContentMap;
