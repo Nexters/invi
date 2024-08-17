@@ -119,7 +119,7 @@ export default function EditorNavigation() {
           </Button>
           <Button
             disabled={
-              !(editor.history.currentIndex < editor.history.history.length - 1)
+              !(editor.history.currentIndex < editor.history.list.length - 1)
             }
             onClick={handleRedo}
             variant="ghost"

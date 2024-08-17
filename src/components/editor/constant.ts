@@ -61,7 +61,7 @@ export const initialEditorState: EditorState = {
 };
 
 export const initialEditorHistory: EditorHistory = {
-  history: [initialEditorData],
+  list: [initialEditorData],
   currentIndex: 0,
 };
 

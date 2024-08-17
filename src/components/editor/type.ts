@@ -42,7 +42,7 @@ export type EditorState = {
 export type EditorData = EditorElement[];
 
 export type EditorHistory = {
-  history: EditorData[];
+  list: EditorData[];
   currentIndex: number;
 };
 

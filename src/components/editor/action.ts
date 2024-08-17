@@ -68,8 +68,8 @@ const updateEditorHistory = (
   data: newData,
   history: {
     ...editor.history,
-    history: [
-      ...editor.history.history.slice(0, editor.history.currentIndex + 1),
+    list: [
+      ...editor.history.list.slice(0, editor.history.currentIndex + 1),
       { ...newData },
     ],
     currentIndex: editor.history.currentIndex + 1,
@@ -338,11 +338,11 @@ const actionHandlers: {
   },
 
   REDO: (editor) => {
-    if (editor.history.currentIndex < editor.history.history.length - 1) {
+    if (editor.history.currentIndex < editor.history.list.length - 1) {
       const nextIndex = editor.history.currentIndex + 1;
       return {
         ...editor,
-        data: { ...editor.history.history[nextIndex] },
+        data: { ...editor.history.list[nextIndex] },
         history: {
           ...editor.history,
           currentIndex: nextIndex,
@@ -357,7 +357,7 @@ const actionHandlers: {
       const prevIndex = editor.history.currentIndex - 1;
       return {
         ...editor,
-        data: { ...editor.history.history[prevIndex] },
+        data: { ...editor.history.list[prevIndex] },
         history: {
           ...editor.history,
           currentIndex: prevIndex,
