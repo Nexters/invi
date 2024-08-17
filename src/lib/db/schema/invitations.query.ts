@@ -34,7 +34,7 @@ export async function getInvitationsByUserId(
     .where(eq(invitations.userId, userId));
 }
 
-async function updateInvitation(params: UpdateInvitationParams) {
+export async function updateInvitation(params: UpdateInvitationParams) {
   const { id, ...updates } = params;
 
   if (!id) {
@@ -55,7 +55,7 @@ async function updateInvitation(params: UpdateInvitationParams) {
   }
 }
 
-async function existsByEventUrl(eventUrl: string) {
+export async function existsByEventUrl(eventUrl: string) {
   try {
     const result = await db
       .select({ count: count() })
