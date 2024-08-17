@@ -53,7 +53,10 @@ export const initialEditorData: EditorData = [
     content: [],
     id: "__body",
     name: "Body",
-    styles: {},
+    styles: {
+      paddingLeft: 28,
+      paddingRight: 28,
+    },
     type: "__body",
   },
 ];

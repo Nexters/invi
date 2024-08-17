@@ -54,7 +54,8 @@ export default function SidebarElementSettingsTab(props: Props) {
           </>
         )}
 
-        {(selectedElement.type === "container" ||
+        {(selectedElement.type === "__body" ||
+          selectedElement.type === "container" ||
           selectedElement.type === "2Col") && (
           <>
             <LayoutSetting />
