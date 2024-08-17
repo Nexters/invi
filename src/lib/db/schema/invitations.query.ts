@@ -2,6 +2,7 @@
 
 import { count, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { getAuth } from "~/lib/auth/utils";
 import { db } from "~/lib/db";
 import {
   invitations,
@@ -11,7 +12,7 @@ import {
 
 type CreateInvitationParams = Omit<
   InvitationInsert,
-  "id" | "eventUrl" | "createdAt" | "updatedAt"
+  "id" | "userId" | "eventUrl" | "createdAt" | "updatedAt"
 >;
 
 type UpdateInvitationParams = {
@@ -41,13 +42,15 @@ export async function getInvitationByEventUrl(eventUrl: string) {
   return responses[0];
 }
 
-export async function getInvitationsByUserId(
-  userId: Invitation["userId"],
-): Promise<Invitation[]> {
+export async function getInvitationsByUserId(): Promise<Invitation[]> {
+  const sessionId = await getAuth();
+  const sessionUserId = sessionId.session.userId;
+  console.log(sessionUserId);
+
   return await db
     .select()
     .from(invitations)
-    .where(eq(invitations.userId, userId));
+    .where(eq(invitations.userId, sessionUserId));
 }
 
 export async function createInvitation(
@@ -55,6 +58,8 @@ export async function createInvitation(
 ): Promise<InvitationInsert> {
   const id = nanoid();
   const currentTimestamp = new Date();
+  const sessionId = await getAuth();
+  const sessionUserId = sessionId.session.userId;
 
   try {
     const res = await db
@@ -62,6 +67,7 @@ export async function createInvitation(
       .values({
         ...params,
         id,
+        userId: sessionUserId,
         eventUrl: id,
         createdAt: currentTimestamp,
         updatedAt: currentTimestamp,
@@ -80,6 +86,7 @@ export async function updateInvitation(params: UpdateInvitationParams) {
   if (!id) {
     throw new Error("ID is required to update an invitation");
   }
+  console.log(updates);
 
   try {
     await db

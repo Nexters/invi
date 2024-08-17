@@ -13,6 +13,7 @@ import {
   Undo2,
 } from "lucide-react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import TitleInput from "~/components/editor/title-input";
@@ -27,11 +28,14 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import TooltipSimple from "~/components/ui/tooltip-simple";
+import { updateInvitation } from "~/lib/db/schema/invitations.query";
 import { cn } from "~/lib/utils";
 
 export default function EditorNavigation() {
   const { editor, editorConfig, dispatch } = useEditor();
   const { openDialog } = useAlertDialogStore();
+  const params = useParams();
+  const subDomain = params.subdomain;
 
   const handlePreviewClick = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
@@ -48,9 +52,11 @@ export default function EditorNavigation() {
   const handleOnSave = async () => {
     try {
       const content = JSON.stringify(editor.data);
-      console.log(":content", content);
-      // TODO: API insert page
-      // TODO: API log notification
+      await updateInvitation({
+        id: subDomain,
+        title: editorConfig.invitationTitle,
+        customFields: content,
+      });
       toast.success("Saved Editor");
     } catch (error) {
       console.error(error);

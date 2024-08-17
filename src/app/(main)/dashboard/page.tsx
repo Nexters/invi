@@ -25,8 +25,9 @@ export default async function Page() {
   if (!auth.user) {
     return redirect("/sign-in");
   }
-  const invitations = await getInvitationsByUserId(auth.user.id);
+  const invitations = await getInvitationsByUserId();
 
+  console.log(invitations);
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
       {/* header */}

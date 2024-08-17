@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { debounce, delay, random } from "es-toolkit";
+import { debounce, delay } from "es-toolkit";
 import { CheckIcon, LoaderIcon, XIcon } from "lucide-react";
 import { useRef } from "react";
 import { toast } from "sonner";
@@ -45,11 +45,7 @@ export default function TitleInput() {
       if (signal.aborted) {
         return;
       }
-
-      if (random(0, 1) > 0.5) {
-        throw new Error("Failed to update title");
-      }
-
+      editorConfig.invitationTitle = value;
       delayMutation.mutate();
     },
     onError: () => {
