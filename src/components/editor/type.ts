@@ -23,6 +23,7 @@ type EditorElementContentMap = {
   map: { address: string };
   blank: {};
   empty: {};
+  logoBanner: {};
 };
 
 export type EditorElementType = keyof EditorElementContentMap;

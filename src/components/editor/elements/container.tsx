@@ -182,6 +182,24 @@ export default function Container({ element }: Props) {
           },
         });
         break;
+      case "logoBanner":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              type: "logoBanner",
+              id: nanoid(),
+              name: "logoBanner",
+              styles: {
+                height: 69,
+                color: "#22222250",
+              },
+              content: {},
+            },
+          },
+        });
+        break;
     }
   };
 
