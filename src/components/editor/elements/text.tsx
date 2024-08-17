@@ -13,8 +13,8 @@ export default function Text({ element }: Props) {
 
   return (
     <ElementWrapper element={element}>
-      <span
-        className="outline-none"
+      <p
+        className="w-full outline-none"
         contentEditable={!editor.state.isPreviewMode}
         suppressContentEditableWarning={true}
         onBlur={(e) => {
@@ -33,7 +33,7 @@ export default function Text({ element }: Props) {
         }}
       >
         {!Array.isArray(element.content) && element.content.innerText}
-      </span>
+      </p>
     </ElementWrapper>
   );
 }
