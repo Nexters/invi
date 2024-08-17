@@ -1,12 +1,14 @@
 "use server";
 
-import { count, eq } from "drizzle-orm";
+import { count, eq, getTableColumns } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { cookies } from "next/headers";
 import { db } from "~/lib/db";
+import { sessions } from "~/lib/db/schema/auth";
 import {
-  invitations,
   type Invitation,
   type InvitationInsert,
+  invitations,
 } from "~/lib/db/schema/invitations";
 
 type CreateInvitationParams = Omit<
@@ -41,13 +43,28 @@ export async function getInvitationByEventUrl(eventUrl: string) {
   return responses[0];
 }
 
-export async function getInvitationsByUserId(
-  userId: Invitation["userId"],
-): Promise<Invitation[]> {
-  return await db
-    .select()
-    .from(invitations)
-    .where(eq(invitations.userId, userId));
+export async function getInvitations(): Promise<Invitation[]> {
+  const cookie = cookies();
+  const sessionCookie = cookie.get("auth_session");
+
+  if (!sessionCookie) {
+    return [];
+  }
+
+  const sessionId = sessionCookie.value;
+
+  try {
+    const result = await db
+      .select(getTableColumns(invitations))
+      .from(invitations)
+      .leftJoin(sessions, eq(sessions.userId, invitations.userId))
+      .where(eq(sessions.id, sessionId));
+
+    return result;
+  } catch (error) {
+    console.error("Error fetching invitations:", error);
+    return [];
+  }
 }
 
 export async function createInvitation(
