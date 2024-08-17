@@ -8,7 +8,6 @@ type Props = {
   element: EditorElement;
 };
 export default function KakaoMap({ element }: Props) {
-  console.log(element);
   return (
     <KakaoAddressProvider>
       {element.content.isMapUse && <KakaoMapElement element={element} />}
