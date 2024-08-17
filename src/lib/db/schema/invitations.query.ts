@@ -2,7 +2,7 @@
 
 import { count, eq } from "drizzle-orm";
 import { db } from "~/lib/db";
-import { invitations } from "~/lib/db/schema/invitations";
+import { invitations, type Invitation } from "~/lib/db/schema/invitations";
 
 type UpdateInvitationParams = {
   id: string;
@@ -12,6 +12,18 @@ type UpdateInvitationParams = {
   eventUrl?: string;
   customFields?: Record<string, any>;
 };
+
+export async function getAllInvitations() {
+  return await db.select().from(invitations);
+}
+
+export async function getInvitationById(id: Invitation["id"]) {
+  const responses = await db
+    .select()
+    .from(invitations)
+    .where(eq(invitations.id, id));
+  return responses[0];
+}
 
 async function updateInvitation(params: UpdateInvitationParams) {
   const { id, ...updates } = params;
