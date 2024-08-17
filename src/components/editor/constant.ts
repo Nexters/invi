@@ -1,4 +1,8 @@
+import { nanoid } from "nanoid";
 import type {
+  Editor,
+  EditorConfig,
+  EditorData,
   EditorElement,
   EditorHistory,
   EditorState,
@@ -44,16 +48,17 @@ export const emptyElement = {
   type: "empty",
 } satisfies EditorElement;
 
+export const initialEditorData: EditorData = [
+  {
+    content: [],
+    id: "__body",
+    name: "Body",
+    styles: {},
+    type: "__body",
+  },
+];
+
 export const initialEditorState: EditorState = {
-  elements: [
-    {
-      content: [],
-      id: "__body",
-      name: "Body",
-      styles: {},
-      type: "__body",
-    },
-  ],
   selectedElement: emptyElement,
   currentTabValue: editorTabValue.ELEMENTS,
   device: "Mobile",
@@ -61,11 +66,21 @@ export const initialEditorState: EditorState = {
 };
 
 export const initialEditorHistory: EditorHistory = {
-  history: [initialEditorState],
+  list: [initialEditorData],
   currentIndex: 0,
 };
 
-export const initialEditor = {
+export const initialEditor: Editor = {
   state: initialEditorState,
   history: initialEditorHistory,
+  data: initialEditorData,
+};
+
+const tempId = nanoid(8);
+
+export const initialEditorConfig: EditorConfig = {
+  backLink: "./",
+  invitationId: tempId,
+  invitationTitle: "제목 없음",
+  invitationSubdomain: tempId,
 };

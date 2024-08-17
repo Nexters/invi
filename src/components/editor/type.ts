@@ -42,19 +42,28 @@ export type InferEditorElement<K extends EditorElementType> = Extract<
 >;
 
 export type EditorState = {
-  elements: EditorElement[];
   selectedElement: EditorElement;
   currentTabValue: EditorTabTypeValue;
   device: DeviceType;
   isPreviewMode: boolean;
 };
 
+export type EditorData = EditorElement[];
+
 export type EditorHistory = {
-  history: EditorState[];
+  list: EditorData[];
   currentIndex: number;
 };
 
 export type Editor = {
   state: EditorState;
   history: EditorHistory;
+  data: EditorData;
+};
+
+export type EditorConfig = {
+  backLink: string;
+  invitationId: string;
+  invitationTitle: string;
+  invitationSubdomain: string;
 };
