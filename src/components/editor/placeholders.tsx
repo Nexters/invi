@@ -64,7 +64,7 @@ export function ContainerPlaceholder() {
 export default function KakaoMapPlaceholder() {
   return (
     <Placeholder type="kakaoMap">
-      <div>K</div>
+      <MapIcon size={40} className="text-muted-foreground" />
     </Placeholder>
   );
 }

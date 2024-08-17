@@ -1,7 +1,6 @@
 import React from "react";
 import KakaoMapPlaceholder, {
   ContainerPlaceholder,
-  MapPlaceholder,
   TextPlaceholder,
   TwoColumnsPlaceholder,
 } from "~/components/editor/placeholders";
@@ -46,15 +45,9 @@ export default function SidebarElementsTab(props: Props) {
       group: "elements",
     },
     {
-      label: "KaKao Map",
+      label: "Map",
       id: "kakaoMap",
       Component: <KakaoMapPlaceholder />,
-      group: "elements",
-    },
-    {
-      id: "map",
-      label: "map",
-      Component: <MapPlaceholder />,
       group: "elements",
     },
   ];
