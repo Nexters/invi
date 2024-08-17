@@ -18,7 +18,12 @@ export default function ElementHelper() {
   const { editor, dispatch } = useEditor();
   const element = editor.state.selectedElement;
 
-  const [layerStyle, setLayerStyle] = useState<React.CSSProperties>({});
+  const [layerStyle, setLayerStyle] = useState<{
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  }>();
 
   const updateLayerStyle = useCallback((id: string) => {
     const el = document.querySelector(`[data-element-id="${id}"]`);
@@ -76,57 +81,59 @@ export default function ElementHelper() {
   return (
     typeof window !== "undefined" &&
     createPortal(
-      !editor.state.isPreviewMode && isValidSelectEditorElement(element) && (
-        <div
-          style={{
-            top: layerStyle.top,
-            left: layerStyle.left,
-            width: layerStyle.width,
-            height: 0,
-          }}
-          className="fixed z-50"
-        >
-          <div className="absolute left-0 right-0 top-0 z-10 h-[1px] bg-primary" />
+      !editor.state.isPreviewMode &&
+        layerStyle &&
+        isValidSelectEditorElement(element) && (
           <div
-            style={{ top: layerStyle.height }}
-            className="absolute left-0 right-0 top-0 z-10 h-[1px] bg-primary"
-          />
-          <div
-            style={{ height: layerStyle.height }}
-            className="absolute left-0 top-0 z-10 w-[1px] bg-primary"
-          />
-          <div
-            style={{ height: layerStyle.height }}
-            className="absolute right-0 top-0 z-10 w-[1px] bg-primary"
-          />
-          <Badge className="absolute -left-[1px] -top-[26px] z-10">
-            {element.name}
-          </Badge>
-          <div className="absolute -left-[28px] -top-[1px] z-10">
-            <div className="flex flex-col gap-0.5">
-              <IconButton>
-                <GripVerticalIcon className="h-4 w-4" />
-              </IconButton>
-              <IconButton onClick={handleMoveUp}>
-                <ArrowUpIcon className="h-4 w-4" />
-              </IconButton>
-              <IconButton onClick={handleMoveDown}>
-                <ArrowDownIcon className="h-4 w-4" />
-              </IconButton>
+            style={{
+              top: layerStyle.top,
+              left: layerStyle.left,
+              width: layerStyle.width,
+              height: 0,
+            }}
+            className="fixed z-50"
+          >
+            <div className="absolute left-0 right-0 top-0 z-10 h-[1px] bg-primary" />
+            <div
+              style={{ top: layerStyle.height - 1 }}
+              className="absolute left-0 right-0 top-0 z-10 h-[1px] bg-primary"
+            />
+            <div
+              style={{ height: layerStyle.height }}
+              className="absolute left-0 top-0 z-10 w-[1px] bg-primary"
+            />
+            <div
+              style={{ height: layerStyle.height }}
+              className="absolute right-0 top-0 z-10 w-[1px] bg-primary"
+            />
+            <Badge className="absolute -left-[1px] -top-[26px] z-10">
+              {element.name}
+            </Badge>
+            <div className="absolute -left-[28px] -top-[1px] z-10">
+              <div className="flex flex-col gap-0.5">
+                <IconButton>
+                  <GripVerticalIcon className="h-4 w-4" />
+                </IconButton>
+                <IconButton onClick={handleMoveUp}>
+                  <ArrowUpIcon className="h-4 w-4" />
+                </IconButton>
+                <IconButton onClick={handleMoveDown}>
+                  <ArrowDownIcon className="h-4 w-4" />
+                </IconButton>
+              </div>
+            </div>
+            <div className="absolute -right-[28px] -top-[1px] z-10">
+              <div className="flex flex-col gap-0.5">
+                <IconButton onClick={handleDeleteElement}>
+                  <Trash2Icon className="h-4 w-4" />
+                </IconButton>
+                <IconButton>
+                  <CopyPlusIcon className="h-4 w-4" />
+                </IconButton>
+              </div>
             </div>
           </div>
-          <div className="absolute -right-[28px] -top-[1px] z-10">
-            <div className="flex flex-col gap-0.5">
-              <IconButton onClick={handleDeleteElement}>
-                <Trash2Icon className="h-4 w-4" />
-              </IconButton>
-              <IconButton>
-                <CopyPlusIcon className="h-4 w-4" />
-              </IconButton>
-            </div>
-          </div>
-        </div>
-      ),
+        ),
       document.body,
     )
   );
