@@ -13,7 +13,10 @@ async function getPlaygroundRoutes() {
         const fullPath = path.join(playgroundDir, entry.name);
         const files = await fs.readdir(fullPath);
         if (files.includes("page.tsx")) {
-          return `/pg/${entry.name}`;
+          const entryName = entry.name
+            .replaceAll("[", "_")
+            .replaceAll("]", "_");
+          return `/pg/${entryName}`;
         }
         return null;
       }),
