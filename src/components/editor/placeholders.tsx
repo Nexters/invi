@@ -69,7 +69,7 @@ export function ImagePlaceholder() {
   );
 }
 
-export default function KakaoMapPlaceholder() {
+export function KakaoMapPlaceholder() {
   return (
     <Placeholder type="kakaoMap">
       <MapIcon size={40} className="text-muted-foreground" />
