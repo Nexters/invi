@@ -18,8 +18,8 @@ export default function ImageSetting({
         <div className="col-span-8">
           <EditorInput
             id="image_src"
-            value={element.content.src}
-            onChange={(e) => {
+            defaultValue={element.content.src}
+            onDebounceChange={(e) => {
               dispatch({
                 type: "UPDATE_ELEMENT",
                 payload: {
@@ -36,8 +36,8 @@ export default function ImageSetting({
         <div className="col-span-4 row-span-1">
           <EditorInput
             id="image_width"
-            value={element.styles.width}
-            onChange={(e) =>
+            defaultValue={element.styles.width}
+            onDebounceChange={(e) =>
               dispatch({
                 type: "UPDATE_ELEMENT_STYLE",
                 payload: { width: e.target.value },
@@ -49,8 +49,8 @@ export default function ImageSetting({
         <div className="col-span-4 row-span-1">
           <EditorInput
             id="image_height"
-            value={element.styles.height}
-            onChange={(e) =>
+            defaultValue={element.styles.height}
+            onDebounceChange={(e) =>
               dispatch({
                 type: "UPDATE_ELEMENT_STYLE",
                 payload: { height: e.target.value },
