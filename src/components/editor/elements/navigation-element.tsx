@@ -7,13 +7,11 @@ type MapType = "naver" | "kakao";
 type MapUrls = Record<MapType, string>;
 
 type Props = {
-  element: InferEditorElement<"kakaoMap">;
+  element: InferEditorElement<"navigation">;
 };
 
-const MapShareComponents = ({ element }: Props) => {
-  const { content } = element;
-  const address =
-    !Array.isArray(content) && content.address ? content.address : "";
+export default function NavigationElement({ element }: Props) {
+  const { address } = element.content;
 
   const openMap = (mapType: MapType, address: string) => {
     const mapUrls: MapUrls = {
@@ -47,19 +45,15 @@ const MapShareComponents = ({ element }: Props) => {
 
   return (
     <ElementWrapper element={element}>
-      <article className="flex gap-x-3">
-        <button onClick={() => openMap("naver", address)}>
-          <Image src="/naver-map.png" alt="naver-map" width={42} height={42} />
-        </button>
-        <button onClick={() => openMap("kakao", address)}>
-          <Image src="/kakao-map.png" alt="kakao-map" width={42} height={42} />
-        </button>
-        <button onClick={() => handleCopy(address)}>
-          <Image src="/copy.png" alt="copy" width={42} height={42} />
-        </button>
-      </article>
+      <button onClick={() => openMap("naver", address)}>
+        <Image src="/naver-map.png" alt="naver-map" width={42} height={42} />
+      </button>
+      <button onClick={() => openMap("kakao", address)}>
+        <Image src="/kakao-map.png" alt="kakao-map" width={42} height={42} />
+      </button>
+      <button onClick={() => handleCopy(address)}>
+        <Image src="/copy.png" alt="copy" width={42} height={42} />
+      </button>
     </ElementWrapper>
   );
-};
-
-export default MapShareComponents;
+}
