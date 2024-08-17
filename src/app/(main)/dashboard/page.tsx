@@ -1,6 +1,7 @@
 import { GearIcon } from "@radix-ui/react-icons";
 import { ChevronRightIcon, CircleIcon } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import ProfileDropDown from "~/components/profile-dropdown";
 import { Button } from "~/components/ui/button";
 import {
@@ -10,9 +11,21 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { getAuth } from "~/lib/auth/utils";
+import { getInvitationsByUserId } from "~/lib/db/schema/invitations.query";
+
+const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}/${month}/${day}`;
+};
 
 export default async function Page() {
   const auth = await getAuth();
+  if (!auth.user) {
+    return redirect("/sign-in");
+  }
+  const invitations = await getInvitationsByUserId(auth.user.id);
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
@@ -38,50 +51,51 @@ export default async function Page() {
               </div>
             </div>
             <div className="mt-9 grid auto-rows-[minmax(14rem,_1fr)] grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 md:grid-cols-3 2xl:grid-cols-4">
-              <div className="group relative overflow-hidden rounded-xl border border-border">
-                <div className="h-full w-full">
-                  <Link
-                    // TODO: 초대장 생성 > 초대장의 편집 페이지로 이동
-                    href={`/pg/editor`}
-                    className="flex h-full flex-col bg-muted p-0.5"
-                  >
-                    <div className="flex-1 overflow-hidden rounded-xl border border-border bg-background p-3">
-                      <p className="font-semibold leading-none tracking-tight">
-                        project.name
-                      </p>
-                      <span className="text-xs text-muted-foreground">
-                        {"yyyy.MM.dd"}
-                      </span>
-                    </div>
-                    <div className="relative flex items-center justify-between px-1 py-1.5 text-xs">
-                      <span className="text-muted-foreground transition duration-200 group-hover:translate-x-[-150%]">
-                        {"yyyy.MM.dd"}
-                      </span>
-                      <div className="flex translate-x-[150%] items-center gap-0.5 text-foreground transition duration-200 group-hover:translate-x-0">
-                        <span>초대장 편집하기</span>
-                        <ChevronRightIcon width={14} height={14} />
+              <ul className="group relative overflow-hidden rounded-xl border border-border">
+                {invitations.map((invitation) => (
+                  <li key={invitation.id} className="h-full w-full">
+                    <Link
+                      href={`/i/${invitation.id}/edit`}
+                      className="flex h-full flex-col bg-muted p-0.5"
+                    >
+                      <div className="flex-1 overflow-hidden rounded-xl border border-border bg-background p-3">
+                        <p className="font-semibold leading-none tracking-tight">
+                          {invitation.title}
+                        </p>
+                        <span className="text-xs text-muted-foreground">
+                          {formatDate(invitation.updatedAt)}
+                        </span>
                       </div>
+                      <div className="relative flex items-center justify-between px-1 py-1.5 text-xs">
+                        <span className="text-muted-foreground transition duration-200 group-hover:translate-x-[-150%]">
+                          {formatDate(invitation.updatedAt)}
+                        </span>
+                        <div className="flex translate-x-[150%] items-center gap-0.5 text-foreground transition duration-200 group-hover:translate-x-0">
+                          <span>초대장 편집하기</span>
+                          <ChevronRightIcon width={14} height={14} />
+                        </div>
+                      </div>
+                    </Link>
+                    <div className="absolute right-4 top-4">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="rounded-full"
+                          >
+                            <GearIcon width={18} height={18} />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem>수정</DropdownMenuItem>
+                          <DropdownMenuItem>삭제</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
-                  </Link>
-                  <div className="absolute right-4 top-4">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="rounded-full"
-                        >
-                          <GearIcon width={18} height={18} />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>수정</DropdownMenuItem>
-                        <DropdownMenuItem>삭제</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                </div>
-              </div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </main>

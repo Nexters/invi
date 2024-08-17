@@ -28,7 +28,7 @@ export async function getById(id: string) {
   return result[0];
 }
 
-async function updateTemplate(params: UpdateTemplateParams) {
+export async function updateTemplate(params: UpdateTemplateParams) {
   const { id, ...updates } = params;
 
   if (!id) {
@@ -64,7 +64,9 @@ export async function deleteTemplate(id: string): Promise<void> {
   }
 }
 
-export async function createTemplate(params: CreateTemplateParams): Promise<void> {
+export async function createTemplate(
+  params: CreateTemplateParams,
+): Promise<void> {
   const { title, description, customFields } = params;
 
   const id = nanoid();

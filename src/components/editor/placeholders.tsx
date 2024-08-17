@@ -64,7 +64,15 @@ export function ContainerPlaceholder() {
 export function ImagePlaceholder() {
   return (
     <Placeholder type="image">
-      <ImageIcon size={40} className="text-muted-foreground" />
+      <ImageIcon size={40} className="text-muted-foreground" />{" "}
+    </Placeholder>
+  );
+}
+
+export default function KakaoMapPlaceholder() {
+  return (
+    <Placeholder type="kakaoMap">
+      <MapIcon size={40} className="text-muted-foreground" />
     </Placeholder>
   );
 }

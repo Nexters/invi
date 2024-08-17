@@ -1,6 +1,6 @@
 import Container from "~/components/editor/elements/container";
 import Image from "~/components/editor/elements/image";
-import MapShareComponents from "~/components/editor/elements/map-share";
+import KakaoMap from "~/components/editor/elements/kakao-map";
 import Text from "~/components/editor/elements/text";
 import type { EditorElement } from "~/components/editor/type";
 
@@ -16,8 +16,8 @@ export default function Recursive({ element }: { element: EditorElement }) {
       return <Text element={element} />;
     case "image":
       return <Image element={element} />;
-    case "map":
-      return <MapShareComponents element={element} />;
+    case "kakaoMap":
+      return <KakaoMap element={element} />;
     default:
       return null;
   }
