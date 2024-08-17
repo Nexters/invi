@@ -82,4 +82,9 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
+  /* radix ui */
+  [data-radix-scroll-area-viewport] > div {
+    height: 100%;
+  }
 }

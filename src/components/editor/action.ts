@@ -77,7 +77,7 @@ const updateEditorHistory = (
     ...editor.history,
     list: [
       ...editor.history.list.slice(0, editor.history.currentIndex + 1),
-      { ...newData },
+      [...newData],
     ],
     currentIndex: editor.history.currentIndex + 1,
   },
@@ -365,7 +365,7 @@ const actionHandlers: {
       const nextIndex = editor.history.currentIndex + 1;
       return {
         ...editor,
-        data: { ...editor.history.list[nextIndex] },
+        data: [...editor.history.list[nextIndex]],
         history: {
           ...editor.history,
           currentIndex: nextIndex,
@@ -380,7 +380,7 @@ const actionHandlers: {
       const prevIndex = editor.history.currentIndex - 1;
       return {
         ...editor,
-        data: { ...editor.history.list[prevIndex] },
+        data: [...editor.history.list[prevIndex]],
         history: {
           ...editor.history,
           currentIndex: prevIndex,
