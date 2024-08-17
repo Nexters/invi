@@ -3,7 +3,9 @@ import { users } from "~/lib/db/schema/users";
 
 export const invitations = pgTable("invitation", {
   id: text("id").primaryKey(),
-  userId: text("user_id").references(() => users.id),
+  userId: text("user_id")
+    .references(() => users.id)
+    .notNull(),
   customFields: json("custom_fields").notNull().$type<Record<string, any>>(),
   title: text("title").notNull(),
   description: text("description"),
