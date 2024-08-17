@@ -63,8 +63,13 @@ export type EditorAction = {
 const updateEditorHistory = (
   editor: Editor,
   newData: Editor["data"],
+  newSelectedElement: EditorElement = emptyElement,
 ): Editor => ({
   ...editor,
+  state: {
+    ...editor.state,
+    selectedElement: newSelectedElement,
+  },
   data: newData,
   history: {
     ...editor.history,
@@ -209,7 +214,7 @@ const actionHandlers: {
 
     const newData = insertElement(elements);
 
-    return updateEditorHistory(editor, newData);
+    return updateEditorHistory(editor, newData, removedElement);
   },
 
   MOVE_ELEMENT_UP: (editor, payload) => {
@@ -262,7 +267,13 @@ const actionHandlers: {
       return element;
     });
 
-    return updateEditorHistory(editor, newData);
+    const isSelectedElementUpdated =
+      editor.state.selectedElement.id === payload.elementDetails.id;
+    const newSelectedElement = isSelectedElementUpdated
+      ? payload.elementDetails
+      : editor.state.selectedElement;
+
+    return updateEditorHistory(editor, newData, newSelectedElement);
   },
 
   UPDATE_ELEMENT_STYLE: (editor, payload) => {
