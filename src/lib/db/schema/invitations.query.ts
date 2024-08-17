@@ -10,7 +10,7 @@ import {
 
 type CreateInvitationParams = Omit<
   InvitationInsert,
-  "id" | "createdAt" | "updatedAt"
+  "id" | "eventUrl" | "createdAt" | "updatedAt"
 >;
 
 type UpdateInvitationParams = {
@@ -34,6 +34,7 @@ export async function createInvitation(
       .values({
         ...params,
         id,
+        eventUrl: id,
         createdAt: currentTimestamp,
         updatedAt: currentTimestamp,
       })
