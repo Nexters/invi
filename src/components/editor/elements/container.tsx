@@ -85,6 +85,24 @@ export default function Container({ element }: Props) {
           },
         });
         break;
+      case "blank":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              type: "blank",
+              id: nanoid(),
+              name: "Blank",
+              styles: {
+                width: "100%",
+                height: "100px",
+              },
+              content: [],
+            },
+          },
+        });
+        break;
       case "text":
         dispatch({
           type: "ADD_ELEMENT",

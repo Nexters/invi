@@ -21,7 +21,8 @@ type EditorElementContentMap = {
     isShareUse: boolean;
   };
   map: { address: string };
-  empty: [];
+  blank: {};
+  empty: {};
 };
 
 export type EditorElementType = keyof EditorElementContentMap;

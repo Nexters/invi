@@ -1,3 +1,4 @@
+import BlankElement from "~/components/editor/elements/blank-element";
 import Container from "~/components/editor/elements/container";
 import ImageElement from "~/components/editor/elements/image-element";
 import KakaoMap from "~/components/editor/elements/kakao-map";
@@ -12,6 +13,8 @@ export default function Recursive({ element }: { element: EditorElement }) {
       return <Container element={element} />;
     case "2Col":
       return <Container element={element} />;
+    case "blank":
+      return <BlankElement element={element} />;
     case "text":
       return <Text element={element} />;
     case "image":

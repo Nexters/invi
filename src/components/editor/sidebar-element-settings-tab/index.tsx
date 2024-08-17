@@ -62,6 +62,12 @@ export default function SidebarElementSettingsTab(props: Props) {
             <BorderSetting />
           </>
         )}
+
+        {selectedElement.type === "blank" && (
+          <>
+            <LayoutSetting />
+          </>
+        )}
       </div>
     </div>
   );

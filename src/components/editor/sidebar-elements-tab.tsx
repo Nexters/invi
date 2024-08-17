@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  BlankPlaceholder,
   ContainerPlaceholder,
   ImagePlaceholder,
   KakaoMapPlaceholder,
@@ -38,6 +39,12 @@ export default function SidebarElementsTab(props: Props) {
       id: "2Col",
       label: "2 Columns",
       Component: <TwoColumnsPlaceholder />,
+      group: "layout",
+    },
+    {
+      id: "blank",
+      label: "Blank",
+      Component: <BlankPlaceholder />,
       group: "layout",
     },
     {
