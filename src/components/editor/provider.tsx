@@ -6,7 +6,11 @@ import {
   initialEditor,
   initialEditorConfig,
 } from "~/components/editor/constant";
-import type { Editor, EditorConfig } from "~/components/editor/type";
+import type {
+  Editor,
+  EditorConfig,
+  EditorData,
+} from "~/components/editor/type";
 
 export const EditorContext = createContext<{
   editor: Editor;
@@ -19,6 +23,7 @@ export const EditorContext = createContext<{
 });
 
 export type EditorProps = {
+  editorData?: EditorData;
   editorConfig?: Partial<EditorConfig>;
 };
 
@@ -29,8 +34,12 @@ export type EditorProviderProps = EditorProps & {
 export default function EditorProvider({
   children,
   editorConfig,
+  editorData,
 }: EditorProviderProps) {
-  const [editor, dispatch] = useReducer(editorReducer, initialEditor);
+  const [editor, dispatch] = useReducer(editorReducer, {
+    ...initialEditor,
+    data: editorData ?? initialEditor.data,
+  });
 
   return (
     <EditorContext.Provider

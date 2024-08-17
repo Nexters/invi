@@ -1,4 +1,4 @@
-import { emptyElement, initialEditor } from "~/components/editor/constant";
+import { emptyElement } from "~/components/editor/constant";
 import type {
   DeviceType,
   Editor,
@@ -368,10 +368,7 @@ const actionHandlers: {
   },
 };
 
-export const editorReducer = (
-  editor = initialEditor,
-  action: EditorAction,
-): Editor => {
+export const editorReducer = (editor: Editor, action: EditorAction): Editor => {
   const handler = actionHandlers[action.type];
   // @ts-expect-error: TypeScript cannot infer that the payload is correct for each action type
   return handler(editor, action?.payload);
