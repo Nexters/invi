@@ -3,6 +3,7 @@
 import { useEditor } from "~/components/editor/provider";
 import BackgroundSetting from "~/components/editor/sidebar-element-settings-tab/background-setting";
 import BorderSetting from "~/components/editor/sidebar-element-settings-tab/border-setting";
+import ImageSetting from "~/components/editor/sidebar-element-settings-tab/image-setting";
 import KakaoMapSetting from "~/components/editor/sidebar-element-settings-tab/kakao-map-setting";
 import LayoutSetting from "~/components/editor/sidebar-element-settings-tab/layout-setting";
 import MapSetting from "~/components/editor/sidebar-element-settings-tab/map-setting";
@@ -28,22 +29,28 @@ export default function SidebarElementSettingsTab(props: Props) {
             <LayoutSetting />
           </>
         )}
-      {selectedElement.type === "kakaoMap" && (
-        <>
-          <KakaoMapSetting />
-        </>
-      )}
+        {selectedElement.type === "kakaoMap" && (
+          <>
+            <KakaoMapSetting />
+          </>
+        )}
 
-      {selectedElement.type === "map" && (
-        <>
-          <MapSetting element={selectedElement} />
-          <LayoutSetting />
-        </>
-      )}
+        {selectedElement.type === "map" && (
+          <>
+            <MapSetting element={selectedElement} />
+            <LayoutSetting />
+          </>
+        )}
 
         {selectedElement.type === "text" && (
           <>
             <TextSetting />
+          </>
+        )}
+
+        {selectedElement.type === "image" && (
+          <>
+            <ImageSetting element={selectedElement} />
           </>
         )}
 

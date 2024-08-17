@@ -100,6 +100,26 @@ export default function Container({ element }: Props) {
           },
         });
         break;
+      case "image":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              type: "image",
+              id: nanoid(),
+              name: "Image",
+              styles: {
+                width: "100%",
+                height: "auto",
+              },
+              content: {
+                src: "",
+                alt: "이미지",
+              },
+            },
+          },
+        });
       case "kakaoMap":
         dispatch({
           type: "ADD_ELEMENT",

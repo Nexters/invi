@@ -4,6 +4,7 @@
     "plugin:@tanstack/eslint-plugin-query/recommended"
   ],
   "rules": {
-    "react/no-children-prop": 0
+    "react/no-children-prop": 0,
+    "@next/next/no-img-element": 0
   }
 }
