@@ -21,6 +21,7 @@ export function KakaoAddressProvider({ children }: { children: ReactNode }) {
   const [coordinate, setCoordinateState] = useState<Coordinate>({
     latitude: 37.566828,
     longitude: 126.9786567,
+    address: "",
   });
 
   const setCoordinate = (latitude: number, longitude: number) => {

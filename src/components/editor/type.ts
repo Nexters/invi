@@ -24,6 +24,8 @@ export type EditorElement = {
         src?: string;
         address?: string;
         location?: number[];
+        isMapUse: boolean;
+        isShareUse: boolean;
       };
 };
 

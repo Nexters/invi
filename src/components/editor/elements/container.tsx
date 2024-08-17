@@ -103,6 +103,9 @@ export default function Container({ element }: Props) {
             elementDetails: {
               content: {
                 location: [37.566828, 126.9786567],
+                address: "",
+                isMapUse: true,
+                isShareUse: true,
               },
               id: nanoid(),
               name: "KaKao Map",

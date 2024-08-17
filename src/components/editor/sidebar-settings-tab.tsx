@@ -84,7 +84,14 @@ export default function SidebarSettingsTab(props: Props) {
         const geocoder = new window.kakao.maps.services.Geocoder();
         geocoder.addressSearch(
           addressData.address,
-          (result: any, status: any) => {
+          (
+            result: {
+              address_name: string;
+              y: number;
+              x: number;
+            }[],
+            status: any,
+          ) => {
             const currentPositions = new window.kakao.maps.LatLng(
               result[0].y,
               result[0].x,
@@ -97,6 +104,7 @@ export default function SidebarSettingsTab(props: Props) {
                   content: {
                     ...editor.state.selectedElement.content,
                     location: [currentPositions.Ma, currentPositions.La],
+                    address: result[0].address_name,
                   },
                 },
               },
@@ -105,6 +113,37 @@ export default function SidebarSettingsTab(props: Props) {
         );
       },
     }).open();
+  };
+
+  const handleClickMapCheckBox = (e: any) => {
+    dispatch({
+      type: "UPDATE_ELEMENT",
+      payload: {
+        elementDetails: {
+          ...editor.state.selectedElement,
+          content: {
+            ...editor.state.selectedElement.content,
+            isMapUse: e.target.checked,
+          },
+        },
+      },
+    });
+  };
+
+  const handleClickShareCheckBox = (e: any) => {
+    console.log(e);
+    dispatch({
+      type: "UPDATE_ELEMENT",
+      payload: {
+        elementDetails: {
+          ...editor.state.selectedElement,
+          content: {
+            ...editor.state.selectedElement.content,
+            isShareUse: e.target.checked,
+          },
+        },
+      },
+    });
   };
 
   return (
@@ -123,12 +162,32 @@ export default function SidebarSettingsTab(props: Props) {
         <AccordionTrigger className="px-6">Custom</AccordionTrigger>
         <AccordionContent className="px-6">
           {editor.state.selectedElement.type === "kakaoMap" && (
-            <button
-              className={`h-full w-full rounded-xl border-none bg-[#5E8AFF] text-sm font-bold text-white disabled:bg-[#D5D7D9]`}
-              onClick={handleChangeKakaoMapLocationChange}
-            >
-              지도 위치 변경하기
-            </button>
+            <>
+              <button
+                className={`h-full w-full rounded-xl border-none bg-[#5E8AFF] text-sm font-bold text-white disabled:bg-[#D5D7D9]`}
+                onClick={handleChangeKakaoMapLocationChange}
+              >
+                지도 위치 변경하기
+              </button>
+              <AccordionContent>
+                <label>
+                  <input
+                    type={"checkbox"}
+                    onClick={handleClickMapCheckBox}
+                    defaultChecked={true}
+                  />
+                  지도
+                </label>
+                <label>
+                  <input
+                    type={"checkbox"}
+                    onClick={handleClickShareCheckBox}
+                    defaultChecked={true}
+                  />
+                  공유
+                </label>
+              </AccordionContent>
+            </>
           )}
         </AccordionContent>
       </AccordionItem>
