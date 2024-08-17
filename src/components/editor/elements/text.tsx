@@ -16,6 +16,7 @@ export default function Text({ element }: Props) {
       <span
         className="outline-none"
         contentEditable={!editor.state.isPreviewMode}
+        suppressContentEditableWarning={true}
         onBlur={(e) => {
           const spanElement = e.target as HTMLSpanElement;
           dispatch({
