@@ -33,21 +33,23 @@ export type InferEditorElement<K extends EditorElementType> = Extract<
 >;
 
 export type EditorState = {
-  elements: EditorElement[];
   selectedElement: EditorElement;
   currentTabValue: EditorTabTypeValue;
   device: DeviceType;
   isPreviewMode: boolean;
 };
 
+export type EditorData = EditorElement[];
+
 export type EditorHistory = {
-  history: EditorState[];
+  history: EditorData[];
   currentIndex: number;
 };
 
 export type Editor = {
   state: EditorState;
   history: EditorHistory;
+  data: EditorData;
 };
 
 export type EditorConfig = {

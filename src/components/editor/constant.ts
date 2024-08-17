@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import type {
   Editor,
   EditorConfig,
+  EditorData,
   EditorElement,
   EditorHistory,
   EditorState,
@@ -42,16 +43,17 @@ export const emptyElement = {
   type: "empty",
 } satisfies EditorElement;
 
+export const initialEditorData: EditorData = [
+  {
+    content: [],
+    id: "__body",
+    name: "Body",
+    styles: {},
+    type: "__body",
+  },
+];
+
 export const initialEditorState: EditorState = {
-  elements: [
-    {
-      content: [],
-      id: "__body",
-      name: "Body",
-      styles: {},
-      type: "__body",
-    },
-  ],
   selectedElement: emptyElement,
   currentTabValue: editorTabValue.ELEMENTS,
   device: "Mobile",
@@ -59,13 +61,14 @@ export const initialEditorState: EditorState = {
 };
 
 export const initialEditorHistory: EditorHistory = {
-  history: [initialEditorState],
+  history: [initialEditorData],
   currentIndex: 0,
 };
 
 export const initialEditor: Editor = {
   state: initialEditorState,
   history: initialEditorHistory,
+  data: initialEditorData,
 };
 
 const tempId = nanoid(8);

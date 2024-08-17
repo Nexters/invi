@@ -62,15 +62,15 @@ export type EditorAction = {
 
 const updateEditorHistory = (
   editor: Editor,
-  newState: Editor["state"],
+  newData: Editor["data"],
 ): Editor => ({
   ...editor,
-  state: newState,
+  data: newData,
   history: {
     ...editor.history,
     history: [
       ...editor.history.history.slice(0, editor.history.currentIndex + 1),
-      { ...newState },
+      { ...newData },
     ],
     currentIndex: editor.history.currentIndex + 1,
   },
@@ -168,7 +168,7 @@ const actionHandlers: {
   ) => Editor;
 } = {
   ADD_ELEMENT: (editor, payload) => {
-    const newElements = traverseElements(editor.state.elements, (element) => {
+    const newElements = traverseElements(editor.data, (element) => {
       if (
         element.id === payload.containerId &&
         Array.isArray(element.content)
@@ -181,17 +181,14 @@ const actionHandlers: {
       return element;
     });
 
-    return updateEditorHistory(editor, {
-      ...editor.state,
-      elements: newElements,
-    });
+    return updateEditorHistory(editor, newElements);
   },
 
   MOVE_ELEMENT: (editor, payload) => {
     const { elementId, newParentId, newIndex } = payload;
 
     const [elements, removedElement] = removeElementFromParent(
-      editor.state.elements,
+      editor.data,
       elementId,
     );
     if (!removedElement) return editor;
@@ -212,16 +209,13 @@ const actionHandlers: {
 
     const newElements = insertElement(elements);
 
-    return updateEditorHistory(editor, {
-      ...editor.state,
-      elements: newElements,
-    });
+    return updateEditorHistory(editor, newElements);
   },
 
   MOVE_ELEMENT_UP: (editor, payload) => {
     const { elementId } = payload;
     const [element, parent, currentIndex] = findElementAndParent(
-      editor.state.elements,
+      editor.data,
       elementId,
     );
     if (
@@ -242,7 +236,7 @@ const actionHandlers: {
   MOVE_ELEMENT_DOWN: (editor, payload) => {
     const { elementId } = payload;
     const [element, parent, currentIndex] = findElementAndParent(
-      editor.state.elements,
+      editor.data,
       elementId,
     );
     if (
@@ -261,24 +255,14 @@ const actionHandlers: {
   },
 
   UPDATE_ELEMENT: (editor, payload) => {
-    const newElements = traverseElements(editor.state.elements, (element) => {
+    const newElements = traverseElements(editor.data, (element) => {
       if (element.id === payload.elementDetails.id) {
         return { ...element, ...payload.elementDetails };
       }
       return element;
     });
 
-    const isSelectedElementUpdated =
-      editor.state.selectedElement.id === payload.elementDetails.id;
-    const newSelectedElement = isSelectedElementUpdated
-      ? payload.elementDetails
-      : editor.state.selectedElement;
-
-    return updateEditorHistory(editor, {
-      ...editor.state,
-      elements: newElements,
-      selectedElement: newSelectedElement,
-    });
+    return updateEditorHistory(editor, newElements);
   },
 
   UPDATE_ELEMENT_STYLE: (editor, payload) => {
@@ -294,18 +278,14 @@ const actionHandlers: {
   },
 
   DELETE_ELEMENT: (editor, payload) => {
-    const newElements = traverseElements(editor.state.elements, (element) => {
+    const newElements = traverseElements(editor.data, (element) => {
       if (element.id === payload.elementDetails.id) {
         return null;
       }
       return element;
     });
 
-    return updateEditorHistory(editor, {
-      ...editor.state,
-      elements: newElements,
-      selectedElement: emptyElement,
-    });
+    return updateEditorHistory(editor, newElements);
   },
 
   CHANGE_CLICKED_ELEMENT: (editor, payload) => {
@@ -317,11 +297,14 @@ const actionHandlers: {
         ? "Elements"
         : editor.state.currentTabValue;
 
-    return updateEditorHistory(editor, {
-      ...editor.state,
-      selectedElement: payload.elementDetails ?? emptyElement,
+    return {
+      ...editor,
+      state: {
+        ...editor.state,
+        selectedElement: payload.elementDetails ?? emptyElement,
+      },
       currentTabValue: newTabValue,
-    });
+    };
   },
 
   CHANGE_CURRENT_TAB_VALUE: (editor, payload) => {
@@ -359,7 +342,7 @@ const actionHandlers: {
       const nextIndex = editor.history.currentIndex + 1;
       return {
         ...editor,
-        state: { ...editor.history.history[nextIndex] },
+        data: { ...editor.history.history[nextIndex] },
         history: {
           ...editor.history,
           currentIndex: nextIndex,
@@ -374,7 +357,7 @@ const actionHandlers: {
       const prevIndex = editor.history.currentIndex - 1;
       return {
         ...editor,
-        state: { ...editor.history.history[prevIndex] },
+        data: { ...editor.history.history[prevIndex] },
         history: {
           ...editor.history,
           currentIndex: prevIndex,

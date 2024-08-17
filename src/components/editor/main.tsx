@@ -46,8 +46,8 @@ export default function EditorMain() {
             <EyeOff />
           </Button>
         )}
-        {Array.isArray(editor.state.elements) &&
-          editor.state.elements.map((childElement) => (
+        {Array.isArray(editor.data) &&
+          editor.data.map((childElement) => (
             <Recursive key={childElement.id} element={childElement} />
           ))}
       </div>

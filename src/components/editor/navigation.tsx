@@ -47,7 +47,7 @@ export default function EditorNavigation() {
 
   const handleOnSave = async () => {
     try {
-      const content = JSON.stringify(editor.state.elements);
+      const content = JSON.stringify(editor.data);
       console.log(":content", content);
       // TODO: API insert page
       // TODO: API log notification
