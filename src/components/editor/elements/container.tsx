@@ -120,6 +120,7 @@ export default function Container({ element }: Props) {
             },
           },
         });
+        break;
       case "kakaoMap":
         dispatch({
           type: "ADD_ELEMENT",
