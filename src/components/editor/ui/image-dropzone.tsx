@@ -7,7 +7,7 @@ import { toast } from "sonner";
 export type InputImageProps = {
   className?: string;
   options?: DropzoneOptions;
-  onLoadImage?: (src: string) => void;
+  onLoadImage?: ({ url, file }: { url: string; file: File }) => void;
 };
 
 export default function ImageDropzone({
@@ -22,8 +22,8 @@ export default function ImageDropzone({
         reader.onabort = () => toast.info("파일 등록이 취소되었습니다.");
         reader.onerror = () => toast.error("파일 등록에 실패했습니다.");
         reader.onload = () => {
-          const src = URL.createObjectURL(file);
-          onLoadImage?.(src);
+          const url = URL.createObjectURL(file);
+          onLoadImage?.({ url, file });
         };
         reader.readAsArrayBuffer(file);
       }
