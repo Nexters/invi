@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { db } from "~/lib/db";
 import {
   invitations,
+  type Invitation,
   type InvitationInsert,
 } from "~/lib/db/schema/invitations";
 
@@ -21,6 +22,27 @@ type UpdateInvitationParams = {
   eventUrl?: string;
   customFields?: Record<string, any>;
 };
+
+export async function getAllInvitations() {
+  return await db.select().from(invitations);
+}
+
+export async function getInvitationById(id: Invitation["id"]) {
+  const responses = await db
+    .select()
+    .from(invitations)
+    .where(eq(invitations.id, id));
+  return responses[0];
+}
+
+export async function getInvitationsByUserId(
+  userId: Invitation["userId"],
+): Promise<Invitation[]> {
+  return await db
+    .select()
+    .from(invitations)
+    .where(eq(invitations.userId, userId));
+}
 
 export async function createInvitation(
   params: CreateInvitationParams,
@@ -67,7 +89,7 @@ async function updateInvitation(params: UpdateInvitationParams) {
   }
 }
 
-async function existsByEventUrl(eventUrl: string) {
+export async function existsByEventUrl(eventUrl: string) {
   try {
     const result = await db
       .select({ count: count() })
