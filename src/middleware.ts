@@ -26,7 +26,7 @@ export function middleware(request: NextRequest) {
 
   if (subdomain) {
     return NextResponse.rewrite(
-      new URL(`/pg/${subdomain}${path}`, request.url),
+      new URL(`/i/${subdomain}/edit${path}`, request.url),
     );
   } else {
     return NextResponse.rewrite(new URL(path, request.url));
