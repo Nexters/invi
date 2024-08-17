@@ -10,6 +10,25 @@ export default async function Page() {
           ...bodyElement,
           content: [
             {
+              id: "logoBanner",
+              name: "Logo Banner",
+              type: "logoBanner",
+              styles: {
+                height: 69,
+                color: "#22222250",
+              },
+              content: {},
+            },
+            {
+              id: "blank",
+              name: "Blank",
+              type: "blank",
+              styles: {
+                height: 32,
+              },
+              content: {},
+            },
+            {
               id: "container",
               name: "Container",
               type: "container",
