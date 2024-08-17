@@ -108,8 +108,13 @@ export default function Container({ element }: Props) {
               type: "image",
               id: nanoid(),
               name: "Image",
-              styles: {},
-              content: { src: "test" },
+              styles: {
+                width: "100%",
+                height: "auto",
+              },
+              content: {
+                src: "https://private-user-images.githubusercontent.com/47740690/352552322-aea7c5d9-bb8b-4895-9aa8-2552154ba8d4.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjM4OTE1NjksIm5iZiI6MTcyMzg5MTI2OSwicGF0aCI6Ii80Nzc0MDY5MC8zNTI1NTIzMjItYWVhN2M1ZDktYmI4Yi00ODk1LTlhYTgtMjU1MjE1NGJhOGQ0LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA4MTclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwODE3VDEwNDEwOVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTY4MWI1ZGFhN2U1NmQ2ZDRjZTE2ZTNlZDIwMDcyMTdiNGI3ODJiODRmY2Y0OWE5OGI5MmEzODkyZDQ0YjZmZWEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.d2f0p1PPlHK-Vyqpc0x_-8cuBeKVqyiRcUpnhAaEgX8",
+              },
             },
           },
         });
