@@ -51,7 +51,7 @@ async function updateTemplate(params: UpdateTemplateParams) {
   }
 }
 
-async function deleteTemplate(id: string): Promise<void> {
+export async function deleteTemplate(id: string): Promise<void> {
   if (!id) {
     throw new Error("ID is required to delete a template");
   }
@@ -64,7 +64,7 @@ async function deleteTemplate(id: string): Promise<void> {
   }
 }
 
-async function createTemplate(params: CreateTemplateParams): Promise<void> {
+export async function createTemplate(params: CreateTemplateParams): Promise<void> {
   const { title, description, customFields } = params;
 
   const id = nanoid();

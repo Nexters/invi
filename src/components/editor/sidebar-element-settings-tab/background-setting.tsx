@@ -16,8 +16,8 @@ export default function BackgroundSetting() {
         <div className="col-span-4">
           <EditorInput
             id="backgroundColor"
-            value={element.styles.backgroundColor ?? "transparent"}
-            onChange={(e) => {
+            defaultValue={element.styles.backgroundColor ?? "transparent"}
+            onDebounceChange={(e) => {
               dispatch({
                 type: "UPDATE_ELEMENT_STYLE",
                 payload: { backgroundColor: e.target.value },

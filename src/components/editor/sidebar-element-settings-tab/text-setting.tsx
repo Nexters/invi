@@ -43,16 +43,16 @@ export default function TextSetting() {
         <div className="col-span-8">
           <EditorInput
             id="fontFamily"
-            value={element.styles.fontFamily ?? "Pretendard"}
-            onChange={handleOnChanges}
+            defaultValue={element.styles.fontFamily ?? "Pretendard"}
+            onDebounceChange={handleOnChanges}
             componentPrefix={<FontFamilyIcon />}
           />
         </div>
         <div className="col-span-4">
           <EditorInput
             id="fontWeight"
-            value={element.styles.fontWeight ?? "normal"}
-            onChange={handleOnChanges}
+            defaultValue={element.styles.fontWeight ?? "normal"}
+            onDebounceChange={handleOnChanges}
             componentPrefix={<FontBoldIcon />}
           />
         </div>
@@ -60,8 +60,8 @@ export default function TextSetting() {
           <EditorInput
             id="fontSize"
             type="number"
-            value={element.styles.fontSize ?? 16}
-            onChange={(e) => {
+            defaultValue={element.styles.fontSize ?? 16}
+            onDebounceChange={(e) => {
               dispatch({
                 type: "UPDATE_ELEMENT_STYLE",
                 payload: {
@@ -75,8 +75,8 @@ export default function TextSetting() {
         <div className="col-span-4">
           <EditorInput
             id="color"
-            value={element.styles.color ?? "inherit"}
-            onChange={handleOnChanges}
+            defaultValue={element.styles.color ?? "inherit"}
+            onDebounceChange={handleOnChanges}
             componentPrefix={
               <div
                 className="h-3.5 w-3.5 rounded ring-1 ring-border"
