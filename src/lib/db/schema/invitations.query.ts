@@ -25,6 +25,15 @@ export async function getInvitationById(id: Invitation["id"]) {
   return responses[0];
 }
 
+export async function getInvitationsByUserId(
+  userId: Invitation["userId"],
+): Promise<Invitation[]> {
+  return await db
+    .select()
+    .from(invitations)
+    .where(eq(invitations.userId, userId));
+}
+
 async function updateInvitation(params: UpdateInvitationParams) {
   const { id, ...updates } = params;
 
