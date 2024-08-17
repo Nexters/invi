@@ -3,6 +3,7 @@
 import { LinkIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
+import ImageDropzone from "~/components/editor/ui/image-dropzone";
 import { EditorInput } from "~/components/editor/ui/input";
 import { Accordion } from "~/components/ui/accordion";
 import { Button } from "~/components/ui/button";
@@ -31,7 +32,7 @@ export default function SidebarSettingsTab(props: Props) {
 }
 
 function CustomDomainSection() {
-  const { editorConfig } = useEditor();
+  const { editor } = useEditor();
 
   return (
     <div className="grid w-full grid-cols-9 gap-1 border-t p-6">
@@ -50,7 +51,7 @@ function CustomDomainSection() {
               </Button>
             </div>
           }
-          defaultValue={editorConfig.invitationSubdomain}
+          defaultValue={editor.config.invitationSubdomain}
           onDebounceChange={() => {}}
         />
         <div className="h-5">
@@ -66,10 +67,19 @@ function CustomDomainSection() {
 }
 
 function SEOSection() {
-  const { editorConfig } = useEditor();
+  const { editor, dispatch } = useEditor();
+
+  const onLoadImage = (src: string) => {
+    dispatch({
+      type: "UPDATE_CONFIG",
+      payload: {
+        invitationThumbnail: src,
+      },
+    });
+  };
 
   const onCopyLink = async () => {
-    const link = `https://${editorConfig.invitationSubdomain}.invi.my`;
+    const link = `https://${editor.config.invitationSubdomain}.invi.my`;
 
     try {
       await navigator.clipboard.writeText(link);
@@ -89,20 +99,55 @@ function SEOSection() {
         </p>
       </div>
       <div className="col-span-9">
+        <EditorInput
+          id="invitationDesc"
+          componentPrefix={"설명:"}
+          className="mr-0 mt-1"
+          defaultValue={editor.config.invitationDesc}
+          onDebounceChange={(e) => {
+            dispatch({
+              type: "UPDATE_CONFIG",
+              payload: {
+                invitationDesc: e.target.value,
+              },
+            });
+          }}
+        />
+      </div>
+      <div className="col-span-9">
+        <ImageDropzone onLoadImage={onLoadImage} />
+        <EditorInput
+          id="invitationThumbnail"
+          componentPrefix={"src"}
+          className="mr-0 mt-1"
+          defaultValue={editor.config.invitationThumbnail}
+          onDebounceChange={(e) => {
+            dispatch({
+              type: "UPDATE_CONFIG",
+              payload: {
+                invitationDesc: e.target.value,
+              },
+            });
+          }}
+        />
+      </div>
+      <div className="col-span-9">
         <div className="select-none bg-[#BACEE0] p-4">
           <div className="inline-block overflow-hidden rounded-[3px] bg-neutral-200">
-            {/* <img
-              src=""
-              width="250px"
-              height="125px"
-              className="aspect-preview object-cover"
-              draggable="false"
-              alt="썸네일"
-            /> */}
+            {editor.config.invitationThumbnail && (
+              <img
+                src={editor.config.invitationThumbnail}
+                width="250px"
+                height="125px"
+                className="aspect-preview object-cover"
+                draggable="false"
+                alt="썸네일"
+              />
+            )}
             <div className="bg-white p-2.5 text-sm">
-              <div>{editorConfig.invitationTitle}</div>
+              <div>{editor.config.invitationTitle}</div>
               <div className="text-xs text-neutral-400">
-                여기를 눌러 링크를 확인하세요.
+                {editor.config.invitationDesc}
               </div>
               <div className="text-xs text-neutral-300">invi.my</div>
             </div>

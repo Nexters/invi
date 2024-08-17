@@ -14,11 +14,9 @@ import type {
 
 export const EditorContext = createContext<{
   editor: Editor;
-  editorConfig: EditorConfig;
   dispatch: Dispatch<EditorAction>;
 }>({
   editor: initialEditor,
-  editorConfig: initialEditorConfig,
   dispatch: () => undefined,
 });
 
@@ -39,16 +37,14 @@ export default function EditorProvider({
   const [editor, dispatch] = useReducer(editorReducer, {
     ...initialEditor,
     data: editorData ?? initialEditor.data,
+    config: {
+      ...initialEditorConfig,
+      ...editorConfig,
+    },
   });
 
   return (
-    <EditorContext.Provider
-      value={{
-        editor,
-        dispatch,
-        editorConfig: { ...initialEditorConfig, ...editorConfig },
-      }}
-    >
+    <EditorContext.Provider value={{ editor, dispatch }}>
       {children}
     </EditorContext.Provider>
   );
