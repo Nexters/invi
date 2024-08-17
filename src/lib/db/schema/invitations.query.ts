@@ -1,8 +1,17 @@
 "use server";
 
 import { count, eq } from "drizzle-orm";
+import { nanoid } from "nanoid";
 import { db } from "~/lib/db";
-import { invitations } from "~/lib/db/schema/invitations";
+import {
+  invitations,
+  type InvitationInsert,
+} from "~/lib/db/schema/invitations";
+
+type CreateInvitationParams = Omit<
+  InvitationInsert,
+  "id" | "createdAt" | "updatedAt"
+>;
 
 type UpdateInvitationParams = {
   id: string;
@@ -12,6 +21,29 @@ type UpdateInvitationParams = {
   eventUrl?: string;
   customFields?: Record<string, any>;
 };
+
+export async function createInvitation(
+  params: CreateInvitationParams,
+): Promise<InvitationInsert> {
+  const id = nanoid();
+  const currentTimestamp = new Date();
+
+  try {
+    const res = await db
+      .insert(invitations)
+      .values({
+        ...params,
+        id,
+        createdAt: currentTimestamp,
+        updatedAt: currentTimestamp,
+      })
+      .returning();
+    return res[0];
+  } catch (error) {
+    console.error("Error creating invitation:", error);
+    throw new Error("Could not create invitation");
+  }
+}
 
 async function updateInvitation(params: UpdateInvitationParams) {
   const { id, ...updates } = params;
