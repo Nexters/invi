@@ -1,4 +1,5 @@
 import Editor from "~/components/editor";
+import { bodyElement } from "~/components/editor/constant";
 
 export default async function Page() {
   return (
@@ -6,10 +7,7 @@ export default async function Page() {
       editorConfig={{ backLink: "/pg" }}
       editorData={[
         {
-          id: "__body",
-          type: "__body",
-          name: "Body",
-          styles: {},
+          ...bodyElement,
           content: [
             {
               id: "container",

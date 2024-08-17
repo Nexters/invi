@@ -48,18 +48,18 @@ export const emptyElement = {
   type: "empty",
 } satisfies EditorElement;
 
-export const initialEditorData: EditorData = [
-  {
-    content: [],
-    id: "__body",
-    name: "Body",
-    styles: {
-      paddingLeft: 28,
-      paddingRight: 28,
-    },
-    type: "__body",
+export const bodyElement = {
+  content: [],
+  id: "__body",
+  name: "Body",
+  styles: {
+    paddingLeft: 28,
+    paddingRight: 28,
   },
-];
+  type: "__body",
+} satisfies EditorElement;
+
+export const initialEditorData: EditorData = [bodyElement];
 
 export const initialEditorState: EditorState = {
   selectedElement: emptyElement,
