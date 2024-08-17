@@ -53,9 +53,9 @@ export default function EditorNavigation() {
     try {
       const content = JSON.stringify(editor.data);
       await updateInvitation({
-        id: subDomain,
-        title: editorConfig.invitationTitle,
-        customFields: content,
+        id: editor.config.invitationId,
+        title: editor.config.invitationTitle,
+        customFields: content as Record<string, any>,
       });
       toast.success("Saved Editor");
     } catch (error) {

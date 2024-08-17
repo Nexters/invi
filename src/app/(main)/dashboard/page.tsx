@@ -55,7 +55,7 @@ export default async function Page() {
                 {invitations.map((invitation) => (
                   <li key={invitation.id} className="h-full w-full">
                     <Link
-                      href={`/i/${invitation.id}/edit`}
+                      href={`/i/${invitation.eventUrl}/edit`}
                       className="flex h-full flex-col bg-muted p-0.5"
                     >
                       <div className="flex-1 overflow-hidden rounded-xl border border-border bg-background p-3">

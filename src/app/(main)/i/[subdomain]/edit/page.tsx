@@ -1,49 +1,23 @@
 import Editor from "~/components/editor";
+import { getInvitationByEventUrl } from "~/lib/db/schema/invitations.query";
 
-export default async function Page() {
+export default async function Page({
+  params,
+}: {
+  params: { subdomain: string };
+}) {
+  const subDomain = params.subdomain;
+  const invitation = await getInvitationByEventUrl(subDomain as string);
+
   return (
     <Editor
-      editorConfig={{ backLink: "/pg" }}
-      editorData={[
-        {
-          id: "__body",
-          type: "__body",
-          name: "Body",
-          styles: {},
-          content: [
-            {
-              id: "container",
-              name: "Container",
-              type: "container",
-              styles: {
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 10,
-                paddingTop: 10,
-                paddingRight: 10,
-                paddingBottom: 10,
-                paddingLeft: 10,
-                width: "100%",
-                height: "auto",
-              },
-              content: [
-                {
-                  id: "text",
-                  name: "Text",
-                  type: "text",
-                  styles: {
-                    textAlign: "left",
-                  },
-                  content: {
-                    innerText: "Hello World",
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      ]}
+      editorConfig={{
+        backLink: "/pg",
+        invitationId: invitation.id,
+        invitationTitle: invitation.title,
+        invitationSubdomain: invitation.eventUrl,
+      }}
+      editorData={invitation.customFields}
     />
   );
 }
