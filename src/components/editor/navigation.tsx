@@ -30,7 +30,7 @@ import TooltipSimple from "~/components/ui/tooltip-simple";
 import { cn } from "~/lib/utils";
 
 export default function EditorNavigation() {
-  const { editor, editorConfig, dispatch } = useEditor();
+  const { editor, dispatch } = useEditor();
   const { openDialog } = useAlertDialogStore();
 
   const handlePreviewClick = () => {
@@ -77,7 +77,7 @@ export default function EditorNavigation() {
     >
       <aside className="flex items-center gap-6">
         <Button asChild variant="ghost" size="icon">
-          <Link href={editorConfig.backLink}>
+          <Link href={editor.config.backLink}>
             <ArrowLeftIcon />
           </Link>
         </Button>

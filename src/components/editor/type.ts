@@ -56,15 +56,18 @@ export type EditorHistory = {
   currentIndex: number;
 };
 
-export type Editor = {
-  state: EditorState;
-  history: EditorHistory;
-  data: EditorData;
-};
-
 export type EditorConfig = {
   backLink: string;
   invitationId: string;
   invitationTitle: string;
+  invitationDesc: string;
+  invitationThumbnail: string;
   invitationSubdomain: string;
+};
+
+export type Editor = {
+  state: EditorState;
+  history: EditorHistory;
+  data: EditorData;
+  config: EditorConfig;
 };
