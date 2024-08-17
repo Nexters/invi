@@ -8,7 +8,7 @@ type Props = {
   element: InferEditorElement<"image">;
 };
 
-export default function Image({ element }: Props) {
+export default function ImageElement({ element }: Props) {
   return (
     <ElementWrapper element={element}>
       {element.content.src ? (

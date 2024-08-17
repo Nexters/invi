@@ -1,5 +1,5 @@
 import Container from "~/components/editor/elements/container";
-import Image from "~/components/editor/elements/image";
+import ImageElement from "~/components/editor/elements/image-element";
 import KakaoMap from "~/components/editor/elements/kakao-map";
 import Text from "~/components/editor/elements/text";
 import type { EditorElement } from "~/components/editor/type";
@@ -15,7 +15,7 @@ export default function Recursive({ element }: { element: EditorElement }) {
     case "text":
       return <Text element={element} />;
     case "image":
-      return <Image element={element} />;
+      return <ImageElement element={element} />;
     case "kakaoMap":
       return <KakaoMap element={element} />;
     default:
