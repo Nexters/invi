@@ -1,4 +1,4 @@
-import { ImageIcon, MapIcon, TypeIcon } from "lucide-react";
+import { BoxSelectIcon, ImageIcon, MapIcon, TypeIcon } from "lucide-react";
 import type { EditorElementType } from "~/components/editor/type";
 import { cn } from "~/lib/utils";
 
@@ -73,6 +73,14 @@ export default function KakaoMapPlaceholder() {
   return (
     <Placeholder type="kakaoMap">
       <MapIcon size={40} className="text-muted-foreground" />
+    </Placeholder>
+  );
+}
+
+export function BlankPlaceholder() {
+  return (
+    <Placeholder type="blank">
+      <BoxSelectIcon size={40} className="text-muted-foreground" />
     </Placeholder>
   );
 }
