@@ -63,8 +63,13 @@ export type EditorAction = {
 const updateEditorHistory = (
   editor: Editor,
   newData: Editor["data"],
+  newSelectedElement: EditorElement = emptyElement,
 ): Editor => ({
   ...editor,
+  state: {
+    ...editor.state,
+    selectedElement: newSelectedElement,
+  },
   data: newData,
   history: {
     ...editor.history,
@@ -130,7 +135,7 @@ const removeElementFromParent = (
   elementId: string,
 ): [EditorElement[], EditorElement | null] => {
   let removedElement: EditorElement | null = null;
-  const newElements = elements.map((el) => {
+  const newData = elements.map((el) => {
     if (Array.isArray(el.content)) {
       const index = el.content.findIndex((child) => child.id === elementId);
       if (index !== -1) {
@@ -154,7 +159,7 @@ const removeElementFromParent = (
     }
     return el;
   }) as EditorElement[];
-  return [newElements, removedElement];
+  return [newData, removedElement];
 };
 
 /**
@@ -168,7 +173,7 @@ const actionHandlers: {
   ) => Editor;
 } = {
   ADD_ELEMENT: (editor, payload) => {
-    const newElements = traverseElements(editor.data, (element) => {
+    const newData = traverseElements(editor.data, (element) => {
       if (
         element.id === payload.containerId &&
         Array.isArray(element.content)
@@ -181,7 +186,7 @@ const actionHandlers: {
       return element;
     });
 
-    return updateEditorHistory(editor, newElements);
+    return updateEditorHistory(editor, newData);
   },
 
   MOVE_ELEMENT: (editor, payload) => {
@@ -207,9 +212,9 @@ const actionHandlers: {
       }) as EditorElement[];
     };
 
-    const newElements = insertElement(elements);
+    const newData = insertElement(elements);
 
-    return updateEditorHistory(editor, newElements);
+    return updateEditorHistory(editor, newData, removedElement);
   },
 
   MOVE_ELEMENT_UP: (editor, payload) => {
@@ -255,14 +260,20 @@ const actionHandlers: {
   },
 
   UPDATE_ELEMENT: (editor, payload) => {
-    const newElements = traverseElements(editor.data, (element) => {
+    const newData = traverseElements(editor.data, (element) => {
       if (element.id === payload.elementDetails.id) {
         return { ...element, ...payload.elementDetails };
       }
       return element;
     });
 
-    return updateEditorHistory(editor, newElements);
+    const isSelectedElementUpdated =
+      editor.state.selectedElement.id === payload.elementDetails.id;
+    const newSelectedElement = isSelectedElementUpdated
+      ? payload.elementDetails
+      : editor.state.selectedElement;
+
+    return updateEditorHistory(editor, newData, newSelectedElement);
   },
 
   UPDATE_ELEMENT_STYLE: (editor, payload) => {
@@ -278,14 +289,14 @@ const actionHandlers: {
   },
 
   DELETE_ELEMENT: (editor, payload) => {
-    const newElements = traverseElements(editor.data, (element) => {
+    const newData = traverseElements(editor.data, (element) => {
       if (element.id === payload.elementDetails.id) {
         return null;
       }
       return element;
     });
 
-    return updateEditorHistory(editor, newElements);
+    return updateEditorHistory(editor, newData);
   },
 
   CHANGE_CLICKED_ELEMENT: (editor, payload) => {

@@ -41,8 +41,8 @@ function WidthHeightSection() {
       <div className="col-span-4 row-span-1">
         <EditorInput
           id="width_input"
-          value={element.styles.width}
-          onChange={(e) =>
+          defaultValue={element.styles.width}
+          onDebounceChange={(e) =>
             dispatch({
               type: "UPDATE_ELEMENT_STYLE",
               payload: { width: e.target.value },
@@ -54,8 +54,8 @@ function WidthHeightSection() {
       <div className="col-span-4 row-span-1">
         <EditorInput
           id="height_input"
-          value={element.styles.height}
-          onChange={(e) =>
+          defaultValue={element.styles.height}
+          onDebounceChange={(e) =>
             dispatch({
               type: "UPDATE_ELEMENT_STYLE",
               payload: { height: e.target.value },
@@ -112,8 +112,8 @@ function FlexBoxSection() {
         <EditorInput
           id="gap_input"
           type="number"
-          value={element.styles.gap}
-          onChange={(e) =>
+          defaultValue={element.styles.gap}
+          onDebounceChange={(e) =>
             dispatch({
               type: "UPDATE_ELEMENT_STYLE",
               payload: { gap: e.target.valueAsNumber },
@@ -151,8 +151,8 @@ function PaddingSection() {
             <EditorInput
               id="px-input"
               type="number"
-              value={element.styles.paddingLeft}
-              onChange={(e) => {
+              defaultValue={element.styles.paddingLeft}
+              onDebounceChange={(e) => {
                 const newValue = e.target.valueAsNumber;
                 dispatch({
                   type: "UPDATE_ELEMENT_STYLE",
@@ -166,8 +166,8 @@ function PaddingSection() {
             <EditorInput
               id="py_input"
               type="number"
-              value={element.styles.paddingTop}
-              onChange={(e) => {
+              defaultValue={element.styles.paddingTop}
+              onDebounceChange={(e) => {
                 const newValue = e.target.valueAsNumber;
                 dispatch({
                   type: "UPDATE_ELEMENT_STYLE",
@@ -184,8 +184,8 @@ function PaddingSection() {
             <EditorInput
               id="pl_input"
               type="number"
-              value={element.styles.paddingLeft}
-              onChange={(e) => {
+              defaultValue={element.styles.paddingLeft}
+              onDebounceChange={(e) => {
                 dispatch({
                   type: "UPDATE_ELEMENT_STYLE",
                   payload: { paddingLeft: e.target.valueAsNumber },
@@ -198,8 +198,8 @@ function PaddingSection() {
             <EditorInput
               id="pt_input"
               type="number"
-              value={element.styles.paddingTop}
-              onChange={(e) => {
+              defaultValue={element.styles.paddingTop}
+              onDebounceChange={(e) => {
                 dispatch({
                   type: "UPDATE_ELEMENT_STYLE",
                   payload: { paddingTop: e.target.valueAsNumber },
@@ -229,8 +229,8 @@ function PaddingSection() {
             <EditorInput
               id="pr_input"
               type="number"
-              value={element.styles.paddingRight}
-              onChange={(e) => {
+              defaultValue={element.styles.paddingRight}
+              onDebounceChange={(e) => {
                 dispatch({
                   type: "UPDATE_ELEMENT_STYLE",
                   payload: { paddingRight: e.target.valueAsNumber },
@@ -243,8 +243,8 @@ function PaddingSection() {
             <EditorInput
               id="pb_input"
               type="number"
-              value={element.styles.paddingBottom}
-              onChange={(e) => {
+              defaultValue={element.styles.paddingBottom}
+              onDebounceChange={(e) => {
                 dispatch({
                   type: "UPDATE_ELEMENT_STYLE",
                   payload: { paddingBottom: e.target.valueAsNumber },

@@ -20,27 +20,29 @@ export default function SidebarElementSettingsTab(props: Props) {
         <SheetTitle>{selectedElement.name} 설정</SheetTitle>
       </SheetHeader>
 
-      {selectedElement.type === "map" && (
-        <>
-          <MapSetting element={selectedElement} />
-          <LayoutSetting />
-        </>
-      )}
+      <div key={selectedElement.id}>
+        {selectedElement.type === "map" && (
+          <>
+            <MapSetting element={selectedElement} />
+            <LayoutSetting />
+          </>
+        )}
 
-      {selectedElement.type === "text" && (
-        <>
-          <TextSetting />
-        </>
-      )}
+        {selectedElement.type === "text" && (
+          <>
+            <TextSetting />
+          </>
+        )}
 
-      {(selectedElement.type === "container" ||
-        selectedElement.type === "2Col") && (
-        <>
-          <LayoutSetting />
-          <BackgroundSetting />
-          <BorderSetting />
-        </>
-      )}
+        {(selectedElement.type === "container" ||
+          selectedElement.type === "2Col") && (
+          <>
+            <LayoutSetting />
+            <BackgroundSetting />
+            <BorderSetting />
+          </>
+        )}
+      </div>
     </div>
   );
 }
