@@ -4,6 +4,7 @@ import {
   ContainerPlaceholder,
   ImagePlaceholder,
   KakaoMapPlaceholder,
+  LogoBannerPlaceholder,
   TextPlaceholder,
   TwoColumnsPlaceholder,
 } from "~/components/editor/placeholders";
@@ -63,6 +64,12 @@ export default function SidebarElementsTab(props: Props) {
       id: "kakaoMap",
       label: "Map",
       Component: <KakaoMapPlaceholder />,
+      group: "elements",
+    },
+    {
+      id: "logoBanner",
+      label: "Logo Banner",
+      Component: <LogoBannerPlaceholder />,
       group: "elements",
     },
   ];

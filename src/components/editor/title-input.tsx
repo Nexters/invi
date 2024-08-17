@@ -11,7 +11,7 @@ import { updateInvitation } from "~/lib/db/schema/invitations.query";
 import { cn } from "~/lib/utils";
 
 export default function TitleInput() {
-  const { editorConfig } = useEditor();
+  const { editor, editorConfig } = useEditor();
   const params = useParams();
   const subDomain = params.subdomain as string;
 
@@ -78,7 +78,7 @@ export default function TitleInput() {
     >
       <div className="flex items-center border-b transition focus-within:border-transparent">
         <input
-          defaultValue={editorConfig.invitationTitle}
+          defaultValue={editor.config.invitationTitle}
           onChange={debounce(handleTitleInput, 300)}
           placeholder="제목을 입력해주세요."
           className="h-9 w-full bg-transparent pl-1 pr-5 pt-0.5 text-lg font-medium placeholder:text-muted-foreground focus-visible:outline-none"

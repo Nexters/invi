@@ -2,6 +2,7 @@ import { emptyElement } from "~/components/editor/constant";
 import type {
   DeviceType,
   Editor,
+  EditorConfig,
   EditorElement,
   EditorTabTypeValue,
 } from "~/components/editor/type";
@@ -30,7 +31,6 @@ type EditorActionMap = {
   UPDATE_ELEMENT: {
     elementDetails: EditorElement;
   };
-
   UPDATE_ELEMENT_STYLE: React.CSSProperties;
   DELETE_ELEMENT: {
     elementDetails: EditorElement;
@@ -44,6 +44,7 @@ type EditorActionMap = {
   CHANGE_DEVICE: {
     device: DeviceType;
   };
+  UPDATE_CONFIG: Partial<EditorConfig>;
   TOGGLE_PREVIEW_MODE: undefined;
   REDO: undefined;
   UNDO: undefined;
@@ -301,9 +302,9 @@ const actionHandlers: {
   },
 
   CHANGE_CLICKED_ELEMENT: (editor, payload) => {
-    const isSelected = isValidSelectEditorElement(payload.elementDetails);
+    const isValidSelect = isValidSelectEditorElement(payload.elementDetails);
 
-    const newTabValue = isSelected
+    const newTabValue = isValidSelect
       ? "Element Settings"
       : editor.state.currentTabValue === "Element Settings"
         ? "Elements"
@@ -335,6 +336,16 @@ const actionHandlers: {
       state: {
         ...editor.state,
         device: payload.device,
+      },
+    };
+  },
+
+  UPDATE_CONFIG: (editor, payload) => {
+    return {
+      ...editor,
+      config: {
+        ...editor.config,
+        ...payload,
       },
     };
   },

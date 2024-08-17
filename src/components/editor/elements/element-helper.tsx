@@ -106,7 +106,10 @@ export default function ElementHelper() {
               style={{ height: layerStyle.height }}
               className="absolute right-0 top-0 z-10 w-[1px] bg-primary"
             />
-            <Badge className="absolute -left-[1px] -top-[26px] z-10">
+            <Badge
+              className="absolute -left-[1px] -top-[26px] z-10"
+              onClick={(e) => e.stopPropagation()}
+            >
               {element.name}
             </Badge>
             <div className="absolute -left-[28px] -top-[1px] z-10">

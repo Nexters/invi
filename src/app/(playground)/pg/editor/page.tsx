@@ -1,4 +1,5 @@
 import Editor from "~/components/editor";
+import { bodyElement } from "~/components/editor/constant";
 
 export default async function Page() {
   return (
@@ -6,11 +7,27 @@ export default async function Page() {
       editorConfig={{ backLink: "/pg" }}
       editorData={[
         {
-          id: "__body",
-          type: "__body",
-          name: "Body",
-          styles: {},
+          ...bodyElement,
           content: [
+            {
+              id: "logoBanner",
+              name: "Logo Banner",
+              type: "logoBanner",
+              styles: {
+                height: 69,
+                color: "#22222250",
+              },
+              content: {},
+            },
+            {
+              id: "blank",
+              name: "Blank",
+              type: "blank",
+              styles: {
+                height: 32,
+              },
+              content: {},
+            },
             {
               id: "container",
               name: "Container",
