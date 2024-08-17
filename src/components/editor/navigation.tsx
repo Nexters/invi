@@ -13,7 +13,9 @@ import {
   Undo2,
 } from "lucide-react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { toast } from "sonner";
+import EditDialog from "~/components/editor/dialog/EditDialog";
 import { useEditor } from "~/components/editor/provider";
 import TitleInput from "~/components/editor/title-input";
 import type { DeviceType } from "~/components/editor/type";
@@ -27,11 +29,16 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import TooltipSimple from "~/components/ui/tooltip-simple";
+import { useInvitationByEventUrl } from "~/lib/hooks/query/invitation";
 import { cn } from "~/lib/utils";
 
 export default function EditorNavigation() {
   const { editor, editorConfig, dispatch } = useEditor();
   const { openDialog } = useAlertDialogStore();
+  const { subdomain } = useParams<{
+    subdomain: string;
+  }>();
+  const { data } = useInvitationByEventUrl(subdomain);
 
   const handlePreviewClick = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
@@ -131,6 +138,7 @@ export default function EditorNavigation() {
         <Button variant="secondary" onClick={handleOnSave} className="gap-1">
           <DownloadIcon className="h-4 w-4" /> 저장
         </Button>
+        {data && <EditDialog invitation={data} />}
         <Button onClick={handleOnSave} className="gap-1">
           <Share2Icon className="h-4 w-4" /> 공유
         </Button>
