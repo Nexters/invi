@@ -3,13 +3,17 @@
 import { useMutation } from "@tanstack/react-query";
 import { debounce, delay } from "es-toolkit";
 import { CheckIcon, LoaderIcon, XIcon } from "lucide-react";
+import { useParams } from "next/navigation";
 import { useRef } from "react";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
+import { updateInvitation } from "~/lib/db/schema/invitations.query";
 import { cn } from "~/lib/utils";
 
 export default function TitleInput() {
   const { editorConfig } = useEditor();
+  const params = useParams();
+  const subDomain = params.subdomain as string;
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -46,6 +50,10 @@ export default function TitleInput() {
         return;
       }
       editorConfig.invitationTitle = value;
+      await updateInvitation({
+        id: subDomain,
+        title: value,
+      });
       delayMutation.mutate();
     },
     onError: () => {
