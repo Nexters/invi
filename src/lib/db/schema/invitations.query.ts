@@ -35,6 +35,14 @@ export async function getInvitationById(id: Invitation["id"]) {
   return responses[0];
 }
 
+export async function getInvitationByEventUrl(eventUrl: string) {
+  const responses = await db
+    .select()
+    .from(invitations)
+    .where(eq(invitations.eventUrl, eventUrl));
+  return responses[0];
+}
+
 export async function getInvitationsByUserId(
   userId: Invitation["userId"],
 ): Promise<Invitation[]> {
