@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.624.0",
+    "@hookform/resolvers": "^3.9.0",
     "@lucia-auth/adapter-drizzle": "^1.1.0",
     "@neondatabase/serverless": "^0.9.4",
     "@radix-ui/react-accordion": "^1.2.0",
