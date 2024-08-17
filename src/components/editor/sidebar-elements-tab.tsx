@@ -1,8 +1,9 @@
 import React from "react";
-import KakaoMapPlaceholder, {
+import {
   BlankPlaceholder,
   ContainerPlaceholder,
   ImagePlaceholder,
+  KakaoMapPlaceholder,
   TextPlaceholder,
   TwoColumnsPlaceholder,
 } from "~/components/editor/placeholders";
