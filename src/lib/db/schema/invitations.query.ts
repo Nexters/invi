@@ -17,8 +17,6 @@ type CreateInvitationParams = Omit<
 type UpdateInvitationParams = {
   id: string;
   title?: string;
-  description?: string;
-  eventDate?: Date;
   eventUrl?: string;
   customFields?: Record<string, any>;
 };
