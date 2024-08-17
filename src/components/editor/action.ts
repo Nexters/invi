@@ -302,8 +302,8 @@ const actionHandlers: {
       state: {
         ...editor.state,
         selectedElement: payload.elementDetails ?? emptyElement,
+        currentTabValue: newTabValue,
       },
-      currentTabValue: newTabValue,
     };
   },
 
