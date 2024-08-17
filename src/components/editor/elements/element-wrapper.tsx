@@ -13,7 +13,6 @@ export default function ElementWrapper({
   ...props
 }: Props) {
   const { editor, dispatch } = useEditor();
-  const isRoot = element.type === "__body";
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -36,7 +35,7 @@ export default function ElementWrapper({
         !editor.state.isPreviewMode && "ring-border hover:ring-1",
         className,
       )}
-      onClick={(e) => !isRoot && handleClick(e)}
+      onClick={handleClick}
     >
       {children}
     </div>

@@ -6,6 +6,7 @@ import BorderSetting from "~/components/editor/sidebar-element-settings-tab/bord
 import ImageSetting from "~/components/editor/sidebar-element-settings-tab/image-setting";
 import KakaoMapSetting from "~/components/editor/sidebar-element-settings-tab/kakao-map-setting";
 import LayoutSetting from "~/components/editor/sidebar-element-settings-tab/layout-setting";
+import LogoBannerSetting from "~/components/editor/sidebar-element-settings-tab/logo-banner-setting";
 import MapSetting from "~/components/editor/sidebar-element-settings-tab/map-setting";
 import TextSetting from "~/components/editor/sidebar-element-settings-tab/text-setting";
 import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
@@ -54,7 +55,8 @@ export default function SidebarElementSettingsTab(props: Props) {
           </>
         )}
 
-        {(selectedElement.type === "container" ||
+        {(selectedElement.type === "__body" ||
+          selectedElement.type === "container" ||
           selectedElement.type === "2Col") && (
           <>
             <LayoutSetting />
@@ -66,6 +68,12 @@ export default function SidebarElementSettingsTab(props: Props) {
         {selectedElement.type === "blank" && (
           <>
             <LayoutSetting />
+          </>
+        )}
+
+        {selectedElement.type === "logoBanner" && (
+          <>
+            <LogoBannerSetting />
           </>
         )}
       </div>

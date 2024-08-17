@@ -302,9 +302,9 @@ const actionHandlers: {
   },
 
   CHANGE_CLICKED_ELEMENT: (editor, payload) => {
-    const isSelected = isValidSelectEditorElement(payload.elementDetails);
+    const isValidSelect = isValidSelectEditorElement(payload.elementDetails);
 
-    const newTabValue = isSelected
+    const newTabValue = isValidSelect
       ? "Element Settings"
       : editor.state.currentTabValue === "Element Settings"
         ? "Elements"

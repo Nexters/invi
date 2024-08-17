@@ -1,5 +1,6 @@
 import { BoxSelectIcon, ImageIcon, MapIcon, TypeIcon } from "lucide-react";
 import type { EditorElementType } from "~/components/editor/type";
+import { LogoTextIcon } from "~/components/ui/icons";
 import { cn } from "~/lib/utils";
 
 type PlaceholderProps = {
@@ -19,7 +20,7 @@ function Placeholder({ type, children, className }: PlaceholderProps) {
       draggable
       onDragStart={handleDragStart}
       className={cn(
-        "flex h-14 w-14 cursor-grab flex-row gap-1 rounded-lg bg-muted/70 p-2 active:cursor-grabbing",
+        "flex h-14 w-14 cursor-grab items-center justify-center gap-1 rounded-lg bg-muted/70 p-2 active:cursor-grabbing",
         className,
       )}
     >
@@ -81,6 +82,14 @@ export function BlankPlaceholder() {
   return (
     <Placeholder type="blank">
       <BoxSelectIcon size={40} className="text-muted-foreground" />
+    </Placeholder>
+  );
+}
+
+export function LogoBannerPlaceholder() {
+  return (
+    <Placeholder type="logoBanner">
+      <LogoTextIcon className="h-8 text-muted-foreground" />
     </Placeholder>
   );
 }
