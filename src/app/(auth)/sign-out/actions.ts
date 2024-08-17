@@ -8,7 +8,7 @@ import {
   invalidateSessionCookie,
 } from "~/lib/auth/utils";
 
-export async function signOutAction(redirectUrl = "/pg/sign-in") {
+export async function signOutAction(redirectUrl = "/") {
   const { session } = await getAuth();
   if (!session) {
     invalidateSessionCookie();

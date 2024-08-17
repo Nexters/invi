@@ -1,12 +1,43 @@
-import type { EditorHistory, EditorState } from "~/components/editor/type";
+import type {
+  EditorElement,
+  EditorHistory,
+  EditorState,
+} from "~/components/editor/type";
 
-export const defaultStyles: React.CSSProperties = {
-  backgroundPosition: "center",
-  objectFit: "cover",
-  backgroundRepeat: "no-repeat",
-  textAlign: "left",
-  opacity: "100%",
+const defaultStyles: React.CSSProperties = {};
+
+export const containerDefaultStyles: React.CSSProperties = {
+  ...defaultStyles,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 10,
+  paddingTop: 10,
+  paddingRight: 10,
+  paddingBottom: 10,
+  paddingLeft: 10,
+  width: "100%",
+  height: "auto",
 };
+
+export const textDefaultStyles: React.CSSProperties = {
+  ...defaultStyles,
+  textAlign: "left",
+};
+
+export const editorTabValue = {
+  ELEMENTS: "Elements",
+  SETTINGS: "Settings",
+  ELEMENT_SETTINGS: "Element Settings",
+} as const;
+
+export const emptyElement = {
+  id: "",
+  content: [],
+  name: "",
+  styles: {},
+  type: "empty",
+} satisfies EditorElement;
 
 export const initialEditorState: EditorState = {
   elements: [
@@ -18,16 +49,10 @@ export const initialEditorState: EditorState = {
       type: "__body",
     },
   ],
-  selectedElement: {
-    id: "",
-    content: [],
-    name: "",
-    styles: {},
-    type: null,
-  },
+  selectedElement: emptyElement,
+  currentTabValue: editorTabValue.ELEMENTS,
   device: "Mobile",
   isPreviewMode: false,
-  funnelPageId: "",
 };
 
 export const initialEditorHistory: EditorHistory = {
