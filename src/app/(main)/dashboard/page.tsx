@@ -27,7 +27,6 @@ export default async function Page() {
   }
   const invitations = await getInvitationsByUserId();
 
-  console.log(invitations);
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
       {/* header */}

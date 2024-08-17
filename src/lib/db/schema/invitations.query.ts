@@ -45,7 +45,6 @@ export async function getInvitationByEventUrl(eventUrl: string) {
 export async function getInvitationsByUserId(): Promise<Invitation[]> {
   const sessionId = await getAuth();
   const sessionUserId = sessionId.session.userId;
-  console.log(sessionUserId);
 
   return await db
     .select()
@@ -86,7 +85,6 @@ export async function updateInvitation(params: UpdateInvitationParams) {
   if (!id) {
     throw new Error("ID is required to update an invitation");
   }
-  console.log(updates);
 
   try {
     await db
