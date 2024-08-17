@@ -208,7 +208,7 @@ export default function Container({ element }: Props) {
       element={element}
       className={cn(
         "h-fit w-full max-w-full",
-        isRoot && "h-full overflow-y-auto",
+        isRoot && "min-h-full",
         !isRoot &&
           !editor.state.isPreviewMode &&
           "ring-1 ring-muted hover:ring-border",
