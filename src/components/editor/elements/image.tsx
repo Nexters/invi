@@ -12,7 +12,7 @@ export default function Image({ element }: Props) {
     <ElementWrapper element={element}>
       {/* TODO: apply real image */}
       <img
-        className="w-full"
+        className="h-full w-full object-cover"
         src={element.content.src}
         alt={element.content.alt ?? "이미지"}
       />
