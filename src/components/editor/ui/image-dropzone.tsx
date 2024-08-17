@@ -1,17 +1,42 @@
 "use client";
 
 import { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
+import { useDropzone, type DropzoneOptions } from "react-dropzone";
+import { toast } from "sonner";
 
-export default function ImageDropzone() {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    // Do something with the files
-    console.log(acceptedFiles);
-  }, []);
+export type InputImageProps = {
+  className?: string;
+  options?: DropzoneOptions;
+  onLoadImage?: (src: string) => void;
+};
+
+export default function ImageDropzone({
+  options,
+  onLoadImage,
+}: InputImageProps) {
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      for (const file of acceptedFiles) {
+        const reader = new FileReader();
+
+        reader.onabort = () => toast.info("파일 등록이 취소되었습니다.");
+        reader.onerror = () => toast.error("파일 등록에 실패했습니다.");
+        reader.onload = () => {
+          const src = URL.createObjectURL(file);
+          onLoadImage?.(src);
+        };
+        reader.readAsArrayBuffer(file);
+      }
+    },
+    [onLoadImage],
+  );
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    ...options,
     onDrop,
+    maxFiles: 1,
     accept: {
-      "image/*": [".jpg", ".jpeg", ".png", ".gif"],
+      "image/*": [],
     },
   });
 

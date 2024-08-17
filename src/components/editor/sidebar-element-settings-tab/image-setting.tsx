@@ -17,7 +17,19 @@ export default function ImageSetting({
     <div className="space-y-1 border-t p-6 pt-4">
       <div className="grid w-full grid-cols-9 gap-1">
         <div className="col-span-9">
-          <ImageDropzone />
+          <ImageDropzone
+            onLoadImage={(src) => {
+              dispatch({
+                type: "UPDATE_ELEMENT",
+                payload: {
+                  elementDetails: {
+                    ...element,
+                    content: { ...element.content, src },
+                  },
+                },
+              });
+            }}
+          />
         </div>
         <div className="col-span-9">
           <EditorInput
