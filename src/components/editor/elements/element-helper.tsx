@@ -7,13 +7,12 @@ import {
   GripVerticalIcon,
   Trash2Icon,
 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useEditor } from "~/components/editor/provider";
 import { isValidSelectEditorElement } from "~/components/editor/util";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
 
 export default function ElementHelper() {
   const { editor, dispatch } = useEditor();
@@ -39,7 +38,7 @@ export default function ElementHelper() {
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     return updateLayerStyle(element.id);
   }, [element.id, updateLayerStyle]);
 
@@ -79,12 +78,27 @@ export default function ElementHelper() {
     createPortal(
       !editor.state.isPreviewMode && isValidSelectEditorElement(element) && (
         <div
-          style={layerStyle}
-          className={cn(
-            "fixed z-50",
-            !editor.state.isPreviewMode && "ring-1 ring-primary",
-          )}
+          style={{
+            top: layerStyle.top,
+            left: layerStyle.left,
+            width: layerStyle.width,
+            height: 0,
+          }}
+          className="fixed z-50"
         >
+          <div className="absolute left-0 right-0 top-0 z-10 h-[1px] bg-primary" />
+          <div
+            style={{ top: layerStyle.height }}
+            className="absolute left-0 right-0 top-0 z-10 h-[1px] bg-primary"
+          />
+          <div
+            style={{ height: layerStyle.height }}
+            className="absolute left-0 top-0 z-10 w-[1px] bg-primary"
+          />
+          <div
+            style={{ height: layerStyle.height }}
+            className="absolute right-0 top-0 z-10 w-[1px] bg-primary"
+          />
           <Badge className="absolute -left-[1px] -top-[26px] z-10">
             {element.name}
           </Badge>
