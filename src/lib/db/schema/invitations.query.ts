@@ -68,7 +68,7 @@ export async function createInvitation(
   }
 }
 
-async function updateInvitation(params: UpdateInvitationParams) {
+export async function updateInvitation(params: UpdateInvitationParams) {
   const { id, ...updates } = params;
 
   if (!id) {
@@ -86,6 +86,24 @@ async function updateInvitation(params: UpdateInvitationParams) {
   } catch (error) {
     console.error("Error updating invitation:", error);
     throw new Error("Could not update invitation");
+  }
+}
+
+export async function deleteInvitation(id: Invitation["id"]): Promise<boolean> {
+  try {
+    const result = await db
+      .delete(invitations)
+      .where(eq(invitations.id, id))
+      .returning({ deletedId: invitations.id });
+
+    if (result.length === 0) {
+      console.warn(`No invitation found with id: ${id}`);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("Error deleting invitation:", error);
+    throw new Error("Could not delete invitation");
   }
 }
 
