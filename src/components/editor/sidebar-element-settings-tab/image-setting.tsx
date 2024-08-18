@@ -1,6 +1,7 @@
 "use client";
 
 import { HeightIcon, WidthIcon } from "@radix-ui/react-icons";
+import ky from "ky";
 import { useEditor } from "~/components/editor/provider";
 import type { InferEditorElement } from "~/components/editor/type";
 import ImageDropzone from "~/components/editor/ui/image-dropzone";
@@ -18,13 +19,20 @@ export default function ImageSetting({
       <div className="grid w-full grid-cols-9 gap-1">
         <div className="col-span-9">
           <ImageDropzone
-            onLoadImage={(src) => {
+            onLoadImage={async ({ url, file }) => {
+              const formData = new FormData();
+              formData.append("file", file);
+
+              await ky.post("/api/uploadImage", {
+                body: formData,
+              });
+
               dispatch({
                 type: "UPDATE_ELEMENT",
                 payload: {
                   elementDetails: {
                     ...element,
-                    content: { ...element.content, src },
+                    content: { ...element.content, src: url },
                   },
                 },
               });
@@ -35,7 +43,7 @@ export default function ImageSetting({
           <EditorInput
             id="image_src"
             defaultValue={element.content.src}
-            onDebounceChange={(e) => {
+            onDebounceChange={async (e) => {
               dispatch({
                 type: "UPDATE_ELEMENT",
                 payload: {
