@@ -6,8 +6,7 @@ export default async function Page({
 }: {
   params: { subdomain: string };
 }) {
-  const subDomain = params.subdomain;
-  const invitation = await getInvitationByEventUrl(subDomain as string);
+  const invitation = await getInvitationByEventUrl(params.subdomain);
 
   return (
     <Editor

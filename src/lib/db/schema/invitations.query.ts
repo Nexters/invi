@@ -16,10 +16,10 @@ type CreateInvitationParams = Omit<
 >;
 
 type UpdateInvitationParams = {
-  id: string;
-  title?: string;
-  eventUrl?: string;
-  customFields?: Record<string, any>;
+  id: Invitation["id"];
+  title?: Invitation["title"];
+  customFields?: Invitation["customFields"];
+  eventUrl?: Invitation["eventUrl"];
 };
 
 export async function getAllInvitations() {
