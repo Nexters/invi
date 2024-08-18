@@ -2,6 +2,7 @@
 
 import { count, eq, getTableColumns } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { revalidatePath } from "next/cache";
 import { getAuth } from "~/lib/auth/utils";
 import { db } from "~/lib/db";
 import {
@@ -86,7 +87,11 @@ export async function createInvitation(
         updatedAt: currentTimestamp,
       })
       .returning();
-    return res[0];
+
+    const newInvitation = res[0];
+    revalidatePath(`/i/${newInvitation.eventUrl}`);
+
+    return newInvitation;
   } catch (error) {
     console.error("Error creating invitation:", error);
     throw new Error("Could not create invitation");
