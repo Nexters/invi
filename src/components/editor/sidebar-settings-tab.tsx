@@ -69,15 +69,6 @@ function CustomDomainSection() {
 function SEOSection() {
   const { editor, dispatch } = useEditor();
 
-  const onLoadImage = (src: string) => {
-    dispatch({
-      type: "UPDATE_CONFIG",
-      payload: {
-        invitationThumbnail: src,
-      },
-    });
-  };
-
   const onCopyLink = async () => {
     const link = `https://${editor.config.invitationSubdomain}.invi.my`;
 
@@ -115,7 +106,17 @@ function SEOSection() {
         />
       </div>
       <div className="col-span-9">
-        <ImageDropzone onLoadImage={onLoadImage} />
+        <ImageDropzone
+          onLoadImage={async ({ url }) => {
+            // TODO: cdn 연동
+            dispatch({
+              type: "UPDATE_CONFIG",
+              payload: {
+                invitationThumbnail: url,
+              },
+            });
+          }}
+        />
         <EditorInput
           id="invitationThumbnail"
           componentPrefix={"src"}
