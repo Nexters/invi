@@ -2,9 +2,8 @@
 
 import { count, eq, getTableColumns } from "drizzle-orm";
 import { nanoid } from "nanoid";
-import { cookies } from "next/headers";
+import { getAuth } from "~/lib/auth/utils";
 import { db } from "~/lib/db";
-import { sessions } from "~/lib/db/schema/auth";
 import {
   type Invitation,
   type InvitationInsert,
@@ -44,26 +43,22 @@ export async function getInvitationByEventUrl(eventUrl: string) {
 }
 
 export async function getInvitations(): Promise<Invitation[]> {
-  const cookie = cookies();
-  const sessionCookie = cookie.get("auth_session");
+  const auth = await getAuth();
 
-  if (!sessionCookie) {
-    return [];
+  if (!auth.user) {
+    throw new Error("No Auth");
   }
-
-  const sessionId = sessionCookie.value;
 
   try {
     const result = await db
       .select(getTableColumns(invitations))
       .from(invitations)
-      .leftJoin(sessions, eq(sessions.userId, invitations.userId))
-      .where(eq(sessions.id, sessionId));
+      .where(eq(invitations.userId, auth.user.id));
 
     return result;
   } catch (error) {
     console.error("Error fetching invitations:", error);
-    return [];
+    throw new Error("[500] Could not fetch invitations");
   }
 }
 
