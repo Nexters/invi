@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { getAuth } from "~/lib/auth/utils";
-import { getInvitationsByUserId } from "~/lib/db/schema/invitations.query";
+import { getInvitationsByAuth } from "~/lib/db/schema/invitations.query";
 
 const formatDate = (date: Date) => {
   const year = date.getFullYear();
@@ -25,7 +25,7 @@ export default async function Page() {
   if (!auth.user) {
     return redirect("/sign-in");
   }
-  const invitations = await getInvitationsByUserId();
+  const invitations = await getInvitationsByAuth();
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
