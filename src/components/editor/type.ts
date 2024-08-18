@@ -20,7 +20,7 @@ type EditorElementContentMap = {
     isMapUse: boolean;
     isShareUse: boolean;
   };
-  map: { address: string };
+  navigation: { address: string };
   blank: {};
   empty: {};
   logoBanner: {};
