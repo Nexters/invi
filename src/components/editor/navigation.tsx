@@ -146,7 +146,10 @@ export default function EditorNavigation() {
           <DownloadIcon className="h-4 w-4" /> 저장
         </Button>
         <Button className="gap-1" asChild>
-          <Link href="/" target="_blank">
+          <Link
+            href={`https://${editor.config.invitationSubdomain}.invi.my/`}
+            target="_blank"
+          >
             <MailOpenIcon className="h-4 w-4" /> 초대장 보기
           </Link>
         </Button>

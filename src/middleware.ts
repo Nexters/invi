@@ -29,16 +29,5 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(new URL(`/i/${subdomain}${path}`, request.url));
   }
 
-  // /i/* 경로로 접근한 경우
-  const match = path.match(/^\/i\/([^\/]+)(\/.*)?$/);
-  if (match) {
-    const subdomain = match[1];
-    const remainingPath = match[2] || "";
-    const newUrl = new URL(request.url);
-    newUrl.hostname = `${subdomain}.${newUrl.hostname}`;
-    newUrl.pathname = remainingPath;
-    return NextResponse.redirect(newUrl);
-  }
-
   return NextResponse.rewrite(new URL(path, request.url));
 }
