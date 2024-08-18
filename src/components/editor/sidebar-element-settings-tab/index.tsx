@@ -45,6 +45,7 @@ export default function SidebarElementSettingsTab(props: Props) {
 
         {selectedElement.type === "text" && (
           <>
+            <LayoutSetting />
             <TextSetting />
           </>
         )}
@@ -60,6 +61,7 @@ export default function SidebarElementSettingsTab(props: Props) {
           selectedElement.type === "2Col") && (
           <>
             <LayoutSetting />
+            <TextSetting />
             <BackgroundSetting />
             <BorderSetting />
           </>
