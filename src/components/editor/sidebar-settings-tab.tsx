@@ -44,7 +44,7 @@ function CustomDomainSection() {
       <div className="col-span-9">
         <EditorInput
           id="subdomain"
-          className="mr-0 pr-0.5 ring-1"
+          className="pr-0.5 ring-1"
           componentSuffix={
             <div>
               <span>.invi.my</span>
@@ -111,7 +111,7 @@ function SEOSection() {
         <EditorInput
           id="invitationDesc"
           componentPrefix={"설명:"}
-          className="mr-0 mt-1"
+          className="mt-1"
           defaultValue={editor.config.invitationDesc}
           onDebounceChange={(e) => {
             dispatch({
@@ -142,7 +142,7 @@ function SEOSection() {
           id="invitationThumbnail"
           disabled={uploadImageMutation.isPending}
           componentPrefix={"src"}
-          className="mr-0 mt-1"
+          className="mt-1"
           defaultValue={editor.config.invitationThumbnail}
           onDebounceChange={(e) => {
             dispatch({
