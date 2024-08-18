@@ -3,18 +3,21 @@
 import { useCallback } from "react";
 import { useDropzone, type DropzoneOptions } from "react-dropzone";
 import { toast } from "sonner";
+import { ImageSolidIcon } from "~/components/ui/icons";
 import { cn } from "~/lib/utils";
 
 export type InputImageProps = {
   className?: string;
   disabled?: boolean;
   options?: DropzoneOptions;
+  children?: React.ReactNode;
   onLoadImage?: ({ url, file }: { url: string; file: File }) => void;
 };
 
 export default function ImageDropzone({
   disabled,
   options,
+  children,
   onLoadImage,
 }: InputImageProps) {
   const onDrop = useCallback(
@@ -39,6 +42,7 @@ export default function ImageDropzone({
     disabled,
     onDrop,
     maxFiles: 1,
+    maxSize: 1024 * 1024 * 10, // 10MB
     accept: {
       "image/*": [],
     },
@@ -48,16 +52,16 @@ export default function ImageDropzone({
     <div
       {...getRootProps()}
       className={cn(
-        "h-20 w-full cursor-pointer rounded-sm border border-transparent bg-secondary p-2 text-xs focus-within:border-border focus-within:outline-none hover:border-border",
+        "flex h-[120px] w-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded-sm border border-transparent bg-muted p-2 text-xs text-muted-foreground focus-within:border-border focus-within:outline-none hover:border-border",
         disabled && "bg-muted",
+        isDragActive && "bg-accent",
       )}
     >
       <input {...getInputProps()} />
-      {isDragActive ? (
-        <p>파일을 여기에 놓으세요...</p>
-      ) : (
-        <p>여기에 파일을 끌어다 놓거나, 클릭하여 파일을 선택하세요.</p>
-      )}
+      <div className="text-muted-foreground">
+        <ImageSolidIcon className="size-6" />
+      </div>
+      {children}
     </div>
   );
 }

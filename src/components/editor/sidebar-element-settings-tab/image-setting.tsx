@@ -44,7 +44,9 @@ export default function ImageSetting({
             onLoadImage={async ({ file }) => {
               imageUploadMutation.mutate(file);
             }}
-          />
+          >
+            <div>10MB 이하, 권장 사이즈 가로 640px</div>
+          </ImageDropzone>
         </div>
         <div className="col-span-9">
           <EditorInput
