@@ -1,6 +1,7 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import ky from "ky";
+import { getAuth } from "~/lib/auth/utils";
 import { env } from "~/lib/env";
 
 const bucket_name = "invi-static";
@@ -56,6 +57,12 @@ async function fetchFile(url: string) {
 }
 
 export async function POST(request: Request) {
+  const auth = await getAuth();
+
+  if (!auth.user) {
+    return Response.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const contentType = request.headers.get("Content-Type");
   try {
     if (contentType?.includes("application/json")) {
