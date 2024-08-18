@@ -10,7 +10,7 @@ import { updateInvitation } from "~/lib/db/schema/invitations.query";
 import { cn } from "~/lib/utils";
 
 export default function TitleInput() {
-  const { editor } = useEditor();
+  const { editor, dispatch } = useEditor();
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -41,15 +41,20 @@ export default function TitleInput() {
       value: string;
       signal: AbortSignal;
     }) => {
-      await delay(1000);
-
       if (signal.aborted) {
         return;
       }
-      editor.config.invitationTitle = value;
+
       await updateInvitation({
-        id: editor.config.invitationSubdomain,
+        id: editor.config.invitationId,
         title: value,
+      });
+
+      dispatch({
+        type: "UPDATE_CONFIG",
+        payload: {
+          invitationTitle: value,
+        },
       });
       delayMutation.mutate();
     },
