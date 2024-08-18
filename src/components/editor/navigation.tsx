@@ -146,10 +146,7 @@ export default function EditorNavigation() {
           <DownloadIcon className="h-4 w-4" /> 저장
         </Button>
         <Button className="gap-1" asChild>
-          <Link
-            href={`/i/${editor.config.invitationSubdomain}`}
-            target="_blank"
-          >
+          <Link href="/" target="_blank">
             <MailOpenIcon className="h-4 w-4" /> 초대장 보기
           </Link>
         </Button>
