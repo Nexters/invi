@@ -20,6 +20,7 @@ export function EditorInput({
     <div
       className={cn(
         "-ml-0.5 mr-2 flex h-7 items-center gap-2 rounded-sm px-1.5 py-0.5 text-sm ring-border focus-within:bg-secondary hover:ring-1",
+        props.disabled && "pointer-events-none opacity-50",
         className,
       )}
     >

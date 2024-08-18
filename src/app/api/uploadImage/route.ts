@@ -1,10 +1,10 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import ky from "ky";
+import { nanoid } from "nanoid";
 import { getAuth } from "~/lib/auth/utils";
 import { env } from "~/lib/env";
-
-const bucket_name = "invi-static";
+import { thumbnail } from "~/lib/thumbnail";
 
 const objectStorageClient = new S3Client({
   endpoint: env.NCP_ENDPOINT,
@@ -20,7 +20,7 @@ async function createPresignedUrl(
   expiresInSeconds: number = 3600,
 ) {
   const command = new PutObjectCommand({
-    Bucket: bucket_name,
+    Bucket: env.NCP_BUCKET_NAME,
     Key: key,
     ACL: "public-read",
   });
@@ -36,24 +36,11 @@ async function uploadUsingPresignedUrlWithFile(
   presignedUrl: string,
   file: File,
 ) {
-  try {
-    const fileStream = file.stream();
+  const fileStream = file.stream();
 
-    const response = await ky.put(presignedUrl, {
-      body: fileStream,
-    });
-
-    console.log(response);
-  } catch (error) {
-    console.error("Error uploading file:", error);
-  }
-}
-
-async function fetchFile(url: string) {
-  const response = await ky.get(url);
-  const blob = await response.blob();
-  const file = new File([blob], "image.png", { type: "image/png" });
-  return file;
+  await ky.put(presignedUrl, {
+    body: fileStream,
+  });
 }
 
 export async function POST(request: Request) {
@@ -64,21 +51,29 @@ export async function POST(request: Request) {
   }
 
   const contentType = request.headers.get("Content-Type");
-  try {
-    if (contentType?.includes("application/json")) {
-      const res = await request.json();
-      const file = await fetchFile(res.url);
-      const presignedUrl = await createPresignedUrl(file.name);
-      uploadUsingPresignedUrlWithFile(presignedUrl, file);
-    } else if (contentType?.includes("multipart/form-data")) {
-      const formData = await request.formData();
-      const file = formData.get("file") as File;
-      const presignedUrl = await createPresignedUrl(file.name);
-      uploadUsingPresignedUrlWithFile(presignedUrl, file);
-    }
-  } catch (error) {
-    console.error("Error uploading file:", error);
+
+  if (!contentType?.includes("multipart/form-data")) {
+    return Response.json(
+      { message: "multipart/form-data is required" },
+      { status: 400 },
+    );
   }
 
-  return Response.json({ message: "File uploaded successfully" });
+  try {
+    const formData = await request.formData();
+    const file = formData.get("file") as File;
+    console.log(":filetype:", file.type);
+    const fileEx = file.name.split(".").pop();
+
+    const filePath = `${auth.user.id}/${nanoid(8)}.${fileEx}`;
+    const presignedUrl = await createPresignedUrl(filePath);
+    await uploadUsingPresignedUrlWithFile(presignedUrl, file);
+
+    return Response.json({
+      url: thumbnail(filePath),
+    });
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    return Response.json({ message: "Error uploading file" }, { status: 500 });
+  }
 }

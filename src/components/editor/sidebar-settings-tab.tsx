@@ -1,5 +1,6 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import { LinkIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
@@ -12,6 +13,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "~/components/ui/sheet";
+import { uploadImage } from "~/lib/image";
 
 type Props = {};
 
@@ -81,6 +83,22 @@ function SEOSection() {
     }
   };
 
+  const uploadImageMutation = useMutation({
+    mutationFn: uploadImage,
+    onSuccess: (url) => {
+      dispatch({
+        type: "UPDATE_CONFIG",
+        payload: {
+          invitationThumbnail: url,
+        },
+      });
+    },
+    onError: (e) => {
+      console.error(e);
+      toast.error("이미지 업로드에 실패했습니다.");
+    },
+  });
+
   return (
     <div className="grid w-full grid-cols-9 gap-2 border-y p-6">
       <div className="col-span-9 flex flex-col">
@@ -107,18 +125,20 @@ function SEOSection() {
       </div>
       <div className="col-span-9">
         <ImageDropzone
-          onLoadImage={async ({ url }) => {
-            // TODO: cdn 연동
+          disabled={uploadImageMutation.isPending}
+          onLoadImage={async ({ url, file }) => {
             dispatch({
               type: "UPDATE_CONFIG",
               payload: {
                 invitationThumbnail: url,
               },
             });
+            uploadImageMutation.mutate(file);
           }}
         />
         <EditorInput
           id="invitationThumbnail"
+          disabled={uploadImageMutation.isPending}
           componentPrefix={"src"}
           className="mr-0 mt-1"
           defaultValue={editor.config.invitationThumbnail}
@@ -126,7 +146,7 @@ function SEOSection() {
             dispatch({
               type: "UPDATE_CONFIG",
               payload: {
-                invitationDesc: e.target.value,
+                invitationThumbnail: e.target.value,
               },
             });
           }}
@@ -140,8 +160,8 @@ function SEOSection() {
                 src={editor.config.invitationThumbnail}
                 width="250px"
                 height="125px"
-                className="aspect-preview object-cover"
-                draggable="false"
+                className="aspect-preview select-none object-cover"
+                draggable={false}
                 alt="썸네일"
               />
             )}

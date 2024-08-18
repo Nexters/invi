@@ -3,14 +3,17 @@
 import { useCallback } from "react";
 import { useDropzone, type DropzoneOptions } from "react-dropzone";
 import { toast } from "sonner";
+import { cn } from "~/lib/utils";
 
 export type InputImageProps = {
   className?: string;
+  disabled?: boolean;
   options?: DropzoneOptions;
   onLoadImage?: ({ url, file }: { url: string; file: File }) => void;
 };
 
 export default function ImageDropzone({
+  disabled,
   options,
   onLoadImage,
 }: InputImageProps) {
@@ -33,6 +36,7 @@ export default function ImageDropzone({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     ...options,
+    disabled,
     onDrop,
     maxFiles: 1,
     accept: {
@@ -43,7 +47,10 @@ export default function ImageDropzone({
   return (
     <div
       {...getRootProps()}
-      className="h-20 w-full cursor-pointer rounded-sm border border-transparent bg-secondary p-2 text-xs focus-within:border-border focus-within:outline-none hover:border-border"
+      className={cn(
+        "h-20 w-full cursor-pointer rounded-sm border border-transparent bg-secondary p-2 text-xs focus-within:border-border focus-within:outline-none hover:border-border",
+        disabled && "bg-muted",
+      )}
     >
       <input {...getInputProps()} />
       {isDragActive ? (
