@@ -4,7 +4,7 @@ import { useEditor } from "~/components/editor/provider";
 import type { InferEditorElement } from "~/components/editor/type";
 import { Input } from "~/components/ui/input";
 
-type Props = { element: InferEditorElement<"map"> };
+type Props = { element: InferEditorElement<"navigation"> };
 
 export default function MapSetting({ element }: Props) {
   const { dispatch } = useEditor();
@@ -15,7 +15,7 @@ export default function MapSetting({ element }: Props) {
       payload: {
         elementDetails: {
           ...element,
-          type: "map",
+          type: "navigation",
           content: {
             ...element.content,
             address: e.target.value,

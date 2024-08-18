@@ -24,19 +24,12 @@ export default function SidebarElementSettingsTab(props: Props) {
       </SheetHeader>
 
       <div key={selectedElement.id}>
-        {selectedElement.type === "map" && (
-          <>
-            <MapSetting element={selectedElement} />
-            <LayoutSetting />
-          </>
-        )}
         {selectedElement.type === "kakaoMap" && (
           <>
             <KakaoMapSetting />
           </>
         )}
-
-        {selectedElement.type === "map" && (
+        {selectedElement.type === "navigation" && (
           <>
             <MapSetting element={selectedElement} />
             <LayoutSetting />

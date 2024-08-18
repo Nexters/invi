@@ -162,17 +162,16 @@ export default function Container({ element }: Props) {
           },
         });
         break;
-      case "map":
+      case "navigation":
         dispatch({
           type: "ADD_ELEMENT",
           payload: {
             containerId: id,
             elementDetails: {
-              type: "map",
+              type: "navigation",
               id: nanoid(),
-              name: "map",
+              name: "navigation",
               styles: {
-                color: "black",
                 ...containerDefaultStyles,
               },
               content: {

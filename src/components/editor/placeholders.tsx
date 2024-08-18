@@ -1,4 +1,10 @@
-import { BoxSelectIcon, ImageIcon, MapIcon, TypeIcon } from "lucide-react";
+import {
+  BoxSelectIcon,
+  ImageIcon,
+  MapIcon,
+  NavigationIcon,
+  TypeIcon,
+} from "lucide-react";
 import type { EditorElementType } from "~/components/editor/type";
 import { LogoTextIcon } from "~/components/ui/icons";
 import { cn } from "~/lib/utils";
@@ -46,14 +52,6 @@ export function TwoColumnsPlaceholder() {
   );
 }
 
-export function MapPlaceholder() {
-  return (
-    <Placeholder type="map">
-      <MapIcon size={40} className="text-muted-foreground" />
-    </Placeholder>
-  );
-}
-
 export function ContainerPlaceholder() {
   return (
     <Placeholder type="container">
@@ -66,6 +64,14 @@ export function ImagePlaceholder() {
   return (
     <Placeholder type="image">
       <ImageIcon size={40} className="text-muted-foreground" />{" "}
+    </Placeholder>
+  );
+}
+
+export function NavigationPlaceholder() {
+  return (
+    <Placeholder type="navigation">
+      <NavigationIcon size={40} className="text-muted-foreground" />
     </Placeholder>
   );
 }
