@@ -5,6 +5,7 @@ import ElementHelper from "~/components/editor/elements/element-helper";
 import Recursive from "~/components/editor/elements/recursive";
 import { useEditor } from "~/components/editor/provider";
 import { Button } from "~/components/ui/button";
+import { ScrollArea } from "~/components/ui/scroll-area";
 import { cn } from "~/lib/utils";
 
 export default function EditorMain() {
@@ -26,7 +27,7 @@ export default function EditorMain() {
       className="flex flex-1 items-center justify-center"
       onClick={handleClick}
     >
-      <div
+      <ScrollArea
         id="editor-main"
         className={cn(
           "ml-[10px] mr-[392px] animate-zoom-in bg-background transition-all",
@@ -50,7 +51,7 @@ export default function EditorMain() {
           editor.data.map((childElement) => (
             <Recursive key={childElement.id} element={childElement} />
           ))}
-      </div>
+      </ScrollArea>
       <ElementHelper />
     </div>
   );

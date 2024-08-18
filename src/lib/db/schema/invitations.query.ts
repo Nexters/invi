@@ -12,14 +12,14 @@ import {
 
 type CreateInvitationParams = Omit<
   InvitationInsert,
-  "id" | "eventUrl" | "createdAt" | "updatedAt"
+  "id" | "userId" | "eventUrl" | "createdAt" | "updatedAt"
 >;
 
 type UpdateInvitationParams = {
-  id: string;
-  title?: string;
-  eventUrl?: string;
-  customFields?: Record<string, any>;
+  id: Invitation["id"];
+  title?: Invitation["title"];
+  customFields?: Invitation["customFields"];
+  eventUrl?: Invitation["eventUrl"];
 };
 
 export async function getAllInvitations() {
@@ -42,7 +42,7 @@ export async function getInvitationByEventUrl(eventUrl: string) {
   return responses[0];
 }
 
-export async function getInvitations(): Promise<Invitation[]> {
+export async function getInvitationsByAuth(): Promise<Invitation[]> {
   const auth = await getAuth();
 
   if (!auth.user) {
@@ -65,6 +65,12 @@ export async function getInvitations(): Promise<Invitation[]> {
 export async function createInvitation(
   params: CreateInvitationParams,
 ): Promise<InvitationInsert> {
+  const auth = await getAuth();
+
+  if (!auth.user) {
+    throw new Error("No Auth");
+  }
+
   const id = nanoid();
   const currentTimestamp = new Date();
 
@@ -74,6 +80,7 @@ export async function createInvitation(
       .values({
         ...params,
         id,
+        userId: auth.user.id,
         eventUrl: id,
         createdAt: currentTimestamp,
         updatedAt: currentTimestamp,

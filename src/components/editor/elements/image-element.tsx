@@ -18,7 +18,7 @@ export default function ImageElement({ element }: Props) {
           alt={element.content.alt ?? "이미지"}
         />
       ) : (
-        <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-secondary text-muted-foreground">
+        <div className="flex h-full w-full items-center justify-center bg-secondary p-5 text-muted-foreground">
           <ImageIcon />
         </div>
       )}

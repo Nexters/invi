@@ -2,6 +2,7 @@ import BlankElement from "~/components/editor/elements/blank-element";
 import Container from "~/components/editor/elements/container";
 import ImageElement from "~/components/editor/elements/image-element";
 import KakaoMap from "~/components/editor/elements/kakao-map";
+import LogoBannerElement from "~/components/editor/elements/logo-banner-element";
 import Text from "~/components/editor/elements/text";
 import type { EditorElement } from "~/components/editor/type";
 
@@ -21,6 +22,8 @@ export default function Recursive({ element }: { element: EditorElement }) {
       return <ImageElement element={element} />;
     case "kakaoMap":
       return <KakaoMap element={element} />;
+    case "logoBanner":
+      return <LogoBannerElement element={element} />;
     default:
       return null;
   }

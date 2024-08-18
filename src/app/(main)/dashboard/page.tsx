@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { getAuth } from "~/lib/auth/utils";
-import { getInvitationsByUserId } from "~/lib/db/schema/invitations.query";
+import { getInvitationsByAuth } from "~/lib/db/schema/invitations.query";
 
 const formatDate = (date: Date) => {
   const year = date.getFullYear();
@@ -25,7 +25,7 @@ export default async function Page() {
   if (!auth.user) {
     return redirect("/sign-in");
   }
-  const invitations = await getInvitationsByUserId(auth.user.id);
+  const invitations = await getInvitationsByAuth();
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
@@ -55,7 +55,7 @@ export default async function Page() {
                 {invitations.map((invitation) => (
                   <li key={invitation.id} className="h-full w-full">
                     <Link
-                      href={`/i/${invitation.id}/edit`}
+                      href={`/i/${invitation.eventUrl}/edit`}
                       className="flex h-full flex-col bg-muted p-0.5"
                     >
                       <div className="flex-1 overflow-hidden rounded-xl border border-border bg-background p-3">
