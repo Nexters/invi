@@ -1,12 +1,29 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import Recursive from "~/components/editor/elements/recursive";
 import EditorProvider from "~/components/editor/provider";
 import { getInvitationByEventUrl } from "~/lib/db/schema/invitations.query";
 
-export default async function Page({
-  params,
-}: {
+type Props = {
   params: { subdomain: string };
-}) {
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const invitation = await getInvitationByEventUrl(params.subdomain);
+
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: {
+      default: invitation.title,
+      template: "%s | 인비",
+    },
+  };
+}
+
+export default async function Page({ params }: Props) {
   const invitation = await getInvitationByEventUrl(params.subdomain);
 
   return (
