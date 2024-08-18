@@ -43,22 +43,29 @@ export async function getInvitationByEventUrl(eventUrl: string) {
 }
 
 export async function getInvitationsByUserId(): Promise<Invitation[]> {
-  const sessionId = await getAuth();
-  const sessionUserId = sessionId.session.userId;
+  const auth = await getAuth();
+
+  if (!auth.user) {
+    throw new Error("No Auth");
+  }
 
   return await db
     .select()
     .from(invitations)
-    .where(eq(invitations.userId, sessionUserId));
+    .where(eq(invitations.userId, auth.user.id));
 }
 
 export async function createInvitation(
   params: CreateInvitationParams,
 ): Promise<InvitationInsert> {
+  const auth = await getAuth();
+
+  if (!auth.user) {
+    throw new Error("No Auth");
+  }
+
   const id = nanoid();
   const currentTimestamp = new Date();
-  const sessionId = await getAuth();
-  const sessionUserId = sessionId.session.userId;
 
   try {
     const res = await db
@@ -66,7 +73,7 @@ export async function createInvitation(
       .values({
         ...params,
         id,
-        userId: sessionUserId,
+        userId: auth.user.id,
         eventUrl: id,
         createdAt: currentTimestamp,
         updatedAt: currentTimestamp,
