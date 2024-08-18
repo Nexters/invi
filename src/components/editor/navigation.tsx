@@ -6,8 +6,8 @@ import {
   EllipsisVerticalIcon,
   EyeIcon,
   Laptop,
+  MailOpenIcon,
   Redo2,
-  Share2Icon,
   Smartphone,
   Tablet,
   Undo2,
@@ -145,8 +145,10 @@ export default function EditorNavigation() {
         <Button variant="secondary" onClick={handleOnSave} className="gap-1">
           <DownloadIcon className="h-4 w-4" /> 저장
         </Button>
-        <Button onClick={handleOnSave} className="gap-1">
-          <Share2Icon className="h-4 w-4" /> 공유
+        <Button className="gap-1" asChild>
+          <Link href="/" target="_blank">
+            <MailOpenIcon className="h-4 w-4" /> 초대장 보기
+          </Link>
         </Button>
         <DropdownMenu>
           <TooltipSimple text="더보기">

@@ -1,5 +1,6 @@
 "use client";
 
+import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { LinkIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -13,6 +14,10 @@ import {
   SheetHeader,
   SheetTitle,
 } from "~/components/ui/sheet";
+import {
+  existsByEventUrl,
+  updateInvitation,
+} from "~/lib/db/schema/invitations.query";
 import { uploadImage } from "~/lib/image";
 
 type Props = {};
@@ -34,36 +39,105 @@ export default function SidebarSettingsTab(props: Props) {
 }
 
 function CustomDomainSection() {
-  const { editor } = useEditor();
+  const { editor, dispatch } = useEditor();
+
+  const updateSubdomainMutation = useMutation({
+    mutationFn: async (subdomain: string) => {
+      const isExist = await existsByEventUrl(subdomain);
+
+      if (isExist) {
+        throw new Error("이미 사용중인 도메인입니다.");
+      }
+
+      await updateInvitation({
+        id: editor.config.invitationId,
+        eventUrl: subdomain,
+      });
+
+      dispatch({
+        type: "UPDATE_CONFIG",
+        payload: {
+          invitationSubdomain: subdomain,
+        },
+      });
+
+      return subdomain;
+    },
+    onSuccess: (subdomain) => {
+      toast.success("도메인이 변경되었습니다.", {
+        description: `https://${subdomain}.invi.my`,
+      });
+    },
+    onError: () => {
+      toast.error("도메인 변경에 실패했습니다.");
+    },
+  });
+
+  const form = useForm({
+    defaultValues: {
+      subdomain: editor.config.invitationSubdomain,
+    },
+    onSubmit: async ({ value }) => {
+      if (value.subdomain === editor.config.invitationSubdomain) {
+        return;
+      }
+
+      await updateSubdomainMutation.mutateAsync(value.subdomain);
+    },
+  });
 
   return (
     <div className="grid w-full grid-cols-9 gap-1 border-t p-6">
       <div className="col-span-9 mb-2 flex items-center">
         <h4 className="text-sm font-medium">도메인 설정</h4>
       </div>
-      <div className="col-span-9">
-        <EditorInput
-          id="subdomain"
-          className="pr-0.5 ring-1"
-          componentSuffix={
-            <div>
-              <span>.invi.my</span>
-              <Button size="sm" className="ml-2 h-6">
-                저장
-              </Button>
-            </div>
-          }
-          defaultValue={editor.config.invitationSubdomain}
-          onDebounceChange={() => {}}
+      <form
+        className="col-span-9"
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          form.handleSubmit();
+        }}
+      >
+        <form.Field
+          name="subdomain"
+          children={(field) => {
+            return (
+              <EditorInput
+                id={field.name}
+                name={field.name}
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+                className="pr-0.5 ring-1"
+                componentSuffix={
+                  <div>
+                    <span>.invi.my</span>
+                    <Button
+                      type="submit"
+                      size="sm"
+                      className="ml-2 h-6"
+                      disabled={
+                        updateSubdomainMutation.isPending ||
+                        field.state.value === editor.config.invitationSubdomain
+                      }
+                    >
+                      저장
+                    </Button>
+                  </div>
+                }
+              />
+            );
+          }}
         />
         <div className="h-5">
-          {true && (
+          {updateSubdomainMutation.isError && (
             <span className="text-xs text-destructive">
-              중복된 도메인입니다. 다른 주소를 사용해주세요.
+              {updateSubdomainMutation.error?.message}
             </span>
           )}
         </div>
-      </div>
+      </form>
     </div>
   );
 }

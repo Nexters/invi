@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Editor from "~/components/editor";
 import { getInvitationByEventUrl } from "~/lib/db/schema/invitations.query";
 
@@ -7,6 +8,10 @@ export default async function Page({
   params: { subdomain: string };
 }) {
   const invitation = await getInvitationByEventUrl(params.subdomain);
+
+  if (!invitation) {
+    notFound();
+  }
 
   return (
     <Editor
