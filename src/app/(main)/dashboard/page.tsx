@@ -1,5 +1,5 @@
 import { GearIcon } from "@radix-ui/react-icons";
-import { ChevronRightIcon, CircleIcon } from "lucide-react";
+import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import ProfileDropDown from "~/components/profile-dropdown";
@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { LogoTextIcon } from "~/components/ui/icons";
 import { getAuth } from "~/lib/auth/utils";
 import { getInvitationsByAuth } from "~/lib/db/schema/invitations.query";
 
@@ -30,9 +31,9 @@ export default async function Page() {
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
       {/* header */}
-      <header className="flex h-14 items-center px-4 lg:px-6">
+      <header className="flex h-20 items-center px-4 lg:px-6">
         <Link className="flex items-center justify-center" href="/">
-          <CircleIcon className="h-6 w-6" />
+          <LogoTextIcon />
           <span className="sr-only">Invi</span>
         </Link>
         <nav className="ml-auto flex items-center gap-4 sm:gap-6">
