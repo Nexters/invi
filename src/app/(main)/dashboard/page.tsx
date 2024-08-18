@@ -2,6 +2,7 @@ import { GearIcon } from "@radix-ui/react-icons";
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import TemplateItem from "~/app/(main)/dashboard/template-item";
 import ProfileDropDown from "~/components/profile-dropdown";
 import { Button } from "~/components/ui/button";
 import {
@@ -13,6 +14,7 @@ import {
 import { LogoTextIcon } from "~/components/ui/icons";
 import { getAuth } from "~/lib/auth/utils";
 import { getInvitationsByAuth } from "~/lib/db/schema/invitations.query";
+import { getAllTemplates } from "~/lib/db/schema/templates.query";
 
 const formatDate = (date: Date) => {
   const year = date.getFullYear();
@@ -26,6 +28,8 @@ export default async function Page() {
   if (!auth.user) {
     return redirect("/sign-in");
   }
+
+  const templates = await getAllTemplates();
   const invitations = await getInvitationsByAuth();
 
   return (
@@ -47,58 +51,74 @@ export default async function Page() {
             <div className="relative flex items-start justify-between gap-4">
               <div className="flex w-full max-w-[80ch] flex-col gap-3">
                 <h2 className="truncate text-2xl font-bold tracking-tight">
-                  나의 초대장
+                  새로 만들기
                 </h2>
               </div>
             </div>
-            <div className="mt-9 grid auto-rows-[minmax(14rem,_1fr)] grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 md:grid-cols-3 2xl:grid-cols-4">
-              <ul className="group relative overflow-hidden rounded-xl border border-border">
-                {invitations.map((invitation) => (
-                  <li key={invitation.id} className="h-full w-full">
-                    <Link
-                      href={`/i/${invitation.eventUrl}/edit`}
-                      className="flex h-full flex-col bg-muted p-0.5"
-                    >
-                      <div className="flex-1 overflow-hidden rounded-xl border border-border bg-background p-3">
-                        <p className="font-semibold leading-none tracking-tight">
-                          {invitation.title}
-                        </p>
-                        <span className="text-xs text-muted-foreground">
-                          {formatDate(invitation.updatedAt)}
-                        </span>
-                      </div>
-                      <div className="relative flex items-center justify-between px-1 py-1.5 text-xs">
-                        <span className="text-muted-foreground transition duration-200 group-hover:translate-x-[-150%]">
-                          {formatDate(invitation.updatedAt)}
-                        </span>
-                        <div className="flex translate-x-[150%] items-center gap-0.5 text-foreground transition duration-200 group-hover:translate-x-0">
-                          <span>초대장 편집하기</span>
-                          <ChevronRightIcon width={14} height={14} />
-                        </div>
-                      </div>
-                    </Link>
-                    <div className="absolute right-4 top-4">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="rounded-full"
-                          >
-                            <GearIcon width={18} height={18} />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>수정</DropdownMenuItem>
-                          <DropdownMenuItem>삭제</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+            <div className="mt-9 grid auto-rows-[minmax(14rem,_1fr)] grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 md:grid-cols-3 2xl:grid-cols-5">
+              {templates.map((template) => (
+                <TemplateItem key={template.id} template={template} />
+              ))}
             </div>
           </div>
+          {!!invitations.length && (
+            <div className="mx-auto max-w-6xl p-14">
+              <div className="relative flex items-start justify-between gap-4">
+                <div className="flex w-full max-w-[80ch] flex-col gap-3">
+                  <h2 className="truncate text-2xl font-bold tracking-tight">
+                    나의 초대장 목록
+                  </h2>
+                </div>
+              </div>
+              <div className="mt-9 grid auto-rows-[minmax(14rem,_1fr)] grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 md:grid-cols-3 2xl:grid-cols-4">
+                <ul className="group relative overflow-hidden rounded-xl">
+                  {invitations.map((invitation) => (
+                    <li key={invitation.id} className="h-full w-full">
+                      <Link
+                        href={`/i/${invitation.eventUrl}/edit`}
+                        className="flex h-full flex-col bg-muted p-0.5"
+                      >
+                        <div className="flex-1 overflow-hidden rounded-xl border border-border bg-background p-3">
+                          <p className="font-semibold leading-none tracking-tight">
+                            {invitation.title}
+                          </p>
+                          <span className="text-xs text-muted-foreground">
+                            {formatDate(invitation.updatedAt)}
+                          </span>
+                        </div>
+                        <div className="relative flex items-center justify-between px-1 py-1.5 text-xs">
+                          <span className="text-muted-foreground transition duration-200 group-hover:translate-x-[-150%]">
+                            {formatDate(invitation.updatedAt)}
+                          </span>
+                          <div className="flex translate-x-[150%] items-center gap-0.5 text-foreground transition duration-200 group-hover:translate-x-0">
+                            <span>초대장 편집하기</span>
+                            <ChevronRightIcon width={14} height={14} />
+                          </div>
+                        </div>
+                      </Link>
+                      <div className="absolute right-4 top-4">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="rounded-full"
+                            >
+                              <GearIcon width={18} height={18} />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem>수정</DropdownMenuItem>
+                            <DropdownMenuItem>삭제</DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
         </main>
       </div>
     </div>
