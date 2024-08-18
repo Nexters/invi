@@ -5,6 +5,7 @@ export const templates = pgTable("template", {
   title: text("title").notNull(),
   description: text("description"),
   customFields: json("custum_fields"),
+  thumbnailUrl: text("thumbnail_url"),
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "date",

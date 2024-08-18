@@ -9,6 +9,7 @@ export const invitations = pgTable("invitation", {
   customFields: json("custom_fields").notNull().$type<Record<string, any>>(),
   title: text("title").notNull(),
   eventUrl: text("event_url").unique().notNull(),
+  thumbnailUrl: text("thumbnail_url"),
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "date",
