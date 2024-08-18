@@ -13,7 +13,7 @@ function isSubdomain(hostname: string) {
   }
 
   return (
-    !hostname.startsWith("localhost:") && !["www", "invi"].includes(hostname)
+    !subdomain.startsWith("localhost:") && !["www", "invi"].includes(subdomain)
   );
 }
 
