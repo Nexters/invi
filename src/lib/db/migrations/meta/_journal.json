@@ -5,64 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1720450854164,
-      "tag": "0000_tranquil_sasquatch",
+      "when": 1723979667666,
+      "tag": "0000_flippant_darkhawk",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1721033805896,
-      "tag": "0001_far_archangel",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1721096502112,
-      "tag": "0002_zippy_stature",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1721539066271,
-      "tag": "0003_peaceful_white_tiger",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1723089015733,
-      "tag": "0004_lying_swordsman",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1723090923481,
-      "tag": "0005_fine_argent",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1723091693284,
-      "tag": "0006_condemned_randall",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1723548738756,
-      "tag": "0007_parallel_meggan",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "7",
-      "when": 1723979374768,
-      "tag": "0008_real_falcon",
+      "when": 1723979672558,
+      "tag": "0001_watery_lord_tyger",
       "breakpoints": true
     }
   ]

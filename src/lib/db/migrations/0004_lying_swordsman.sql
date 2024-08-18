@@ -1,1 +1,0 @@
-ALTER TABLE "invitation_response" ALTER COLUMN "id" SET DATA TYPE text;
