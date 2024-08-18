@@ -3,19 +3,19 @@ import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
 import { db } from "~/lib/db";
-import { templates } from "~/lib/db/schema/templates";
+import { templates, type TemplateInsert } from "~/lib/db/schema/templates";
 
 type CreateTemplateParams = {
-  title: string;
-  description?: string;
-  customFields?: Record<string, any>; // JSON data
+  title: TemplateInsert["title"];
+  description: TemplateInsert["description"];
+  customFields: TemplateInsert["customFields"];
 };
 
 type UpdateTemplateParams = {
   id: string;
-  title?: string;
-  description?: string;
-  customFields?: Record<string, any>; // JSON data
+  title?: TemplateInsert["title"];
+  description?: TemplateInsert["description"];
+  customFields?: TemplateInsert["customFields"];
 };
 
 export async function getAllTemplates() {

@@ -1,1 +1,0 @@
-ALTER TABLE "template" RENAME COLUMN "name" TO "title";

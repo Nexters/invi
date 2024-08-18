@@ -20,8 +20,8 @@ export default function ProfileDropDown({ user }: ProfileDropDownProps) {
   return (
     <div>
       <DropdownMenu>
-        <DropdownMenuTrigger className="text-xs outline-none">
-          <Avatar className="h-7 w-7">
+        <DropdownMenuTrigger className="text-sm outline-none">
+          <Avatar className="h-8 w-8">
             {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
             <AvatarFallback>{user?.name[0].toUpperCase()}</AvatarFallback>
           </Avatar>
