@@ -46,13 +46,31 @@ export default function NavigationElement({ element }: Props) {
   return (
     <ElementWrapper element={element}>
       <button onClick={() => openMap("naver", address)}>
-        <Image src="/naver-map.png" alt="naver-map" width={42} height={42} />
+        <Image
+          src="/naver-map.png"
+          alt="naver-map"
+          width={42}
+          height={42}
+          draggable={false}
+        />
       </button>
       <button onClick={() => openMap("kakao", address)}>
-        <Image src="/kakao-map.png" alt="kakao-map" width={42} height={42} />
+        <Image
+          src="/kakao-map.png"
+          alt="kakao-map"
+          width={42}
+          height={42}
+          draggable={false}
+        />
       </button>
       <button onClick={() => handleCopy(address)}>
-        <Image src="/copy.png" alt="copy" width={42} height={42} />
+        <Image
+          src="/copy.png"
+          alt="copy"
+          width={42}
+          height={42}
+          draggable={false}
+        />
       </button>
     </ElementWrapper>
   );

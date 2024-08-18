@@ -13,7 +13,8 @@ export default function ImageElement({ element }: Props) {
     <ElementWrapper element={element}>
       {element.content.src ? (
         <img
-          className="h-full w-full object-cover"
+          className="h-full w-full select-none object-cover"
+          draggable={false}
           src={element.content.src}
           alt={element.content.alt ?? "이미지"}
         />
