@@ -1,4 +1,5 @@
 import { json, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import type { EditorData } from "~/components/editor/type";
 import { users } from "~/lib/db/schema/users";
 
 export const invitations = pgTable("invitation", {
@@ -6,7 +7,7 @@ export const invitations = pgTable("invitation", {
   userId: text("user_id")
     .references(() => users.id)
     .notNull(),
-  customFields: json("custom_fields").notNull().$type<Record<string, any>>(),
+  customFields: json("custom_fields").notNull().$type<EditorData>(),
   title: text("title").notNull(),
   eventUrl: text("event_url").unique().notNull(),
   thumbnailUrl: text("thumbnail_url"),

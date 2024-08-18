@@ -1,15 +1,16 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { debounce, delay, random } from "es-toolkit";
+import { debounce, delay } from "es-toolkit";
 import { CheckIcon, LoaderIcon, XIcon } from "lucide-react";
 import { useRef } from "react";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
+import { updateInvitation } from "~/lib/db/schema/invitations.query";
 import { cn } from "~/lib/utils";
 
 export default function TitleInput() {
-  const { editor } = useEditor();
+  const { editor, dispatch } = useEditor();
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -40,16 +41,21 @@ export default function TitleInput() {
       value: string;
       signal: AbortSignal;
     }) => {
-      await delay(1000);
-
       if (signal.aborted) {
         return;
       }
 
-      if (random(0, 1) > 0.5) {
-        throw new Error("Failed to update title");
-      }
+      await updateInvitation({
+        id: editor.config.invitationId,
+        title: value,
+      });
 
+      dispatch({
+        type: "UPDATE_CONFIG",
+        payload: {
+          invitationTitle: value,
+        },
+      });
       delayMutation.mutate();
     },
     onError: () => {

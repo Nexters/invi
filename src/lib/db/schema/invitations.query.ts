@@ -2,6 +2,7 @@
 
 import { count, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { getAuth } from "~/lib/auth/utils";
 import { db } from "~/lib/db";
 import {
   invitations,
@@ -11,14 +12,14 @@ import {
 
 type CreateInvitationParams = Omit<
   InvitationInsert,
-  "id" | "eventUrl" | "createdAt" | "updatedAt"
+  "id" | "userId" | "eventUrl" | "createdAt" | "updatedAt"
 >;
 
 type UpdateInvitationParams = {
-  id: string;
-  title?: string;
-  eventUrl?: string;
-  customFields?: Record<string, any>;
+  id: Invitation["id"];
+  title?: Invitation["title"];
+  customFields?: Invitation["customFields"];
+  eventUrl?: Invitation["eventUrl"];
 };
 
 export async function getAllInvitations() {
@@ -41,18 +42,28 @@ export async function getInvitationByEventUrl(eventUrl: string) {
   return responses[0];
 }
 
-export async function getInvitationsByUserId(
-  userId: Invitation["userId"],
-): Promise<Invitation[]> {
+export async function getInvitationsByUserId(): Promise<Invitation[]> {
+  const auth = await getAuth();
+
+  if (!auth.user) {
+    throw new Error("No Auth");
+  }
+
   return await db
     .select()
     .from(invitations)
-    .where(eq(invitations.userId, userId));
+    .where(eq(invitations.userId, auth.user.id));
 }
 
 export async function createInvitation(
   params: CreateInvitationParams,
 ): Promise<InvitationInsert> {
+  const auth = await getAuth();
+
+  if (!auth.user) {
+    throw new Error("No Auth");
+  }
+
   const id = nanoid();
   const currentTimestamp = new Date();
 
@@ -62,6 +73,7 @@ export async function createInvitation(
       .values({
         ...params,
         id,
+        userId: auth.user.id,
         eventUrl: id,
         createdAt: currentTimestamp,
         updatedAt: currentTimestamp,

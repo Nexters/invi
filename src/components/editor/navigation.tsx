@@ -13,6 +13,7 @@ import {
   Undo2,
 } from "lucide-react";
 import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import TitleInput from "~/components/editor/title-input";
@@ -27,11 +28,18 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import TooltipSimple from "~/components/ui/tooltip-simple";
+import {
+  deleteInvitation,
+  updateInvitation,
+} from "~/lib/db/schema/invitations.query";
 import { cn } from "~/lib/utils";
 
 export default function EditorNavigation() {
   const { editor, dispatch } = useEditor();
+  const router = useRouter();
   const { openDialog } = useAlertDialogStore();
+  const params = useParams();
+  const subDomain = params.subdomain;
 
   const handlePreviewClick = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
@@ -47,14 +55,17 @@ export default function EditorNavigation() {
 
   const handleOnSave = async () => {
     try {
-      const content = JSON.stringify(editor.data);
-      console.log(":content", content);
-      // TODO: API insert page
-      // TODO: API log notification
-      toast.success("Saved Editor");
+      await updateInvitation({
+        id: editor.config.invitationId,
+        title: editor.config.invitationTitle,
+        customFields: editor.data,
+      });
+      toast.success("저장되었습니다.");
     } catch (error) {
       console.error(error);
-      toast.error("Oppse!", { description: "Could not save editor" });
+      toast.error("일시적인 오류가 발생되었습니다.", {
+        description: "잠시후 다시 시도해보세요.",
+      });
     }
   };
 
@@ -64,7 +75,10 @@ export default function EditorNavigation() {
       description: "이 작업을 되돌릴 수 없습니다.",
       confirmText: "확인",
       cancelText: "취소",
-      onConfirm: () => {},
+      onConfirm: async () => {
+        await deleteInvitation(editor.config.invitationId);
+        router.replace("/dashboard");
+      },
     });
   };
 
