@@ -1,11 +1,38 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { createInvitation } from "~/lib/db/schema/invitations.query";
 import type { Template } from "~/lib/db/schema/templates";
 
 export default function TemplateItem({ template }: { template: Template }) {
+  const router = useRouter();
+
+  const createMutation = useMutation({
+    mutationFn: async () => {
+      // TODO: global loading
+      return await createInvitation({
+        title: template.title,
+        customFields: template.customFields,
+      });
+    },
+    onSuccess: (data) => {
+      toast.success("초대장이 생성되었습니다.");
+      router.push(`/i/${data.eventUrl}/edit`);
+    },
+    onError: (error) => {
+      console.error("Error creating invitation:", error);
+      toast.error("초대장 생성 중 오류가 발생했습니다.");
+    },
+  });
+
   return (
-    <button className="group relative inline-flex h-full w-full flex-col focus:outline-none">
+    <button
+      className="group relative inline-flex h-full w-full flex-col focus:outline-none"
+      onClick={() => createMutation.mutate()}
+    >
       <div className="relative flex aspect-[7/5] w-full items-center justify-center overflow-hidden rounded bg-muted">
         {template.thumbnailUrl && (
           <img

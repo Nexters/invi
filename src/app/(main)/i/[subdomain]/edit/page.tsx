@@ -11,7 +11,7 @@ export default async function Page({
   return (
     <Editor
       editorConfig={{
-        backLink: "/pg",
+        backLink: "/dashboard",
         invitationId: invitation.id,
         invitationTitle: invitation.title,
         invitationSubdomain: invitation.eventUrl,
