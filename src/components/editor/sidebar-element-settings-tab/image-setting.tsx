@@ -1,11 +1,13 @@
 "use client";
 
 import { HeightIcon, WidthIcon } from "@radix-ui/react-icons";
-import ky from "ky";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import type { InferEditorElement } from "~/components/editor/type";
 import ImageDropzone from "~/components/editor/ui/image-dropzone";
 import { EditorInput } from "~/components/editor/ui/input";
+import { uploadImage } from "~/lib/image";
 
 export default function ImageSetting({
   element,
@@ -14,34 +16,44 @@ export default function ImageSetting({
 }) {
   const { dispatch } = useEditor();
 
+  const imageUploadMutation = useMutation({
+    mutationFn: uploadImage,
+    onSuccess: (url) => {
+      dispatch({
+        type: "UPDATE_ELEMENT",
+        payload: {
+          elementDetails: {
+            ...element,
+            content: { ...element.content, src: url },
+          },
+        },
+      });
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error("이미지 업로드에 실패했습니다.");
+    },
+  });
+
   return (
     <div className="space-y-1 border-t p-6 pt-4">
-      <div className="grid w-full grid-cols-9 gap-1">
-        <div className="col-span-9">
+      <div className="grid w-full grid-cols-9 gap-1 gap-y-2">
+        <div className="col-span-9 space-y-1">
+          <div className="text-sm text-muted-foreground">
+            아래에 이미지 파일을 끌어다 놓거나, <br />
+            클릭해서 파일을 선택해 업로드 해주세요.
+          </div>
           <ImageDropzone
-            onLoadImage={async ({ url, file }) => {
-              const formData = new FormData();
-              formData.append("file", file);
-
-              await ky.post("/api/uploadImage", {
-                body: formData,
-              });
-
-              dispatch({
-                type: "UPDATE_ELEMENT",
-                payload: {
-                  elementDetails: {
-                    ...element,
-                    content: { ...element.content, src: url },
-                  },
-                },
-              });
+            disabled={imageUploadMutation.isPending}
+            onLoadImage={async ({ file }) => {
+              imageUploadMutation.mutate(file);
             }}
-          />
-        </div>
-        <div className="col-span-9">
+          >
+            <div>10MB 이하, 권장 사이즈 가로 640px</div>
+          </ImageDropzone>
           <EditorInput
             id="image_src"
+            disabled={imageUploadMutation.isPending}
             defaultValue={element.content.src}
             onDebounceChange={async (e) => {
               dispatch({
@@ -57,7 +69,7 @@ export default function ImageSetting({
             componentPrefix={"src"}
           />
         </div>
-        <div className="col-span-4 row-span-1">
+        <div className="col-span-4">
           <EditorInput
             id="image_width"
             defaultValue={element.styles.width}
@@ -70,7 +82,7 @@ export default function ImageSetting({
             componentPrefix={<WidthIcon />}
           />
         </div>
-        <div className="col-span-4 row-span-1">
+        <div className="col-span-4">
           <EditorInput
             id="image_height"
             defaultValue={element.styles.height}
