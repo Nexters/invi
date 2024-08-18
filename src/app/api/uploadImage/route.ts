@@ -1,19 +1,16 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import ky from "ky";
+import { env } from "~/lib/env";
 
-const endpoint = "https://kr.object.ncloudstorage.com";
-const region = "kr-standard";
-const access_key = "ncp_iam_BPAMKR1FnZHrkPDEjofp";
-const secret_key = "ncp_iam_BPKMKR4NS4tVApUg2rTjbzyT6da7lEOmrr";
 const bucket_name = "invi-static";
 
 const objectStorageClient = new S3Client({
-  endpoint: endpoint,
-  region: region,
+  endpoint: env.NCP_ENDPOINT,
+  region: env.NCP_REGION,
   credentials: {
-    accessKeyId: access_key,
-    secretAccessKey: secret_key,
+    accessKeyId: env.NCP_ACCESS_KEY,
+    secretAccessKey: env.NCP_SECRET_KEY,
   },
 });
 
