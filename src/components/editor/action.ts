@@ -2,6 +2,7 @@ import { emptyElement } from "~/components/editor/constant";
 import type {
   DeviceType,
   Editor,
+  EditorConfig,
   EditorElement,
   EditorTabTypeValue,
 } from "~/components/editor/type";
@@ -30,7 +31,6 @@ type EditorActionMap = {
   UPDATE_ELEMENT: {
     elementDetails: EditorElement;
   };
-
   UPDATE_ELEMENT_STYLE: React.CSSProperties;
   DELETE_ELEMENT: {
     elementDetails: EditorElement;
@@ -44,6 +44,7 @@ type EditorActionMap = {
   CHANGE_DEVICE: {
     device: DeviceType;
   };
+  UPDATE_CONFIG: Partial<EditorConfig>;
   TOGGLE_PREVIEW_MODE: undefined;
   REDO: undefined;
   UNDO: undefined;
@@ -76,7 +77,7 @@ const updateEditorHistory = (
     ...editor.history,
     list: [
       ...editor.history.list.slice(0, editor.history.currentIndex + 1),
-      { ...newData },
+      [...newData],
     ],
     currentIndex: editor.history.currentIndex + 1,
   },
@@ -301,9 +302,9 @@ const actionHandlers: {
   },
 
   CHANGE_CLICKED_ELEMENT: (editor, payload) => {
-    const isSelected = isValidSelectEditorElement(payload.elementDetails);
+    const isValidSelect = isValidSelectEditorElement(payload.elementDetails);
 
-    const newTabValue = isSelected
+    const newTabValue = isValidSelect
       ? "Element Settings"
       : editor.state.currentTabValue === "Element Settings"
         ? "Elements"
@@ -339,6 +340,16 @@ const actionHandlers: {
     };
   },
 
+  UPDATE_CONFIG: (editor, payload) => {
+    return {
+      ...editor,
+      config: {
+        ...editor.config,
+        ...payload,
+      },
+    };
+  },
+
   TOGGLE_PREVIEW_MODE: (editor) => {
     return {
       ...editor,
@@ -354,7 +365,7 @@ const actionHandlers: {
       const nextIndex = editor.history.currentIndex + 1;
       return {
         ...editor,
-        data: { ...editor.history.list[nextIndex] },
+        data: [...editor.history.list[nextIndex]],
         history: {
           ...editor.history,
           currentIndex: nextIndex,
@@ -369,7 +380,7 @@ const actionHandlers: {
       const prevIndex = editor.history.currentIndex - 1;
       return {
         ...editor,
-        data: { ...editor.history.list[prevIndex] },
+        data: [...editor.history.list[prevIndex]],
         history: {
           ...editor.history,
           currentIndex: prevIndex,

@@ -7,7 +7,7 @@ import {
   GripVerticalIcon,
   Trash2Icon,
 } from "lucide-react";
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useEditor } from "~/components/editor/provider";
 import { isValidSelectEditorElement } from "~/components/editor/util";
@@ -24,6 +24,7 @@ export default function ElementHelper() {
     width: number;
     height: number;
   }>();
+  const rafRef = useRef<number | null>(null);
 
   const updateLayerStyle = useCallback((id: string) => {
     const el = document.querySelector(`[data-element-id="${id}"]`);
@@ -32,14 +33,27 @@ export default function ElementHelper() {
       return;
     }
 
-    const resizeObserver = new ResizeObserver(() => {
+    const updateStyle = () => {
       const { top, left, width, height } = el.getBoundingClientRect();
       setLayerStyle({ top, left, width, height });
-    });
+      rafRef.current = requestAnimationFrame(updateStyle);
+    };
 
-    resizeObserver.observe(el, { box: "border-box" });
+    const handleScroll = () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+      rafRef.current = requestAnimationFrame(updateStyle);
+    };
+
+    window.addEventListener("scroll", handleScroll, true);
+    rafRef.current = requestAnimationFrame(updateStyle);
+
     return () => {
-      resizeObserver.unobserve(el);
+      window.removeEventListener("scroll", handleScroll, true);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
   }, []);
 
@@ -91,7 +105,7 @@ export default function ElementHelper() {
               width: layerStyle.width,
               height: 0,
             }}
-            className="fixed z-50"
+            className="fixed z-20"
           >
             <div className="absolute left-0 right-0 top-0 z-10 h-[1px] bg-primary" />
             <div
@@ -106,7 +120,10 @@ export default function ElementHelper() {
               style={{ height: layerStyle.height }}
               className="absolute right-0 top-0 z-10 w-[1px] bg-primary"
             />
-            <Badge className="absolute -left-[1px] -top-[26px] z-10">
+            <Badge
+              className="absolute -left-[1px] -top-[26px] z-10"
+              onClick={(e) => e.stopPropagation()}
+            >
               {element.name}
             </Badge>
             <div className="absolute -left-[28px] -top-[1px] z-10">

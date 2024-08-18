@@ -48,15 +48,18 @@ export const emptyElement = {
   type: "empty",
 } satisfies EditorElement;
 
-export const initialEditorData: EditorData = [
-  {
-    content: [],
-    id: "__body",
-    name: "Body",
-    styles: {},
-    type: "__body",
+export const bodyElement = {
+  content: [],
+  id: "__body",
+  name: "Body",
+  styles: {
+    paddingLeft: 28,
+    paddingRight: 28,
   },
-];
+  type: "__body",
+} satisfies EditorElement;
+
+export const initialEditorData: EditorData = [bodyElement];
 
 export const initialEditorState: EditorState = {
   selectedElement: emptyElement,
@@ -70,17 +73,20 @@ export const initialEditorHistory: EditorHistory = {
   currentIndex: 0,
 };
 
-export const initialEditor: Editor = {
-  state: initialEditorState,
-  history: initialEditorHistory,
-  data: initialEditorData,
-};
-
 const tempId = nanoid(8);
 
 export const initialEditorConfig: EditorConfig = {
   backLink: "./",
   invitationId: tempId,
   invitationTitle: "제목 없음",
+  invitationDesc: "여기를 눌러 링크를 확인하세요.",
+  invitationThumbnail: "",
   invitationSubdomain: tempId,
+};
+
+export const initialEditor: Editor = {
+  state: initialEditorState,
+  history: initialEditorHistory,
+  data: initialEditorData,
+  config: initialEditorConfig,
 };
