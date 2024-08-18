@@ -60,10 +60,12 @@ export default function EditorNavigation() {
         title: editor.config.invitationTitle,
         customFields: editor.data,
       });
-      toast.success("Saved Editor");
+      toast.success("저장되었습니다.");
     } catch (error) {
       console.error(error);
-      toast.error("Oppse!", { description: "Could not save editor" });
+      toast.error("일시적인 오류가 발생되었습니다.", {
+        description: "잠시후 다시 시도해보세요.",
+      });
     }
   };
 
