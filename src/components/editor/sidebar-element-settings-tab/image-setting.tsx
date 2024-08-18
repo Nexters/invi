@@ -44,17 +44,6 @@ export default function ImageSetting({
             id="image_src"
             defaultValue={element.content.src}
             onDebounceChange={async (e) => {
-              const value = e.target.value;
-              if (value === "") return;
-
-              const searchParams = new URLSearchParams();
-              searchParams.set("url", value);
-              await ky.post("/api/uploadImage", {
-                json: {
-                  url: value,
-                },
-              });
-
               dispatch({
                 type: "UPDATE_ELEMENT",
                 payload: {
