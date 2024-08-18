@@ -55,11 +55,10 @@ export default function EditorNavigation() {
 
   const handleOnSave = async () => {
     try {
-      const content = JSON.stringify(editor.data);
       await updateInvitation({
         id: editor.config.invitationId,
         title: editor.config.invitationTitle,
-        customFields: content as Record<string, any>,
+        customFields: editor.data,
       });
       toast.success("Saved Editor");
     } catch (error) {
