@@ -135,7 +135,9 @@ function SEOSection() {
             });
             uploadImageMutation.mutate(file);
           }}
-        />
+        >
+          <div>10MB 이하, 권장 이미지 비율 2:1</div>
+        </ImageDropzone>
         <EditorInput
           id="invitationThumbnail"
           disabled={uploadImageMutation.isPending}

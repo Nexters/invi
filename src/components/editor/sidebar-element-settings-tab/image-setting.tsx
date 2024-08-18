@@ -37,8 +37,12 @@ export default function ImageSetting({
 
   return (
     <div className="space-y-1 border-t p-6 pt-4">
-      <div className="grid w-full grid-cols-9 gap-1">
-        <div className="col-span-9">
+      <div className="grid w-full grid-cols-9 gap-1 gap-y-2">
+        <div className="col-span-9 space-y-1">
+          <div className="text-sm text-muted-foreground">
+            아래에 이미지 파일을 끌어다 놓거나, <br />
+            클릭해서 파일을 선택해 업로드 해주세요.
+          </div>
           <ImageDropzone
             disabled={imageUploadMutation.isPending}
             onLoadImage={async ({ file }) => {
@@ -47,8 +51,6 @@ export default function ImageSetting({
           >
             <div>10MB 이하, 권장 사이즈 가로 640px</div>
           </ImageDropzone>
-        </div>
-        <div className="col-span-9">
           <EditorInput
             id="image_src"
             disabled={imageUploadMutation.isPending}
@@ -67,7 +69,7 @@ export default function ImageSetting({
             componentPrefix={"src"}
           />
         </div>
-        <div className="col-span-4 row-span-1">
+        <div className="col-span-4">
           <EditorInput
             id="image_width"
             defaultValue={element.styles.width}
@@ -80,7 +82,7 @@ export default function ImageSetting({
             componentPrefix={<WidthIcon />}
           />
         </div>
-        <div className="col-span-4 row-span-1">
+        <div className="col-span-4">
           <EditorInput
             id="image_height"
             defaultValue={element.styles.height}
