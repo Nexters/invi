@@ -46,10 +46,9 @@ export default async function Page({ params }: Props) {
       editorState={{ isPreviewMode: true }}
     >
       <main className="mx-auto max-w-md">
-        {Array.isArray(invitation.customFields) &&
-          invitation.customFields.map((childElement) => (
-            <Recursive key={childElement.id} element={childElement} />
-          ))}
+        {invitation.customFields.elements.map((childElement) => (
+          <Recursive key={childElement.id} element={childElement} />
+        ))}
       </main>
     </EditorProvider>
   );

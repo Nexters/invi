@@ -1,14 +1,14 @@
 "use client";
 
 import { useEditor } from "~/components/editor/provider";
-import BackgroundSetting from "~/components/editor/sidebar-element-settings-tab/background-setting";
-import BorderSetting from "~/components/editor/sidebar-element-settings-tab/border-setting";
-import ImageSetting from "~/components/editor/sidebar-element-settings-tab/image-setting";
-import KakaoMapSetting from "~/components/editor/sidebar-element-settings-tab/kakao-map-setting";
-import LayoutSetting from "~/components/editor/sidebar-element-settings-tab/layout-setting";
-import LogoBannerSetting from "~/components/editor/sidebar-element-settings-tab/logo-banner-setting";
-import MapSetting from "~/components/editor/sidebar-element-settings-tab/map-setting";
-import TextSetting from "~/components/editor/sidebar-element-settings-tab/text-setting";
+import BackgroundSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/background-setting";
+import BorderSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/border-setting";
+import ImageSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/image-setting";
+import KakaoMapSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/kakao-map-setting";
+import LayoutSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/layout-setting";
+import LogoBannerSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/logo-banner-setting";
+import MapSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/map-setting";
+import TextSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/text-setting";
 import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
 
 type Props = {};

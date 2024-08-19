@@ -64,24 +64,28 @@ export type EditorAction = {
 
 const updateEditorHistory = (
   editor: Editor,
-  newData: Editor["data"],
+  data: Partial<Editor["data"]>,
   newSelectedElement: EditorElement = emptyElement,
-): Editor => ({
-  ...editor,
-  state: {
-    ...editor.state,
-    selectedElement: newSelectedElement,
-  },
-  data: newData,
-  history: {
-    ...editor.history,
-    list: [
-      ...editor.history.list.slice(0, editor.history.currentIndex + 1),
-      [...newData],
-    ],
-    currentIndex: editor.history.currentIndex + 1,
-  },
-});
+): Editor => {
+  const newData = { ...editor.data, ...data };
+
+  return {
+    ...editor,
+    state: {
+      ...editor.state,
+      selectedElement: newSelectedElement,
+    },
+    data: newData,
+    history: {
+      ...editor.history,
+      list: [
+        ...editor.history.list.slice(0, editor.history.currentIndex + 1),
+        { ...newData },
+      ],
+      currentIndex: editor.history.currentIndex + 1,
+    },
+  };
+};
 
 const traverseElements = (
   elements: EditorElement[],
@@ -175,7 +179,7 @@ const actionHandlers: {
   ) => Editor;
 } = {
   ADD_ELEMENT: (editor, payload) => {
-    const newData = traverseElements(editor.data, (element) => {
+    const elements = traverseElements(editor.data.elements, (element) => {
       if (
         element.id === payload.containerId &&
         Array.isArray(element.content)
@@ -188,14 +192,14 @@ const actionHandlers: {
       return element;
     });
 
-    return updateEditorHistory(editor, newData);
+    return updateEditorHistory(editor, { elements });
   },
 
   MOVE_ELEMENT: (editor, payload) => {
     const { elementId, newParentId, newIndex } = payload;
 
     const [elements, removedElement] = removeElementFromParent(
-      editor.data,
+      editor.data.elements,
       elementId,
     );
     if (!removedElement) return editor;
@@ -214,15 +218,19 @@ const actionHandlers: {
       }) as EditorElement[];
     };
 
-    const newData = insertElement(elements);
+    const newElements = insertElement(elements);
 
-    return updateEditorHistory(editor, newData, removedElement);
+    return updateEditorHistory(
+      editor,
+      { elements: newElements },
+      removedElement,
+    );
   },
 
   MOVE_ELEMENT_UP: (editor, payload) => {
     const { elementId } = payload;
     const [element, parent, currentIndex] = findElementAndParent(
-      editor.data,
+      editor.data.elements,
       elementId,
     );
     if (
@@ -243,7 +251,7 @@ const actionHandlers: {
   MOVE_ELEMENT_DOWN: (editor, payload) => {
     const { elementId } = payload;
     const [element, parent, currentIndex] = findElementAndParent(
-      editor.data,
+      editor.data.elements,
       elementId,
     );
     if (
@@ -262,7 +270,7 @@ const actionHandlers: {
   },
 
   UPDATE_ELEMENT: (editor, payload) => {
-    const newData = traverseElements(editor.data, (element) => {
+    const elements = traverseElements(editor.data.elements, (element) => {
       if (element.id === payload.elementDetails.id) {
         return { ...element, ...payload.elementDetails };
       }
@@ -275,7 +283,7 @@ const actionHandlers: {
       ? payload.elementDetails
       : editor.state.selectedElement;
 
-    return updateEditorHistory(editor, newData, newSelectedElement);
+    return updateEditorHistory(editor, { elements }, newSelectedElement);
   },
 
   UPDATE_ELEMENT_STYLE: (editor, payload) => {
@@ -291,14 +299,14 @@ const actionHandlers: {
   },
 
   DELETE_ELEMENT: (editor, payload) => {
-    const newData = traverseElements(editor.data, (element) => {
+    const elements = traverseElements(editor.data.elements, (element) => {
       if (element.id === payload.elementDetails.id) {
         return null;
       }
       return element;
     });
 
-    return updateEditorHistory(editor, newData);
+    return updateEditorHistory(editor, { elements });
   },
 
   CHANGE_CLICKED_ELEMENT: (editor, payload) => {
@@ -365,7 +373,7 @@ const actionHandlers: {
       const nextIndex = editor.history.currentIndex + 1;
       return {
         ...editor,
-        data: [...editor.history.list[nextIndex]],
+        data: { ...editor.history.list[nextIndex] },
         history: {
           ...editor.history,
           currentIndex: nextIndex,
@@ -380,7 +388,7 @@ const actionHandlers: {
       const prevIndex = editor.history.currentIndex - 1;
       return {
         ...editor,
-        data: [...editor.history.list[prevIndex]],
+        data: { ...editor.history.list[prevIndex] },
         history: {
           ...editor.history,
           currentIndex: prevIndex,

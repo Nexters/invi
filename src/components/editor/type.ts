@@ -50,7 +50,9 @@ export type EditorState = {
   isPreviewMode: boolean;
 };
 
-export type EditorData = EditorElement[];
+export type EditorData = {
+  elements: EditorElement[];
+};
 
 export type EditorHistory = {
   list: EditorData[];
