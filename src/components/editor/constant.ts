@@ -59,7 +59,9 @@ export const bodyElement = {
   type: "__body",
 } satisfies EditorElement;
 
-export const initialEditorData: EditorData = [bodyElement];
+export const initialEditorData: EditorData = {
+  elements: [bodyElement],
+};
 
 export const initialEditorState: EditorState = {
   selectedElement: emptyElement,
