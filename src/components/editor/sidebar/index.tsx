@@ -1,17 +1,16 @@
 "use client";
 
-import { Sheet, SheetContent } from "~/components/ui/sheet";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { PlusIcon, SettingsIcon, WrenchIcon } from "lucide-react";
 import { editorTabValue } from "~/components/editor/constant";
 import { useEditor } from "~/components/editor/provider";
-import SidebarElementSettingsTab from "~/components/editor/sidebar-element-settings-tab";
-import SidebarElementsTab from "~/components/editor/sidebar-elements-tab";
-import SidebarSettingsTab from "~/components/editor/sidebar-settings-tab";
+import SidebarElementSettingsTab from "~/components/editor/sidebar/sidebar-element-settings-tab";
+import SidebarElementsTab from "~/components/editor/sidebar/sidebar-elements-tab";
+import SidebarSettingsTab from "~/components/editor/sidebar/sidebar-settings-tab";
 import type { EditorTabTypeValue } from "~/components/editor/type";
 import { isValidSelectEditorElement } from "~/components/editor/util";
 import { Button } from "~/components/ui/button";
+import { Sheet, SheetContent } from "~/components/ui/sheet";
 import { cn } from "~/lib/utils";
 
 type Props = {};
