@@ -8,8 +8,8 @@ import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
 export default function InvitationResponseFab() {
   return (
     <Drawer.Root>
-      <div className="absolute inset-x-0 bottom-0 mx-auto max-w-lg text-center">
-        <Drawer.Trigger className="mb-[5%] h-[63px] w-[80%] text-primary-foreground">
+      <div className="absolute inset-x-0 bottom-0 z-50 mx-auto max-w-lg text-center">
+        <Drawer.Trigger className="h-[63px] w-[100%] rounded-t-lg bg-blue-300 text-primary-foreground">
           세션 참여 조사하기
         </Drawer.Trigger>
       </div>
@@ -39,7 +39,7 @@ function InvitationResponseForm() {
   });
 
   return (
-    <div className="h-[400px]">
+    <div className="h-[400px] p-5">
       <SheetHeader>
         <SheetTitle className="text-left text-2xl">세션 참여 조사</SheetTitle>
       </SheetHeader>

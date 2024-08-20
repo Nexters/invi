@@ -47,9 +47,11 @@ export default async function Page({ params }: Props) {
       editorState={{ isPreviewMode: true }}
     >
       <main className="relative mx-auto max-w-lg">
-        {invitation.customFields.elements.map((childElement) => (
-          <Recursive key={childElement.id} element={childElement} />
-        ))}
+        <div className={"h-lvh overflow-y-auto"}>
+          {invitation.customFields.elements.map((childElement) => (
+            <Recursive key={childElement.id} element={childElement} />
+          ))}
+        </div>
         {invitation.customFields?.fab?.type === "invitation_response" && (
           <FloatingActionButton />
         )}

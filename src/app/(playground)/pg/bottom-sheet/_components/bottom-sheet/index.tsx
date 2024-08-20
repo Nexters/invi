@@ -30,10 +30,10 @@ export default function BottomSheet() {
     onSubmit: async ({ value }) => {
       const { name, attendance } = value;
       await createInvitationResponses({
-        invitation_id: "4yZl98Z1JmInrHOANn3uj", 
+        invitation_id: "4yZl98Z1JmInrHOANn3uj",
         participant_name: name,
         attendance: attendance === "true",
-        reason: "", 
+        reason: "",
       });
       toast("참여가 완료되었습니다.", {
         duration: 2000,
@@ -113,7 +113,7 @@ export default function BottomSheet() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <div className="fixed bottom-0 left-0 right-0 mx-auto h-[127px] w-full max-w-2xl px-4 py-8">
+        <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto h-[127px] w-full max-w-2xl px-4 py-8">
           <Button
             variant="outline"
             className="h-full w-full rounded-xl border-none bg-[#5E8AFF] text-lg font-bold text-white"
