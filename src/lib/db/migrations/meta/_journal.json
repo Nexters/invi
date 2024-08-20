@@ -15,6 +15,13 @@
       "when": 1723979672558,
       "tag": "0001_watery_lord_tyger",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1724153952587,
+      "tag": "0002_orange_titanium_man",
+      "breakpoints": true
     }
   ]
 }
