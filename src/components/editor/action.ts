@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { emptyElement } from "~/components/editor/constant";
 import type {
   DeviceType,
@@ -33,6 +34,9 @@ type EditorActionMap = {
   };
   UPDATE_ELEMENT_STYLE: React.CSSProperties;
   DELETE_ELEMENT: {
+    elementDetails: EditorElement;
+  };
+  DUPLICATE_ELEMENT: {
     elementDetails: EditorElement;
   };
   CHANGE_CLICKED_ELEMENT: {
@@ -136,6 +140,34 @@ const findElementAndParent = (
   return [null, null, -1];
 };
 
+const findParentId = (
+  elements: EditorElement[],
+  targetId: string,
+): string | null => {
+  for (const el of elements) {
+    if (Array.isArray(el.content)) {
+      if (el.content.some((child) => child.id === targetId)) {
+        return el.id;
+      }
+      const foundInChild = findParentId(el.content, targetId);
+      if (foundInChild) return foundInChild;
+    }
+  }
+  return null;
+};
+
+const deepCloneElement = (element: EditorElement): EditorElement => {
+  const newElement = { ...element, id: nanoid() };
+
+  if (Array.isArray(element.content)) {
+    newElement.content = element.content.map((child) =>
+      deepCloneElement(child),
+    );
+  }
+
+  return newElement;
+};
+
 const removeElementFromParent = (
   elements: EditorElement[],
   elementId: string,
@@ -179,6 +211,8 @@ const actionHandlers: {
   ) => Editor;
 } = {
   ADD_ELEMENT: (editor, payload) => {
+    const newElement = payload.elementDetails;
+
     const elements = traverseElements(editor.data.elements, (element) => {
       if (
         element.id === payload.containerId &&
@@ -186,13 +220,13 @@ const actionHandlers: {
       ) {
         return {
           ...element,
-          content: [...element.content, payload.elementDetails],
+          content: [...element.content, newElement],
         } as EditorElement;
       }
       return element;
     });
 
-    return updateEditorHistory(editor, { elements });
+    return updateEditorHistory(editor, { elements }, newElement);
   },
 
   MOVE_ELEMENT: (editor, payload) => {
@@ -307,6 +341,24 @@ const actionHandlers: {
     });
 
     return updateEditorHistory(editor, { elements });
+  },
+
+  DUPLICATE_ELEMENT: (editor, payload) => {
+    const containerId = findParentId(
+      editor.data.elements,
+      payload.elementDetails.id,
+    );
+
+    if (!containerId) {
+      return editor;
+    }
+
+    const newElement = deepCloneElement(payload.elementDetails);
+
+    return actionHandlers.ADD_ELEMENT(editor, {
+      containerId,
+      elementDetails: newElement,
+    });
   },
 
   CHANGE_CLICKED_ELEMENT: (editor, payload) => {
