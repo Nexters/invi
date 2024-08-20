@@ -13,7 +13,7 @@ import {
   Undo2,
 } from "lucide-react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import TitleInput from "~/components/editor/title-input";
@@ -38,8 +38,6 @@ export default function EditorNavigation() {
   const { editor, dispatch } = useEditor();
   const router = useRouter();
   const { openDialog } = useAlertDialogStore();
-  const params = useParams();
-  const subDomain = params.subdomain;
 
   const handlePreviewClick = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
@@ -54,19 +52,18 @@ export default function EditorNavigation() {
   };
 
   const handleOnSave = async () => {
-    try {
-      await updateInvitation({
+    toast.promise(
+      updateInvitation({
         id: editor.config.invitationId,
         title: editor.config.invitationTitle,
         customFields: editor.data,
-      });
-      toast.success("저장되었습니다.");
-    } catch (error) {
-      console.error(error);
-      toast.error("일시적인 오류가 발생되었습니다.", {
-        description: "잠시후 다시 시도해보세요.",
-      });
-    }
+      }),
+      {
+        loading: "저장중...",
+        success: "저장되었습니다.",
+        error: "일시적인 오류가 발생되었습니다.",
+      },
+    );
   };
 
   const handleOnDelete = () => {
