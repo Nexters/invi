@@ -117,10 +117,7 @@ function CustomDomainSection() {
                       type="submit"
                       size="sm"
                       className="ml-2 h-6"
-                      disabled={
-                        updateSubdomainMutation.isPending ||
-                        field.state.value === editor.config.invitationSubdomain
-                      }
+                      disabled={updateSubdomainMutation.isPending}
                     >
                       저장
                     </Button>
