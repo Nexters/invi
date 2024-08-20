@@ -52,6 +52,9 @@ export type EditorState = {
 
 export type EditorData = {
   elements: EditorElement[];
+  fab: {
+    type: "" | "invitation_response";
+  };
 };
 
 export type EditorHistory = {

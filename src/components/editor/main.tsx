@@ -3,6 +3,7 @@
 import { EyeOff } from "lucide-react";
 import ElementHelper from "~/components/editor/elements/element-helper";
 import Recursive from "~/components/editor/elements/recursive";
+import FloatingActionButton from "~/components/editor/fab";
 import { useEditor } from "~/components/editor/provider";
 import { Button } from "~/components/ui/button";
 import { ScrollArea } from "~/components/ui/scroll-area";
@@ -24,7 +25,7 @@ export default function EditorMain() {
 
   return (
     <div
-      className="flex flex-1 items-center justify-center"
+      className="relative flex flex-1 items-center justify-center"
       onClick={handleClick}
     >
       <ScrollArea
@@ -50,6 +51,7 @@ export default function EditorMain() {
         {editor.data.elements.map((childElement) => (
           <Recursive key={childElement.id} element={childElement} />
         ))}
+        <FloatingActionButton />
       </ScrollArea>
       <ElementHelper />
     </div>

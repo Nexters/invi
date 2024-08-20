@@ -1,6 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import Recursive from "~/components/editor/elements/recursive";
+import FloatingActionButton from "~/components/editor/fab";
 import EditorProvider from "~/components/editor/provider";
 import { getInvitationByEventUrl } from "~/lib/db/schema/invitations.query";
 
@@ -45,10 +46,13 @@ export default async function Page({ params }: Props) {
       editorData={invitation.customFields}
       editorState={{ isPreviewMode: true }}
     >
-      <main className="mx-auto max-w-md">
+      <main className="relative mx-auto max-w-lg">
         {invitation.customFields.elements.map((childElement) => (
           <Recursive key={childElement.id} element={childElement} />
         ))}
+        {invitation.customFields?.fab?.type === "invitation_response" && (
+          <FloatingActionButton />
+        )}
       </main>
     </EditorProvider>
   );

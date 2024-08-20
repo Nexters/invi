@@ -1,11 +1,12 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { PlusIcon, SettingsIcon, WrenchIcon } from "lucide-react";
+import { MailIcon, PlusIcon, SettingsIcon, WrenchIcon } from "lucide-react";
 import { editorTabValue } from "~/components/editor/constant";
 import { useEditor } from "~/components/editor/provider";
 import SidebarElementSettingsTab from "~/components/editor/sidebar/sidebar-element-settings-tab";
 import SidebarElementsTab from "~/components/editor/sidebar/sidebar-elements-tab";
+import SidebarInvitationResponseTab from "~/components/editor/sidebar/sidebar-invitation-response-tab";
 import SidebarSettingsTab from "~/components/editor/sidebar/sidebar-settings-tab";
 import type { EditorTabTypeValue } from "~/components/editor/type";
 import { isValidSelectEditorElement } from "~/components/editor/util";
@@ -28,6 +29,11 @@ export default function EditorSidebar() {
       value: editorTabValue.SETTINGS,
       icon: <SettingsIcon />,
       content: <SidebarSettingsTab />,
+    },
+    {
+      value: editorTabValue.INVITATION_RESPONSE,
+      icon: <MailIcon />,
+      content: <SidebarInvitationResponseTab />,
     },
     {
       value: editorTabValue.ELEMENT_SETTINGS,

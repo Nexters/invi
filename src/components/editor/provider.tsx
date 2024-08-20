@@ -21,7 +21,7 @@ export const EditorContext = createContext<{
 });
 
 export type EditorProps = {
-  editorData?: EditorData;
+  editorData?: Partial<EditorData>;
   editorConfig?: Partial<EditorConfig>;
   editorState?: Partial<Editor["state"]>;
 };
@@ -38,7 +38,10 @@ export default function EditorProvider({
 }: EditorProviderProps) {
   const [editor, dispatch] = useReducer(editorReducer, {
     ...initialEditor,
-    data: editorData ?? initialEditor.data,
+    data: {
+      ...initialEditor.data,
+      ...editorData,
+    },
     config: {
       ...initialEditorConfig,
       ...editorConfig,
