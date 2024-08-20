@@ -21,6 +21,7 @@ type UpdateInvitationParams = {
   title?: Invitation["title"];
   customFields?: Invitation["customFields"];
   eventUrl?: Invitation["eventUrl"];
+  thumbnailUrl?: Invitation["thumbnailUrl"];
 };
 
 export async function getAllInvitations() {

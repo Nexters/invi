@@ -18,12 +18,19 @@ export async function generateMetadata(
   if (!invitation) {
     return {};
   }
-  const previousImages = (await parent).openGraph?.images || [];
+
+  const images = (await parent).openGraph?.images || [];
+  if (invitation.thumbnailUrl) {
+    images.unshift(invitation.thumbnailUrl);
+  }
 
   return {
     title: {
       default: invitation.title,
       template: "%s | 인비",
+    },
+    openGraph: {
+      images,
     },
   };
 }
