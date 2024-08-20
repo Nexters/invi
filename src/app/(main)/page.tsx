@@ -13,7 +13,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col px-7">
       <header className="pt-[58px]">
         <Image
-          src="/logo1.png"
+          src="/landing-logo.png"
           alt="logo"
           width={85}
           height={29}
