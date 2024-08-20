@@ -15,6 +15,7 @@ export default function TemplateItem({ template }: { template: Template }) {
       // TODO: global loading
       return await createInvitation({
         title: template.title,
+        thumbnailUrl: template.thumbnailUrl,
         customFields: template.customFields,
       });
     },
