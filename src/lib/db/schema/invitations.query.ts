@@ -11,6 +11,13 @@ import {
   invitations,
 } from "~/lib/db/schema/invitations";
 
+import { customAlphabet } from "nanoid";
+
+const alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+const nanoid = customAlphabet(alphabet, 5);
+
+// TODO 중복 방지 로직 추가되어야 함
+
 type CreateInvitationParams = Omit<
   InvitationInsert,
   "id" | "userId" | "eventUrl" | "createdAt" | "updatedAt"
