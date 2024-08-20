@@ -9,6 +9,11 @@ import {
   type InvitationResponseInsert,
 } from "~/lib/db/schema/invitation_response";
 
+type CreateInvitationResponseParams = Omit<
+  InvitationResponseInsert,
+  "id" | "created_at"
+>;
+
 export async function getAllInvitationResponses() {
   return await db.select().from(invitationResponses);
 }
@@ -38,18 +43,24 @@ export async function getInvitationResponseStats() {
 }
 
 export async function createInvitationResponses(
-  participant_name: string,
-  attendance: boolean,
-  reason?: string,
-) {
-  const data: InvitationResponseInsert = {
-    id: nanoid(),
-    participant_name: participant_name,
-    attendance: attendance,
-    reason: reason,
-    created_at: new Date(),
-  };
+  params: CreateInvitationResponseParams,
+): Promise<InvitationResponseInsert> {
+  const id = nanoid();
+  const currentTimestamp = new Date();
 
-  const res = db.insert(invitationResponses).values(data);
-  return res;
+  try {
+    const res = await db
+      .insert(invitationResponses)
+      .values({
+        ...params,
+        id,
+        created_at: currentTimestamp,
+      })
+      .returning();
+
+    return res[0];
+  } catch (error) {
+    console.error("Error creating invitatio response:", error);
+    throw new Error("Could not create invitation response");
+  }
 }
