@@ -5,6 +5,7 @@ import { ChevronDownIcon } from "lucide-react";
 import { useState } from "react";
 import ElementWrapper from "~/components/editor/elements/element-wrapper";
 import Text from "~/components/editor/elements/text";
+import { useEditor } from "~/components/editor/provider";
 import type { InferEditorElement } from "~/components/editor/type";
 
 export default function AccordionElement({
@@ -12,7 +13,10 @@ export default function AccordionElement({
 }: {
   element: InferEditorElement<"accordion">;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const { editor } = useEditor();
+  const [isOpen, setIsOpen] = useState(
+    editor.state.isPreviewMode ? false : true,
+  );
 
   return (
     <ElementWrapper element={element}>
@@ -24,7 +28,7 @@ export default function AccordionElement({
           data-state={isOpen ? "open" : "closed"}
           className="flex w-full select-none items-center justify-between p-6 pb-3 text-xl font-semibold [&[data-state=open]>svg]:rotate-180"
           style={element.content.triggerStyle}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => editor.state.isPreviewMode && setIsOpen(!isOpen)}
         >
           {element.content.triggerText ?? "제목"}
           <ChevronDownIcon className="h-6 w-6 shrink-0 transition-transform duration-200" />
@@ -37,7 +41,7 @@ export default function AccordionElement({
               transition={{ duration: 0.2, ease: "easeOut" }}
               exit={{ height: 0 }}
               style={element.content.contentStyle}
-              className="overflow-hidden bg-secondary text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+              className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
             >
               <div className="px-6 py-3">
                 <Text element={element.content.text} />

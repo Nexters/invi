@@ -1,6 +1,7 @@
 "use client";
 
 import { useEditor } from "~/components/editor/provider";
+import AccordionSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/accordion-setting";
 import BackgroundSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/background-setting";
 import BorderSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/border-setting";
 import ImageSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/image-setting";
@@ -69,6 +70,12 @@ export default function SidebarElementSettingsTab(props: Props) {
         {selectedElement.type === "logoBanner" && (
           <>
             <LogoBannerSetting />
+          </>
+        )}
+
+        {selectedElement.type === "accordion" && (
+          <>
+            <AccordionSetting />
           </>
         )}
       </div>
