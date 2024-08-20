@@ -1,6 +1,6 @@
 import {
   BoxSelectIcon,
-  ChevronDown,
+  ChevronsDownUpIcon,
   ImageIcon,
   MapIcon,
   NavigationIcon,
@@ -104,7 +104,7 @@ export function LogoBannerPlaceholder() {
 export function AccordionPlaceholder() {
   return (
     <Placeholder type="accordion">
-      <ChevronDown className="size-8" />
+      <ChevronsDownUpIcon className="size-8" />
     </Placeholder>
   );
 }
