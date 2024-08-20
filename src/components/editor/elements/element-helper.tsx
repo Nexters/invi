@@ -92,6 +92,15 @@ export default function ElementHelper() {
     });
   };
 
+  const handleDuplicateElement = () => {
+    dispatch({
+      type: "DUPLICATE_ELEMENT",
+      payload: {
+        elementDetails: element,
+      },
+    });
+  };
+
   return (
     typeof window !== "undefined" &&
     createPortal(
@@ -144,7 +153,7 @@ export default function ElementHelper() {
                 <IconButton onClick={handleDeleteElement}>
                   <Trash2Icon className="h-4 w-4" />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={handleDuplicateElement}>
                   <CopyPlusIcon className="h-4 w-4" />
                 </IconButton>
               </div>
