@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  AccordionPlaceholder,
   BlankPlaceholder,
   ContainerPlaceholder,
   ImagePlaceholder,
@@ -77,6 +78,12 @@ export default function SidebarElementsTab(props: Props) {
       id: "logoBanner",
       label: "Logo Banner",
       Component: <LogoBannerPlaceholder />,
+      group: "elements",
+    },
+    {
+      id: "accordion",
+      label: "Accordion",
+      Component: <AccordionPlaceholder />,
       group: "elements",
     },
   ];

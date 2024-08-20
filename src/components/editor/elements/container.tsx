@@ -199,6 +199,36 @@ export default function Container({ element }: Props) {
           },
         });
         break;
+      case "accordion":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              type: "accordion",
+              id: nanoid(),
+              name: "Accordion",
+              styles: {},
+              content: {
+                triggerText: "제목",
+                triggerStyle: {
+                  color: "#09090B",
+                },
+                containerStyle: {
+                  backgroundColor: "#F4F4F5",
+                },
+                text: {
+                  type: "text",
+                  id: nanoid(),
+                  name: "Text",
+                  styles: textDefaultStyles,
+                  content: { innerText: "여기에 내용을 입력하세요." },
+                },
+              },
+            },
+          },
+        });
+        break;
     }
   };
 
