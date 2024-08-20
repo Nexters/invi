@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { ReactNode } from "react";
+import GlobalLoading from "~/components/gloabl-loading";
 import { GlobalAlert } from "~/components/global-alert";
 import { Toaster } from "~/components/ui/sonner";
 import { TooltipProvider } from "~/components/ui/tooltip";
@@ -45,6 +46,7 @@ export default function Providers({ children }: { children: ReactNode }) {
       <TooltipProvider>{children}</TooltipProvider>
       <Toaster />
       <GlobalAlert />
+      <GlobalLoading />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
