@@ -24,6 +24,7 @@ type EditorElementContentMap = {
   blank: {};
   empty: {};
   logoBanner: {};
+  accordion: {};
 };
 
 export type EditorElementType = keyof EditorElementContentMap;
