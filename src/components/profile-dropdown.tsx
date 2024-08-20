@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { toast } from "sonner";
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,7 +36,7 @@ export default function ProfileDropDown({ user }: ProfileDropDownProps) {
       <DropdownMenu>
         <DropdownMenuTrigger className="text-sm outline-none">
           <Avatar className="h-8 w-8">
-            {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
+            <AvatarImage src={user?.profileImage} />
             <AvatarFallback>{user?.name[0].toUpperCase()}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
