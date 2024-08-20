@@ -41,6 +41,7 @@ export async function GET(request: Request): Promise<Response> {
       name: user.name,
       email: user.email,
       provider: "google",
+      profileImage: user.picture,
     });
 
     await createSession(dbUser.id);
