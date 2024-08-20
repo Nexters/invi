@@ -42,8 +42,6 @@ export async function deleteUser(id: string): Promise<void> {
   try {
     const result = await db.delete(users).where(eq(users.id, id));
 
-    // TODO cascade delete template, invitaions, etc
-
     if (result.rowCount === 0) {
       throw new Error("User not found");
     }
