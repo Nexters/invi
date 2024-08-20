@@ -49,6 +49,17 @@ export const invitation_response = pgTable("invitation_response", {
   invitation_id: text("invitation_id").references(() => invitation.id),
 });
 
+export const session = pgTable("session", {
+  id: text("id").primaryKey().notNull(),
+  user_id: text("user_id")
+    .notNull()
+    .references(() => user.id),
+  expires_at: timestamp("expires_at", {
+    withTimezone: true,
+    mode: "string",
+  }).notNull(),
+});
+
 export const user = pgTable(
   "user",
   {
@@ -67,17 +78,6 @@ export const user = pgTable(
     };
   },
 );
-
-export const session = pgTable("session", {
-  id: text("id").primaryKey().notNull(),
-  user_id: text("user_id")
-    .notNull()
-    .references(() => user.id),
-  expires_at: timestamp("expires_at", {
-    withTimezone: true,
-    mode: "string",
-  }).notNull(),
-});
 
 export const invitation = pgTable(
   "invitation",
@@ -112,7 +112,7 @@ export const template = pgTable("template", {
   id: text("id").primaryKey().notNull(),
   title: text("title").notNull(),
   description: text("description"),
-  custum_fields: json("custum_fields"),
+  custum_fields: json("custum_fields").notNull(),
   created_at: timestamp("created_at", {
     withTimezone: true,
     mode: "string",
