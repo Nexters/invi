@@ -75,6 +75,7 @@ export default function EditorNavigation() {
       onConfirm: async () => {
         await deleteInvitation(editor.config.invitationId);
         router.replace("/dashboard");
+        toast.success("삭제되었습니다.");
       },
     });
   };
