@@ -37,6 +37,7 @@ export const kakaoMapDefaultStyles: React.CSSProperties = {
 export const editorTabValue = {
   ELEMENTS: "Elements",
   SETTINGS: "Settings",
+  INVITATION_RESPONSE: "Invitation Response",
   ELEMENT_SETTINGS: "Element Settings",
 } as const;
 
@@ -61,6 +62,9 @@ export const bodyElement = {
 
 export const initialEditorData: EditorData = {
   elements: [bodyElement],
+  fab: {
+    type: "invitation_response",
+  },
 };
 
 export const initialEditorState: EditorState = {
