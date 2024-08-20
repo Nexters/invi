@@ -92,7 +92,8 @@ export default function ElementHelper() {
     });
   };
 
-  const handleDuplicateElement = () => {
+  const handleDuplicateElement = (e: React.MouseEvent) => {
+    e.stopPropagation();
     dispatch({
       type: "DUPLICATE_ELEMENT",
       payload: {
