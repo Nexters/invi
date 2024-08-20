@@ -20,6 +20,7 @@ export default function TemplateItem({ template }: { template: Template }) {
       const [data] = await Promise.all([
         await createInvitation({
           title: template.title,
+          thumbnailUrl: template.thumbnailUrl,
           customFields: template.customFields,
         }),
         await delay(1000),
