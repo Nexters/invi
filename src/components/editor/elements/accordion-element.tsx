@@ -41,7 +41,7 @@ export default function AccordionElement({
               transition={{ duration: 0.2, ease: "easeOut" }}
               exit={{ height: 0 }}
               style={element.content.contentStyle}
-              className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+              className="overflow-hidden text-sm"
             >
               <div className="px-6 py-3">
                 <Text element={element.content.text} />
