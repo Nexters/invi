@@ -29,7 +29,12 @@ export default function BottomSheet() {
     },
     onSubmit: async ({ value }) => {
       const { name, attendance } = value;
-      await createInvitationResponses(name, attendance as unknown as boolean);
+      await createInvitationResponses({
+        invitation_id: "4yZl98Z1JmInrHOANn3uj", 
+        participant_name: name,
+        attendance: attendance === "true",
+        reason: "", 
+      });
       toast("참여가 완료되었습니다.", {
         duration: 2000,
         style: {
