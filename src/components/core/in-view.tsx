@@ -42,7 +42,7 @@ export function InView({
       animate={isInView ? "visible" : "hidden"}
       variants={variants}
       transition={transition}
-      className=""
+      className={className}
     >
       {children}
     </motion.div>
