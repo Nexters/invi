@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
+import { delay } from "es-toolkit";
 import { PlusIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -15,14 +16,21 @@ export default function TemplateItem({ template }: { template: Template }) {
   const createMutation = useMutation({
     mutationFn: async () => {
       loadingLayer.open("초대장을 만들고 있어요...");
-      return await createInvitation({
-        title: template.title,
-        customFields: template.customFields,
-      });
+
+      const [data] = await Promise.all([
+        await createInvitation({
+          title: template.title,
+          customFields: template.customFields,
+        }),
+        await delay(1000),
+      ]);
+
+      return data;
     },
     onSuccess: (data) => {
       toast.success("초대장이 생성되었습니다.");
       router.push(`/i/${data.eventUrl}/edit`);
+      loadingLayer.close();
     },
     onError: (error) => {
       console.error("Error creating invitation:", error);
