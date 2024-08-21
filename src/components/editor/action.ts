@@ -52,6 +52,9 @@ type EditorActionMap = {
   TOGGLE_PREVIEW_MODE: undefined;
   REDO: undefined;
   UNDO: undefined;
+  UPDATE_FAB_STATE: {
+    type: "" | "invitation_response";
+  };
 };
 
 export type EditorAction = {
@@ -448,6 +451,18 @@ const actionHandlers: {
       };
     }
     return editor;
+  },
+
+  UPDATE_FAB_STATE: (editor, payload) => {
+    return {
+      ...editor,
+      data: {
+        ...editor.data,
+        fab: {
+          type: payload.type,
+        },
+      },
+    };
   },
 };
 
