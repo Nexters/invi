@@ -109,11 +109,13 @@ export default function EditorNavigation() {
       )}
     >
       <aside className="flex items-center gap-6">
-        <Button asChild variant="ghost" size="icon">
-          <Link href={editor.config.backLink}>
-            <ArrowLeftIcon />
-          </Link>
-        </Button>
+        <TooltipSimple text="대시보드">
+          <Button asChild variant="ghost" size="icon">
+            <Link href={editor.config.backLink}>
+              <ArrowLeftIcon />
+            </Link>
+          </Button>
+        </TooltipSimple>
         <TitleInput />
         {/* TODO: 디바이스 미리보기 개선 */}
         {/* <Tabs 
@@ -140,27 +142,41 @@ export default function EditorNavigation() {
       </aside>
       <aside className="flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" onClick={handlePreviewClick}>
-            <EyeIcon />
-          </Button>
-          <Button
+          <TooltipSimple text="미리보기">
+            <Button variant="ghost" size="icon" onClick={handlePreviewClick}>
+              <EyeIcon />
+            </Button>
+          </TooltipSimple>
+          <TooltipSimple
+            text="되돌리기"
             disabled={!(editor.history.currentIndex > 0)}
-            onClick={handleUndo}
-            variant="ghost"
-            size="icon"
           >
-            <Undo2 />
-          </Button>
-          <Button
+            <Button
+              disabled={!(editor.history.currentIndex > 0)}
+              onClick={handleUndo}
+              variant="ghost"
+              size="icon"
+            >
+              <Undo2 />
+            </Button>
+          </TooltipSimple>
+          <TooltipSimple
+            text="다시 실행"
             disabled={
               !(editor.history.currentIndex < editor.history.list.length - 1)
             }
-            onClick={handleRedo}
-            variant="ghost"
-            size="icon"
           >
-            <Redo2 />
-          </Button>
+            <Button
+              disabled={
+                !(editor.history.currentIndex < editor.history.list.length - 1)
+              }
+              onClick={handleRedo}
+              variant="ghost"
+              size="icon"
+            >
+              <Redo2 />
+            </Button>
+          </TooltipSimple>
         </div>
         <Button variant="secondary" onClick={handleOnSave} className="gap-1">
           <DownloadIcon className="h-4 w-4" /> 저장
