@@ -344,21 +344,32 @@ const actionHandlers: {
   },
 
   DUPLICATE_ELEMENT: (editor, payload) => {
-    const containerId = findParentId(
+    const [targetElement, parent, targetIndex] = findElementAndParent(
       editor.data.elements,
       payload.elementDetails.id,
     );
 
-    if (!containerId) {
+    if (!parent || targetIndex === -1) {
       return editor;
     }
 
     const newElement = deepCloneElement(payload.elementDetails);
 
-    return actionHandlers.ADD_ELEMENT(editor, {
-      containerId,
-      elementDetails: newElement,
+    const elements = traverseElements(editor.data.elements, (element) => {
+      if (element.id === parent.id && Array.isArray(element.content)) {
+        return {
+          ...element,
+          content: [
+            ...element.content.slice(0, targetIndex + 1),
+            newElement,
+            ...element.content.slice(targetIndex + 1),
+          ],
+        } as EditorElement;
+      }
+      return element;
     });
+
+    return updateEditorHistory(editor, { elements }, newElement);
   },
 
   CHANGE_CLICKED_ELEMENT: (editor, payload) => {
