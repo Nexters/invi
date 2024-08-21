@@ -217,12 +217,29 @@ export default function Container({ element }: Props) {
                 containerStyle: {
                   backgroundColor: "#F4F4F5",
                 },
-                text: {
-                  type: "text",
+                innerContainer: {
+                  type: "container",
                   id: nanoid(),
-                  name: "Text",
-                  styles: textDefaultStyles,
-                  content: { innerText: "여기에 내용을 입력하세요." },
+                  name: "Container",
+                  styles: {
+                    ...containerDefaultStyles,
+                    paddingLeft: 24,
+                    paddingRight: 24,
+                    paddingTop: 12,
+                    paddingBottom: 12,
+                    color: "#09090B",
+                  },
+                  content: [
+                    {
+                      type: "text",
+                      id: nanoid(),
+                      name: "Text",
+                      styles: {
+                        ...textDefaultStyles,
+                      },
+                      content: { innerText: "여기에 내용을 입력하세요." },
+                    },
+                  ],
                 },
               },
             },
