@@ -13,6 +13,7 @@ import { useEditor } from "~/components/editor/provider";
 import { isValidSelectEditorElement } from "~/components/editor/util";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
 
 export default function ElementHelper() {
   const { editor, dispatch } = useEditor();
@@ -138,7 +139,10 @@ export default function ElementHelper() {
             </Badge>
             <div className="absolute -left-[28px] -top-[1px] z-10">
               <div className="flex flex-col gap-0.5">
-                <IconButton>
+                <IconButton
+                  className="cursor-grab"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <GripVerticalIcon className="h-4 w-4" />
                 </IconButton>
                 <IconButton onClick={handleMoveUp}>
@@ -167,5 +171,11 @@ export default function ElementHelper() {
 }
 
 function IconButton(props: React.ComponentProps<"button">) {
-  return <Button {...props} size="icon" className="h-6 w-6 p-0" />;
+  return (
+    <Button
+      {...props}
+      size="icon"
+      className={cn("h-6 w-6 p-0", props.className)}
+    />
+  );
 }
