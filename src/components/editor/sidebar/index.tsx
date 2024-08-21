@@ -12,6 +12,7 @@ import type { EditorTabTypeValue } from "~/components/editor/type";
 import { isValidSelectEditorElement } from "~/components/editor/util";
 import { Button } from "~/components/ui/button";
 import { Sheet, SheetContent } from "~/components/ui/sheet";
+import TooltipSimple from "~/components/ui/tooltip-simple";
 import { cn } from "~/lib/utils";
 
 type Props = {};
@@ -69,19 +70,20 @@ export default function EditorSidebar() {
               }
 
               return (
-                <TabsTrigger
-                  key={`${tab.value}-trigger`}
-                  value={tab.value}
-                  asChild
-                >
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="data-[state=active]:bg-secondary"
-                  >
-                    {tab.icon}
-                  </Button>
-                </TabsTrigger>
+                <TooltipSimple key={`${tab.value}-trigger`} text={tab.value}>
+                  <TabsTrigger value={tab.value} asChild>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className={cn(
+                        tab.value === editor.state.currentTabValue &&
+                          "bg-secondary",
+                      )}
+                    >
+                      {tab.icon}
+                    </Button>
+                  </TabsTrigger>
+                </TooltipSimple>
               );
             })}
           </TabsList>

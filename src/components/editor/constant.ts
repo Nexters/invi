@@ -35,10 +35,10 @@ export const kakaoMapDefaultStyles: React.CSSProperties = {
 };
 
 export const editorTabValue = {
-  ELEMENTS: "Elements",
-  SETTINGS: "Settings",
-  INVITATION_RESPONSE: "Invitation Response",
-  ELEMENT_SETTINGS: "Element Settings",
+  ELEMENTS: "도구상자",
+  SETTINGS: "초대장 설정",
+  INVITATION_RESPONSE: "초대 응답 설정",
+  ELEMENT_SETTINGS: "도구 설정",
 } as const;
 
 export const emptyElement = {

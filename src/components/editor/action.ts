@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { emptyElement } from "~/components/editor/constant";
+import { editorTabValue, emptyElement } from "~/components/editor/constant";
 import type {
   DeviceType,
   Editor,
@@ -365,9 +365,9 @@ const actionHandlers: {
     const isValidSelect = isValidSelectEditorElement(payload.elementDetails);
 
     const newTabValue = isValidSelect
-      ? "Element Settings"
-      : editor.state.currentTabValue === "Element Settings"
-        ? "Elements"
+      ? editorTabValue.ELEMENTS
+      : editor.state.currentTabValue === editorTabValue.ELEMENT_SETTINGS
+        ? editorTabValue.ELEMENT_SETTINGS
         : editor.state.currentTabValue;
 
     return {
