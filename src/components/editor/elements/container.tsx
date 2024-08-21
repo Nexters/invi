@@ -257,7 +257,7 @@ export default function Container({ element }: Props) {
         isRoot && "min-h-full",
         !isRoot &&
           !editor.state.isPreviewMode &&
-          "ring-1 ring-muted hover:ring-border",
+          "hover:ring-1 hover:ring-border",
       )}
       onDrop={handleDrop}
       onDragStart={handleDragStart}
