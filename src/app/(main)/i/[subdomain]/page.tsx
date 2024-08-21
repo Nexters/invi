@@ -30,7 +30,6 @@ export async function generateMetadata(
 
 export default async function Page({ params }: Props) {
   const invitation = await getInvitationByEventUrl(params.subdomain);
-  console.log(invitation);
   if (!invitation) {
     notFound();
   }
