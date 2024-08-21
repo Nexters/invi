@@ -6,11 +6,8 @@ import {
   DownloadIcon,
   EllipsisVerticalIcon,
   EyeIcon,
-  Laptop,
   MailOpenIcon,
   Redo2,
-  Smartphone,
-  Tablet,
   Undo2,
 } from "lucide-react";
 import Link from "next/link";
@@ -18,7 +15,6 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import TitleInput from "~/components/editor/title-input";
-import type { DeviceType } from "~/components/editor/type";
 import { useAlertDialogStore } from "~/components/global-alert";
 import { Button } from "~/components/ui/button";
 import {
@@ -27,7 +23,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import TooltipSimple from "~/components/ui/tooltip-simple";
 import {
   createInvitation,
@@ -120,7 +115,8 @@ export default function EditorNavigation() {
           </Link>
         </Button>
         <TitleInput />
-        <Tabs
+        {/* TODO: 디바이스 미리보기 개선 */}
+        {/* <Tabs 
           value={editor.state.device}
           onValueChange={(value) => {
             dispatch({
@@ -140,7 +136,7 @@ export default function EditorNavigation() {
               <Smartphone />
             </TabsTrigger>
           </TabsList>
-        </Tabs>
+        </Tabs> */}
       </aside>
       <aside className="flex items-center gap-4">
         <div className="flex items-center gap-2">
