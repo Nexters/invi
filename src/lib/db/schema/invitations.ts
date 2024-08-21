@@ -9,6 +9,7 @@ export const invitations = pgTable("invitation", {
     .notNull(),
   customFields: json("custom_fields").notNull().$type<EditorData>(),
   title: text("title").notNull(),
+  description: text("description"),
   eventUrl: text("event_url").unique().notNull(),
   thumbnailUrl: text("thumbnail_url"),
   createdAt: timestamp("created_at", {
