@@ -100,13 +100,15 @@ export async function createInvitation(
 }
 
 export async function updateInvitation(params: UpdateInvitationParams) {
-  const { id, ...updates } = params;
+  const { id, eventUrl, ...updates } = params;
 
   if (!id) {
     throw new Error("ID is required to update an invitation");
   }
 
   try {
+    const existingInvitation = await getInvitationById(id);
+
     await db
       .update(invitations)
       .set({
@@ -114,6 +116,13 @@ export async function updateInvitation(params: UpdateInvitationParams) {
         updatedAt: new Date(),
       })
       .where(eq(invitations.id, id));
+
+    if (eventUrl && eventUrl !== existingInvitation.eventUrl) {
+      revalidatePath(`/i/${eventUrl}`);
+      revalidatePath(`/i/${existingInvitation.eventUrl}`);
+    } else {
+      revalidatePath(`/i/${existingInvitation.eventUrl}`);
+    }
   } catch (error) {
     console.error("Error updating invitation:", error);
     throw new Error("Could not update invitation");
