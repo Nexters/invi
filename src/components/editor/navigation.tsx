@@ -1,5 +1,6 @@
 "use client";
 
+import { delay } from "es-toolkit";
 import {
   ArrowLeftIcon,
   DownloadIcon,
@@ -29,15 +30,18 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import TooltipSimple from "~/components/ui/tooltip-simple";
 import {
+  createInvitation,
   deleteInvitation,
   updateInvitation,
 } from "~/lib/db/schema/invitations.query";
 import { cn } from "~/lib/utils";
+import { useLoadingStore } from "../gloabl-loading";
 
 export default function EditorNavigation() {
-  const { editor, dispatch } = useEditor();
   const router = useRouter();
+  const { editor, dispatch } = useEditor();
   const { openDialog } = useAlertDialogStore();
+  const loadingStore = useLoadingStore();
 
   const handlePreviewClick = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
@@ -78,6 +82,28 @@ export default function EditorNavigation() {
         toast.success("삭제되었습니다.");
       },
     });
+  };
+
+  const handleOnClone = async () => {
+    try {
+      loadingStore.open("새로운 초대장을 만들고 있어요...");
+
+      const [newInvi] = await Promise.all([
+        createInvitation({
+          title: editor.config.invitationTitle + " 복사본",
+          customFields: editor.data,
+          thumbnailUrl: editor.config.invitationThumbnail,
+        }),
+        delay(2000),
+      ]);
+
+      router.push(`/i/${newInvi.eventUrl}/edit`);
+    } catch (e) {
+      console.error(e);
+      toast.error("일시적인 오류가 발생되었습니다.");
+    } finally {
+      loadingStore.close();
+    }
   };
 
   return (
@@ -160,7 +186,9 @@ export default function EditorNavigation() {
             </DropdownMenuTrigger>
           </TooltipSimple>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>복제하기</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleOnClone}>
+              복제하기
+            </DropdownMenuItem>
             <DropdownMenuItem
               className="text-destructive"
               onClick={handleOnDelete}
