@@ -247,7 +247,9 @@ function SEOSection() {
               <div className="text-xs text-neutral-400">
                 {editor.config.invitationDesc}
               </div>
-              <div className="text-xs text-neutral-300">invi.my</div>
+              <div className="text-xs text-neutral-300">
+                {editor.config.invitationSubdomain}.invi.my
+              </div>
             </div>
           </div>
         </div>
