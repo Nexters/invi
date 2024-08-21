@@ -175,6 +175,7 @@ function SEOSection() {
     mutationFn: async () => {
       await updateInvitation({
         id: editor.config.invitationId,
+        description: editor.config.invitationDesc,
         thumbnailUrl: editor.config.invitationThumbnail,
       });
     },
@@ -198,7 +199,7 @@ function SEOSection() {
           링크 공유시 보여지는 정보를 설정해보세요.
         </p>
       </div>
-      <div className="col-span-9">
+      <div className="col-span-9 space-y-1">
         <ImageDropzone
           disabled={isPending}
           onLoadImage={async ({ url, file }) => {
@@ -217,13 +218,26 @@ function SEOSection() {
           id="invitationThumbnail"
           disabled={isPending}
           componentPrefix={"이미지 링크"}
-          className="mt-1"
           defaultValue={editor.config.invitationThumbnail}
           onDebounceChange={(e) => {
             dispatch({
               type: "UPDATE_CONFIG",
               payload: {
                 invitationThumbnail: e.target.value,
+              },
+            });
+          }}
+        />
+        <EditorInput
+          id="invitationDesc"
+          disabled={isPending}
+          componentPrefix={"설명"}
+          defaultValue={editor.config.invitationDesc}
+          onDebounceChange={(e) => {
+            dispatch({
+              type: "UPDATE_CONFIG",
+              payload: {
+                invitationDesc: e.target.value,
               },
             });
           }}
