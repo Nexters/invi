@@ -24,7 +24,7 @@ export default function GlobalLoading() {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 flex flex-col items-center justify-center gap-2 bg-background/95 animate-in"
+          className="fixed inset-0 z-[999] flex flex-col items-center justify-center gap-2 bg-background/95 animate-in"
           initial={{ opacity: 0, filter: "blur(4px)" }}
           animate={{ opacity: 1, filter: "blur(0px)" }}
           exit={{ opacity: 0, filter: "blur(2px)" }}
