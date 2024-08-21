@@ -21,8 +21,10 @@ export default async function Page() {
     return redirect("/sign-in");
   }
 
-  const templates = await getAllTemplates();
-  const invitations = await getInvitationsByAuth();
+  const [templates, invitations] = await Promise.all([
+    getAllTemplates(),
+    getInvitationsByAuth(),
+  ]);
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
