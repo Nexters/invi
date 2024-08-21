@@ -29,6 +29,7 @@ export async function generateMetadata(
       default: invitation.title,
       template: "%s | 인비",
     },
+    description: invitation.description ?? "",
     openGraph: {
       images,
     },
