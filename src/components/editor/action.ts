@@ -430,6 +430,10 @@ const actionHandlers: {
           ...editor.history,
           currentIndex: nextIndex,
         },
+        state: {
+          ...editor.state,
+          selectedElement: emptyElement,
+        },
       };
     }
     return editor;
@@ -444,6 +448,10 @@ const actionHandlers: {
         history: {
           ...editor.history,
           currentIndex: prevIndex,
+        },
+        state: {
+          ...editor.state,
+          selectedElement: emptyElement,
         },
       };
     }
