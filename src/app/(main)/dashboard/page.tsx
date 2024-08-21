@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import InvitationItem from "~/app/(main)/dashboard/invitation-item";
 import TemplateItem from "~/app/(main)/dashboard/template-item";
 import ProfileDropDown from "~/components/profile-dropdown";
+import ThemeDropdown from "~/components/theme-dropdown";
 import { LogoTextIcon } from "~/components/ui/icons";
 import { getAuth } from "~/lib/auth/utils";
 import { getInvitationsByAuth } from "~/lib/db/schema/invitations.query";
@@ -44,7 +45,8 @@ export default async function Page() {
           <LogoTextIcon />
           <span className="sr-only">Invi</span>
         </Link>
-        <nav className="ml-auto flex items-center gap-4 sm:gap-6">
+        <nav className="ml-auto flex items-center gap-3">
+          <ThemeDropdown />
           <ProfileDropDown user={auth.user} />
         </nav>
       </header>
