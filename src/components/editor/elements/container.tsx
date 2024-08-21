@@ -1,7 +1,7 @@
 "use client";
 
 import { nanoid } from "nanoid";
-import React from "react";
+import React, { useState } from "react";
 import {
   containerDefaultStyles,
   kakaoMapDefaultStyles,
@@ -23,17 +23,23 @@ export default function Container({ element }: Props) {
   const { editor, dispatch } = useEditor();
   const isRoot = type === "__body";
 
-  const handleDragStart = (e: React.DragEvent) => {
-    if (isRoot) return;
-    e.dataTransfer.setData("componentType", "container");
-  };
+  const [isDraggingOver, setIsDraggingOver] = useState(false);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingOver(false);
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.stopPropagation();
+    setIsDraggingOver(false);
 
     const componentType = e.dataTransfer.getData(
       "componentType",
@@ -255,13 +261,14 @@ export default function Container({ element }: Props) {
       className={cn(
         "h-fit w-full max-w-full",
         isRoot && "min-h-full",
-        !isRoot &&
-          !editor.state.isPreviewMode &&
-          "hover:ring-1 hover:ring-border",
+        !editor.state.isPreviewMode && [
+          !isRoot && "hover:ring-1 hover:ring-border",
+          isDraggingOver && "ring-2 ring-inset ring-primary",
+        ],
       )}
       onDrop={handleDrop}
-      onDragStart={handleDragStart}
       onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
     >
       {Array.isArray(content) &&
         content.map((childElement) => (
