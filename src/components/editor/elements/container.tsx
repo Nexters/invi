@@ -259,11 +259,12 @@ export default function Container({ element }: Props) {
     <ElementWrapper
       element={element}
       className={cn(
-        "h-fit w-full max-w-full",
+        "h-fit w-full max-w-full ring-inset",
         isRoot && "min-h-full",
         !editor.state.isPreviewMode && [
           !isRoot && "hover:ring-1 hover:ring-border",
-          isDraggingOver && "ring-2 ring-inset ring-primary",
+          editor.state.isDragging && "ring-1 ring-border",
+          isDraggingOver && "ring-2 ring-primary",
         ],
       )}
       onDrop={handleDrop}

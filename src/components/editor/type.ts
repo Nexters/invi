@@ -55,6 +55,7 @@ export type EditorState = {
   currentTabValue: EditorTabTypeValue;
   device: DeviceType;
   isPreviewMode: boolean;
+  isDragging: boolean;
 };
 
 export type EditorData = {

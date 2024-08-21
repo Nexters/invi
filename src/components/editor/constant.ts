@@ -72,6 +72,7 @@ export const initialEditorState: EditorState = {
   currentTabValue: editorTabValue.ELEMENTS,
   device: "Mobile",
   isPreviewMode: false,
+  isDragging: false,
 };
 
 export const initialEditorHistory: EditorHistory = {

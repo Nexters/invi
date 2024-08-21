@@ -49,6 +49,7 @@ type EditorActionMap = {
     device: DeviceType;
   };
   UPDATE_CONFIG: Partial<EditorConfig>;
+  SET_DRAGGING: boolean;
   TOGGLE_PREVIEW_MODE: undefined;
   REDO: undefined;
   UNDO: undefined;
@@ -417,6 +418,16 @@ const actionHandlers: {
       config: {
         ...editor.config,
         ...payload,
+      },
+    };
+  },
+
+  SET_DRAGGING: (editor, payload) => {
+    return {
+      ...editor,
+      state: {
+        ...editor.state,
+        isDragging: payload,
       },
     };
   },
