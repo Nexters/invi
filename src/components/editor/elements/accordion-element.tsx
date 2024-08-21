@@ -3,8 +3,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDownIcon } from "lucide-react";
 import { useState } from "react";
+import Container from "~/components/editor/elements/container";
 import ElementWrapper from "~/components/editor/elements/element-wrapper";
-import Text from "~/components/editor/elements/text";
 import { useEditor } from "~/components/editor/provider";
 import type { InferEditorElement } from "~/components/editor/type";
 
@@ -43,9 +43,7 @@ export default function AccordionElement({
               style={element.content.contentStyle}
               className="overflow-hidden text-sm"
             >
-              <div className="px-6 py-3">
-                <Text element={element.content.text} />
-              </div>
+              <Container element={element.content.innerContainer} />
             </motion.div>
           )}
         </AnimatePresence>

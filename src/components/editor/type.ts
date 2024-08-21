@@ -29,7 +29,7 @@ type EditorElementContentMap = {
     triggerStyle?: React.CSSProperties;
     containerStyle?: React.CSSProperties;
     contentStyle?: React.CSSProperties;
-    text: InferEditorElement<"text">;
+    innerContainer: InferEditorElement<"container">;
   };
 };
 
