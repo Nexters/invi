@@ -12,7 +12,7 @@ export default function InvitationItem({
   return (
     <Link
       href={`/i/${invitation.eventUrl}/edit`}
-      className="relative inline-flex flex-col overflow-hidden rounded border px-4 pb-5 pt-6 transition hover:bg-muted/20 focus:outline-none"
+      className="relative inline-flex flex-col overflow-hidden rounded border px-4 pb-5 pt-6 transition hover:scale-[1.02] focus:outline-none active:scale-[0.98]"
     >
       <div className="relative flex aspect-[11/4] w-full items-center justify-center overflow-hidden rounded border bg-muted">
         {invitation.thumbnailUrl && (
