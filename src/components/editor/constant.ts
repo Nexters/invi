@@ -3,6 +3,7 @@ import type {
   Editor,
   EditorConfig,
   EditorData,
+  EditorElementType,
   EditorHistory,
   EditorState,
   InferEditorElement,
@@ -15,7 +16,6 @@ import type {
 export const emptyElement: InferEditorElement<"empty"> = {
   id: "",
   type: "empty",
-  name: "",
   styles: {},
   content: [],
 };
@@ -23,7 +23,6 @@ export const emptyElement: InferEditorElement<"empty"> = {
 export const bodyElement: InferEditorElement<"__body"> = {
   id: "__body",
   type: "__body",
-  name: "Body",
   styles: {
     paddingLeft: 28,
     paddingRight: 28,
@@ -47,7 +46,6 @@ export const containerDefaultStyles: React.CSSProperties = {
 export const containerElement: InferEditorElement<"container"> = {
   id: "__container",
   type: "container",
-  name: "Container",
   styles: containerDefaultStyles,
   content: [],
 };
@@ -55,7 +53,6 @@ export const containerElement: InferEditorElement<"container"> = {
 export const twoColumnElement: InferEditorElement<"2Col"> = {
   id: "__2col",
   type: "2Col",
-  name: "Two Columns",
   styles: containerDefaultStyles,
   content: [
     {
@@ -74,7 +71,6 @@ export const twoColumnElement: InferEditorElement<"2Col"> = {
 export const blankElement: InferEditorElement<"blank"> = {
   id: "__blank",
   type: "blank",
-  name: "Blank",
   styles: {
     height: 32,
   },
@@ -88,7 +84,6 @@ export const textDefaultStyles: React.CSSProperties = {
 export const textElement: InferEditorElement<"text"> = {
   id: "__text",
   type: "text",
-  name: "Text",
   styles: textDefaultStyles,
   content: {
     innerText: "여기에 내용을 입력하세요.",
@@ -98,7 +93,6 @@ export const textElement: InferEditorElement<"text"> = {
 export const imageElement: InferEditorElement<"image"> = {
   id: "__image",
   type: "image",
-  name: "Image",
   styles: {
     width: "100%",
     height: "auto",
@@ -116,7 +110,6 @@ export const kakaoMapDefaultStyles: React.CSSProperties = {
 export const kakaoMapElement: InferEditorElement<"kakaoMap"> = {
   id: "__kakaoMap",
   type: "kakaoMap",
-  name: "KaKao Map",
   styles: kakaoMapDefaultStyles,
   content: {
     location: {
@@ -132,7 +125,6 @@ export const kakaoMapElement: InferEditorElement<"kakaoMap"> = {
 export const navigationElement: InferEditorElement<"navigation"> = {
   id: "__navigation",
   type: "navigation",
-  name: "Navigation",
   styles: {},
   content: {
     address: "서울역",
@@ -142,7 +134,6 @@ export const navigationElement: InferEditorElement<"navigation"> = {
 export const logoBannerElement: InferEditorElement<"logoBanner"> = {
   id: "__logoBanner",
   type: "logoBanner",
-  name: "Logo Banner",
   styles: {
     height: 69,
     color: "#22222250",
@@ -153,7 +144,6 @@ export const logoBannerElement: InferEditorElement<"logoBanner"> = {
 export const accordionElement: InferEditorElement<"accordion"> = {
   id: "__accordion",
   type: "accordion",
-  name: "Accordion",
   styles: {},
   content: {
     triggerText: "제목",
@@ -185,6 +175,24 @@ export const accordionElement: InferEditorElement<"accordion"> = {
       ],
     },
   },
+};
+
+/**
+ * mapper for element types
+ */
+
+export const elementNameMap: Record<EditorElementType, string> = {
+  __body: "페이지",
+  "2Col": "2Col",
+  container: "컨테이너",
+  blank: "공백",
+  text: "텍스트",
+  image: "이미지",
+  kakaoMap: "지도",
+  navigation: "길찾기",
+  logoBanner: "인비 로고",
+  accordion: "펼침/접힘",
+  empty: "",
 };
 
 /**

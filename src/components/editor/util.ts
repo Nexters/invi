@@ -4,6 +4,7 @@ import {
   blankElement,
   bodyElement,
   containerElement,
+  elementNameMap,
   emptyElement,
   imageElement,
   kakaoMapElement,
@@ -68,4 +69,8 @@ export const makeElement = <T extends EditorElementType>(
 ): Extract<EditorElement, { type: T }> => {
   const defaultElement = getDefaultElement(type);
   return cloneElement(defaultElement);
+};
+
+export const getElementName = (type: EditorElementType) => {
+  return elementNameMap[type] ?? "";
 };

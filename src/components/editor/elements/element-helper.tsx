@@ -10,7 +10,10 @@ import {
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useEditor } from "~/components/editor/provider";
-import { isValidSelectEditorElement } from "~/components/editor/util";
+import {
+  getElementName,
+  isValidSelectEditorElement,
+} from "~/components/editor/util";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
@@ -154,7 +157,7 @@ export default function ElementHelper() {
               className="absolute -left-[1px] -top-[26px] z-10"
               onClick={(e) => e.stopPropagation()}
             >
-              {element.name}
+              {getElementName(element.type)}
             </Badge>
             {element.type !== "__body" && (
               <div className="absolute -left-[28px] -top-[1px] z-10">

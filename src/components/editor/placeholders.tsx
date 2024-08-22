@@ -1,14 +1,14 @@
 import {
   BoxSelectIcon,
   ChevronsDownUpIcon,
-  ImageIcon,
   MapIcon,
   NavigationIcon,
+  SquareIcon,
   TypeIcon,
 } from "lucide-react";
 import { useEditor } from "~/components/editor/provider";
 import type { EditorElementType } from "~/components/editor/type";
-import { LogoTextIcon } from "~/components/ui/icons";
+import { ImageSolidIcon, LogoTextIcon } from "~/components/ui/icons";
 import { cn } from "~/lib/utils";
 
 type PlaceholderProps = {
@@ -39,7 +39,7 @@ function Placeholder({ type, children, className }: PlaceholderProps) {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       className={cn(
-        "flex h-14 w-14 cursor-grab items-center justify-center gap-1 rounded-lg bg-muted/70 p-2 text-muted-foreground active:cursor-grabbing",
+        "flex h-14 w-14 cursor-grab items-center justify-center gap-1.5 rounded-lg bg-muted/70 p-2 text-muted-foreground active:cursor-grabbing",
         className,
       )}
     >
@@ -51,7 +51,7 @@ function Placeholder({ type, children, className }: PlaceholderProps) {
 export function TextPlaceholder() {
   return (
     <Placeholder type="text">
-      <TypeIcon size={40} className="text-muted-foreground" />
+      <TypeIcon className="size-6" />
     </Placeholder>
   );
 }
@@ -68,7 +68,7 @@ export function TwoColumnsPlaceholder() {
 export function ContainerPlaceholder() {
   return (
     <Placeholder type="container">
-      <div className="h-full w-full rounded-sm border-[1px] border-dashed border-muted-foreground/50 bg-muted" />
+      <SquareIcon className="size-6" />
     </Placeholder>
   );
 }
@@ -76,7 +76,7 @@ export function ContainerPlaceholder() {
 export function ImagePlaceholder() {
   return (
     <Placeholder type="image">
-      <ImageIcon className="size-8" />
+      <ImageSolidIcon className="size-6" />
     </Placeholder>
   );
 }
@@ -84,7 +84,7 @@ export function ImagePlaceholder() {
 export function NavigationPlaceholder() {
   return (
     <Placeholder type="navigation">
-      <NavigationIcon className="size-8" />
+      <NavigationIcon className="size-6" />
     </Placeholder>
   );
 }
@@ -92,7 +92,7 @@ export function NavigationPlaceholder() {
 export function KakaoMapPlaceholder() {
   return (
     <Placeholder type="kakaoMap">
-      <MapIcon className="size-8" />
+      <MapIcon className="size-6" />
     </Placeholder>
   );
 }
@@ -100,7 +100,7 @@ export function KakaoMapPlaceholder() {
 export function BlankPlaceholder() {
   return (
     <Placeholder type="blank">
-      <BoxSelectIcon className="size-8" />
+      <BoxSelectIcon className="size-6" />
     </Placeholder>
   );
 }
@@ -116,7 +116,7 @@ export function LogoBannerPlaceholder() {
 export function AccordionPlaceholder() {
   return (
     <Placeholder type="accordion">
-      <ChevronsDownUpIcon className="size-8" />
+      <ChevronsDownUpIcon className="size-6" />
     </Placeholder>
   );
 }

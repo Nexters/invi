@@ -8,9 +8,9 @@ import {
   LogoBannerPlaceholder,
   NavigationPlaceholder,
   TextPlaceholder,
-  TwoColumnsPlaceholder,
 } from "~/components/editor/placeholders";
 import type { EditorElementType } from "~/components/editor/type";
+import { getElementName } from "~/components/editor/util";
 import {
   Accordion,
   AccordionContent,
@@ -27,62 +27,47 @@ type Props = {};
 
 export default function SidebarElementsTab(props: Props) {
   const elements: {
-    id: EditorElementType;
-    label: string;
+    type: EditorElementType;
     Component: React.ReactNode;
     group: "layout" | "elements";
   }[] = [
     {
-      id: "container",
-      label: "Container",
+      type: "container",
       Component: <ContainerPlaceholder />,
       group: "layout",
     },
     {
-      id: "2Col",
-      label: "2 Columns",
-      Component: <TwoColumnsPlaceholder />,
-      group: "layout",
-    },
-    {
-      id: "blank",
-      label: "Blank",
+      type: "blank",
       Component: <BlankPlaceholder />,
       group: "layout",
     },
     {
-      id: "text",
-      label: "Text",
+      type: "logoBanner",
+      Component: <LogoBannerPlaceholder />,
+      group: "layout",
+    },
+    {
+      type: "text",
       Component: <TextPlaceholder />,
       group: "elements",
     },
     {
-      id: "image",
-      label: "Image",
+      type: "image",
       Component: <ImagePlaceholder />,
       group: "elements",
     },
     {
-      id: "kakaoMap",
-      label: "Map",
+      type: "kakaoMap",
       Component: <KakaoMapPlaceholder />,
       group: "elements",
     },
     {
-      id: "navigation",
-      label: "Navigation",
+      type: "navigation",
       Component: <NavigationPlaceholder />,
       group: "elements",
     },
     {
-      id: "logoBanner",
-      label: "Logo Banner",
-      Component: <LogoBannerPlaceholder />,
-      group: "elements",
-    },
-    {
-      id: "accordion",
-      label: "Accordion",
+      type: "accordion",
       Component: <AccordionPlaceholder />,
       group: "elements",
     },
@@ -107,12 +92,12 @@ export default function SidebarElementsTab(props: Props) {
             .filter((element) => element.group === "layout")
             .map((element) => (
               <div
-                key={element.id}
+                key={element.type}
                 className="flex flex-col items-center justify-center gap-1"
               >
                 {element.Component}
                 <span className="text-xs text-muted-foreground">
-                  {element.label}
+                  {getElementName(element.type)}
                 </span>
               </div>
             ))}
@@ -125,12 +110,12 @@ export default function SidebarElementsTab(props: Props) {
             .filter((element) => element.group === "elements")
             .map((element) => (
               <div
-                key={element.id}
+                key={element.type}
                 className="flex flex-col items-center justify-center gap-1"
               >
                 {element.Component}
                 <span className="text-xs text-muted-foreground">
-                  {element.label}
+                  {getElementName(element.type)}
                 </span>
               </div>
             ))}

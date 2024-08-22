@@ -39,7 +39,6 @@ export type EditorElement = {
   [K in EditorElementType]: {
     type: K;
     id: string;
-    name: string;
     styles: React.CSSProperties;
     content: EditorElementContentMap[K];
   };
