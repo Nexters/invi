@@ -113,6 +113,7 @@ export async function updateInvitation(params: UpdateInvitationParams) {
       .update(invitations)
       .set({
         ...updates,
+        ...(eventUrl && { eventUrl }),
         updatedAt: new Date(),
       })
       .where(eq(invitations.id, id));
