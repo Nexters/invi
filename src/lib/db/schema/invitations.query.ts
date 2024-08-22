@@ -1,7 +1,6 @@
 "use server";
 
 import { count, eq, getTableColumns } from "drizzle-orm";
-import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 import { getAuth } from "~/lib/auth/utils";
 import { db } from "~/lib/db";
