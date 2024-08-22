@@ -19,7 +19,7 @@ export default function InvitationItem({
           <img
             src={invitation.thumbnailUrl}
             alt={invitation.title}
-            className="transition-all"
+            className="h-full w-full object-cover transition-all"
           />
         )}
       </div>
