@@ -1,5 +1,6 @@
 "use client";
 
+import { debounce } from "es-toolkit";
 import { useCallback, useRef } from "react";
 import ContentEditable, {
   type ContentEditableEvent,
@@ -26,11 +27,7 @@ export default function Text({ element }: Props) {
   const text = useRef(sanitize(element.content.innerText));
 
   const handleChange = (e: ContentEditableEvent) => {
-    text.current = e.target.value;
-  };
-
-  const handleBlur = () => {
-    const textHtml = sanitize(text.current);
+    const textHtml = sanitize(e.target.value);
     dispatch({
       type: "UPDATE_ELEMENT",
       payload: {
@@ -50,8 +47,7 @@ export default function Text({ element }: Props) {
         className="w-full outline-none"
         disabled={editor.state.isPreviewMode}
         html={text.current}
-        onBlur={handleBlur}
-        onChange={handleChange}
+        onChange={debounce(handleChange, 500)}
       />
     </ElementWrapper>
   );
