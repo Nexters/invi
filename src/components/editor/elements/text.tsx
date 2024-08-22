@@ -31,7 +31,6 @@ export default function Text({ element }: Props) {
 
   const handleBlur = () => {
     const textHtml = sanitize(text.current);
-    text.current = textHtml;
     dispatch({
       type: "UPDATE_ELEMENT",
       payload: {
