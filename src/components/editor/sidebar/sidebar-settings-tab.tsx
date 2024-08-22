@@ -109,7 +109,7 @@ function CustomDomainSection() {
                 name={field.name}
                 value={field.state.value}
                 onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
+                onChange={(e) => field.handleChange(e.target.value.trim())}
                 className="pr-0.5 ring-1"
                 componentSuffix={
                   <div>
