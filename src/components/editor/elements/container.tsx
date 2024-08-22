@@ -14,10 +14,7 @@ export default function Container({ element }: Props) {
   return (
     <ElementWrapper
       element={element}
-      className={cn(
-        "h-fit w-full max-w-full ring-inset",
-        isRoot && "min-h-full",
-      )}
+      className={cn("h-fit w-full max-w-full", isRoot && "min-h-full")}
     >
       {Array.isArray(content) &&
         content.map((childElement) => (
