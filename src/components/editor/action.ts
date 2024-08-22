@@ -18,10 +18,18 @@ type EditorActionMap = {
     containerId: string;
     elementDetails: EditorElement;
   };
+  ADD_ELEMENT_NEAR_BY: {
+    elementId: string;
+    elementDetails: EditorElement;
+  };
   MOVE_ELEMENT: {
     elementId: string;
     newParentId: string;
     newIndex: number;
+  };
+  MOVE_ELEMENT_NEAR_BY: {
+    elementId: string;
+    targetId: string;
   };
   MOVE_ELEMENT_UP: {
     elementId: string;
@@ -49,6 +57,10 @@ type EditorActionMap = {
     device: DeviceType;
   };
   UPDATE_CONFIG: Partial<EditorConfig>;
+  /**
+   * elementId, empty string for not dragging
+   */
+  SET_DRAGGING: string;
   TOGGLE_PREVIEW_MODE: undefined;
   REDO: undefined;
   UNDO: undefined;
@@ -233,6 +245,32 @@ const actionHandlers: {
     return updateEditorHistory(editor, { elements }, newElement);
   },
 
+  ADD_ELEMENT_NEAR_BY: (editor, payload) => {
+    const targetId = payload.elementId;
+    const newElement = payload.elementDetails;
+
+    const addElementNearBy = (elements: EditorElement[]): EditorElement[] => {
+      return elements.reduce<EditorElement[]>((acc, element) => {
+        if (element.id === targetId) {
+          return [...acc, element, newElement];
+        }
+
+        if (Array.isArray(element.content)) {
+          const updatedContent = addElementNearBy(element.content);
+          return [
+            ...acc,
+            { ...element, content: updatedContent } as EditorElement,
+          ];
+        }
+        return [...acc, element];
+      }, []);
+    };
+
+    const newElements = addElementNearBy(editor.data.elements);
+
+    return updateEditorHistory(editor, { elements: newElements }, newElement);
+  },
+
   MOVE_ELEMENT: (editor, payload) => {
     const { elementId, newParentId, newIndex } = payload;
 
@@ -263,6 +301,36 @@ const actionHandlers: {
       { elements: newElements },
       removedElement,
     );
+  },
+
+  MOVE_ELEMENT_NEAR_BY: (editor, payload) => {
+    const { elementId, targetId } = payload;
+
+    if (targetId === "__body") {
+      const bodyContents = editor.data.elements[0].content as EditorElement[];
+
+      return actionHandlers.MOVE_ELEMENT(editor, {
+        elementId,
+        newParentId: targetId,
+        newIndex: bodyContents.length,
+      });
+    }
+
+    const [_, targetParent, targetIndex] = findElementAndParent(
+      editor.data.elements,
+      targetId,
+    );
+
+    if (!targetParent) {
+      console.error("Target parent not found");
+      return editor;
+    }
+
+    return actionHandlers.MOVE_ELEMENT(editor, {
+      elementId,
+      newParentId: targetParent.id,
+      newIndex: targetIndex + 1,
+    });
   },
 
   MOVE_ELEMENT_UP: (editor, payload) => {
@@ -348,21 +416,32 @@ const actionHandlers: {
   },
 
   DUPLICATE_ELEMENT: (editor, payload) => {
-    const containerId = findParentId(
+    const [targetElement, parent, targetIndex] = findElementAndParent(
       editor.data.elements,
       payload.elementDetails.id,
     );
 
-    if (!containerId) {
+    if (!parent || targetIndex === -1) {
       return editor;
     }
 
     const newElement = deepCloneElement(payload.elementDetails);
 
-    return actionHandlers.ADD_ELEMENT(editor, {
-      containerId,
-      elementDetails: newElement,
+    const elements = traverseElements(editor.data.elements, (element) => {
+      if (element.id === parent.id && Array.isArray(element.content)) {
+        return {
+          ...element,
+          content: [
+            ...element.content.slice(0, targetIndex + 1),
+            newElement,
+            ...element.content.slice(targetIndex + 1),
+          ],
+        } as EditorElement;
+      }
+      return element;
     });
+
+    return updateEditorHistory(editor, { elements }, newElement);
   },
 
   CHANGE_CLICKED_ELEMENT: (editor, payload) => {
@@ -408,6 +487,17 @@ const actionHandlers: {
       config: {
         ...editor.config,
         ...payload,
+      },
+    };
+  },
+
+  SET_DRAGGING: (editor, payload) => {
+    return {
+      ...editor,
+      state: {
+        ...editor.state,
+        isDragging: !!payload,
+        draggedElementId: payload,
       },
     };
   },

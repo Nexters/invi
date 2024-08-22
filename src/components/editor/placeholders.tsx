@@ -6,6 +6,7 @@ import {
   NavigationIcon,
   TypeIcon,
 } from "lucide-react";
+import { useEditor } from "~/components/editor/provider";
 import type { EditorElementType } from "~/components/editor/type";
 import { LogoTextIcon } from "~/components/ui/icons";
 import { cn } from "~/lib/utils";
@@ -17,15 +18,26 @@ type PlaceholderProps = {
 };
 
 function Placeholder({ type, children, className }: PlaceholderProps) {
+  const { dispatch } = useEditor();
+
   const handleDragStart = (e: React.DragEvent) => {
     if (type === null) return;
+
+    e.dataTransfer.setData("action", "add");
     e.dataTransfer.setData("componentType", type);
+    dispatch({ type: "SET_DRAGGING", payload: "ghost" });
+    dispatch({ type: "CHANGE_CLICKED_ELEMENT", payload: {} });
+  };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    dispatch({ type: "SET_DRAGGING", payload: "" });
   };
 
   return (
     <div
       draggable
       onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
       className={cn(
         "flex h-14 w-14 cursor-grab items-center justify-center gap-1 rounded-lg bg-muted/70 p-2 text-muted-foreground active:cursor-grabbing",
         className,
