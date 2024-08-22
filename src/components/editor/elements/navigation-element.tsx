@@ -34,7 +34,9 @@ export default function NavigationElement({ element, className }: Props) {
   const handleCopy = async (text: string) => {
     await copyTextAsync(text);
     toast("복사되었습니다.", {
+      description: text,
       duration: 2000,
+      position: "top-center",
       style: {
         backgroundColor: "black",
         opacity: 0.9,
