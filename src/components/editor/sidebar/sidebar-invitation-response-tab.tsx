@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useEditor } from "~/components/editor/provider";
 import {
   SheetDescription,
@@ -7,6 +8,7 @@ import {
   SheetTitle,
 } from "~/components/ui/sheet";
 import { Switch } from "~/components/ui/switch";
+import { getInvitationResponseById } from "~/lib/db/schema/invitation_response.query";
 
 export default function SidebarInvitationResponseTab() {
   const { editor, dispatch } = useEditor();
@@ -50,6 +52,17 @@ export default function SidebarInvitationResponseTab() {
 }
 
 function InvitationResponseContent() {
+  const { editor, dispatch } = useEditor();
+  const [invitationResponse, setInvitationResponse] = useState();
+  useEffect(() => {
+    (async () => {
+      setInvitationResponse(
+        await getInvitationResponseById(editor.config.invitationId),
+      );
+    })();
+    console.log(invitationResponse);
+  }, [invitationResponse]);
+
   return (
     <div className="grid w-full grid-cols-9 gap-1 border-t p-6">
       <div className="col-span-9"></div>

@@ -1,15 +1,19 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Drawer } from "vaul";
 import AttendanceFalseDefault from "~/assets/attendance/attendance-false-default.svg";
-import AttendanceTrueDefault from "~/assets/attendance/attendance-true-deafult.svg";
+import AttendanceTrueDefault from "~/assets/attendance/attendance-true-default.svg";
 import ImageRadio from "~/components/editor/fab/image-radio";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
+import { createInvitationResponses } from "~/lib/db/schema/invitation_response.query";
+import { getInvitationByEventUrl } from "~/lib/db/schema/invitations.query";
 
 export default function InvitationResponseFab() {
   return (
@@ -31,6 +35,21 @@ export default function InvitationResponseFab() {
 }
 
 function InvitationResponseForm() {
+  const params = useParams<{ subdomain: string }>();
+  const [invitationId, setInvitationId] = useState<string>("");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        console.log(params.subdomain);
+        const invitation = await getInvitationByEventUrl(params.subdomain);
+        return setInvitationId(invitation.id);
+      } catch (error) {
+        console.error("Failed to fetch invitation:", error);
+      }
+    })();
+  }, []);
+
   const form = useForm({
     defaultValues: {
       name: "",
@@ -38,8 +57,11 @@ function InvitationResponseForm() {
     },
     onSubmit: async ({ value }) => {
       const { name, attendance } = value;
-      console.log(name, attendance);
-      // await createInvitationResponses(name, attendance as unknown as boolean);
+      await createInvitationResponses({
+        invitation_id: invitationId,
+        participant_name: name,
+        attendance: attendance,
+      });
       toast("참여가 완료되었습니다.", { duration: 2000 });
     },
   });
