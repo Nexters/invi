@@ -107,7 +107,7 @@ export default function ElementHelper() {
     if (element.id === "__body") return;
 
     const elementDom = document.querySelector(
-      `[data-element-id=${element.id}]`,
+      `[data-element-id="${element.id}"]`,
     );
     if (elementDom) {
       e.dataTransfer.setDragImage(elementDom, 0, 0);
