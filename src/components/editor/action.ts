@@ -18,6 +18,10 @@ type EditorActionMap = {
     containerId: string;
     elementDetails: EditorElement;
   };
+  ADD_ELEMENT_NEAR_BY: {
+    elementId: string;
+    elementDetails: EditorElement;
+  };
   MOVE_ELEMENT: {
     elementId: string;
     newParentId: string;
@@ -228,6 +232,32 @@ const actionHandlers: {
     });
 
     return updateEditorHistory(editor, { elements }, newElement);
+  },
+
+  ADD_ELEMENT_NEAR_BY: (editor, payload) => {
+    const targetId = payload.elementId;
+    const newElement = payload.elementDetails;
+
+    const addElementNearBy = (elements: EditorElement[]): EditorElement[] => {
+      return elements.reduce<EditorElement[]>((acc, element) => {
+        if (element.id === targetId) {
+          return [...acc, element, newElement];
+        }
+
+        if (Array.isArray(element.content)) {
+          const updatedContent = addElementNearBy(element.content);
+          return [
+            ...acc,
+            { ...element, content: updatedContent } as EditorElement,
+          ];
+        }
+        return [...acc, element];
+      }, []);
+    };
+
+    const newElements = addElementNearBy(editor.data.elements);
+
+    return updateEditorHistory(editor, { elements: newElements }, newElement);
   },
 
   MOVE_ELEMENT: (editor, payload) => {

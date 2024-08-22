@@ -103,6 +103,20 @@ export default function ElementHelper() {
     });
   };
 
+  const handleDragStart = (e: React.DragEvent) => {
+    if (element.id === "__body") return;
+
+    const elementDom = document.querySelector(
+      `[data-element-id=${element.id}]`,
+    );
+    if (elementDom) {
+      e.dataTransfer.setDragImage(elementDom, 0, 0);
+    }
+
+    e.dataTransfer.setData("action", "move");
+    e.dataTransfer.setData("elementId", element.id);
+  };
+
   return (
     typeof window !== "undefined" &&
     createPortal(
@@ -142,6 +156,8 @@ export default function ElementHelper() {
                 <IconButton
                   className="cursor-grab"
                   onClick={(e) => e.stopPropagation()}
+                  draggable
+                  onDragStart={handleDragStart}
                 >
                   <GripVerticalIcon className="h-4 w-4" />
                 </IconButton>

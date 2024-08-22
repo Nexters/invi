@@ -10,7 +10,7 @@ type Props = {
 
 export default function ImageElement({ element }: Props) {
   return (
-    <ElementWrapper element={element}>
+    <ElementWrapper element={element} className="flex-shrink-0">
       {element.content.src ? (
         <img
           className="h-full w-full select-none object-cover"
