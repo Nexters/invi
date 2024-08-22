@@ -257,7 +257,9 @@ function SEOSection() {
               />
             )}
             <div className="bg-white p-2.5 text-sm">
-              <div>{editor.config.invitationTitle}</div>
+              <div className="text-neutral-900">
+                {editor.config.invitationTitle}
+              </div>
               <div className="text-xs text-neutral-400">
                 {editor.config.invitationDesc}
               </div>

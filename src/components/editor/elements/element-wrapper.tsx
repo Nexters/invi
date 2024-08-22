@@ -55,7 +55,7 @@ export default function ElementWrapper({
         className={cn(
           "relative w-full ring-inset transition",
           !editor.state.isPreviewMode && [
-            "hover:ring-1 hover:ring-border",
+            "hover:ring-2 hover:ring-border",
             editor.state.isDragging && "ring-1 ring-border",
           ],
           className,

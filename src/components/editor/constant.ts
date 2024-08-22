@@ -32,13 +32,14 @@ export const bodyElement: InferEditorElement<"__body"> = {
 
 export const containerDefaultStyles: React.CSSProperties = {
   display: "flex",
+  flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
   gap: 10,
-  paddingTop: 10,
-  paddingRight: 10,
-  paddingBottom: 10,
-  paddingLeft: 10,
+  paddingTop: 20,
+  paddingRight: 24,
+  paddingBottom: 20,
+  paddingLeft: 24,
   width: "100%",
   height: "auto",
 };
@@ -72,7 +73,7 @@ export const blankElement: InferEditorElement<"blank"> = {
   id: "__blank",
   type: "blank",
   styles: {
-    height: 32,
+    height: "32px",
   },
   content: [],
 };
@@ -161,8 +162,8 @@ export const accordionElement: InferEditorElement<"accordion"> = {
         gap: 0,
         paddingTop: 10,
         paddingRight: 10,
-        paddingBottom: 10,
-        paddingLeft: 10,
+        paddingBottom: 24,
+        paddingLeft: 24,
       },
       content: [
         {
