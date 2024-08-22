@@ -107,7 +107,9 @@ export async function updateInvitation(params: UpdateInvitationParams) {
   }
 
   try {
-    const existingInvitation = await getInvitationById(id);
+    if (eventUrl) {
+      const existingInvitation = await getInvitationById(id);
+    }
 
     await db
       .update(invitations)
