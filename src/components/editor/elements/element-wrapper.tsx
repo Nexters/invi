@@ -136,13 +136,24 @@ const useDropzone = ({ element }: { element: EditorElement }) => {
           return;
         }
 
-        dispatch({
-          type: "MOVE_ELEMENT_NEAR_BY",
-          payload: {
-            elementId,
-            targetId: element.id,
-          },
-        });
+        if (isContainer) {
+          dispatch({
+            type: "MOVE_ELEMENT",
+            payload: {
+              elementId,
+              newParentId: element.id,
+              newIndex: (element.content as EditorElement[]).length,
+            },
+          });
+        } else {
+          dispatch({
+            type: "MOVE_ELEMENT_NEAR_BY",
+            payload: {
+              elementId,
+              targetId: element.id,
+            },
+          });
+        }
         break;
     }
   };
