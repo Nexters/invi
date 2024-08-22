@@ -1,8 +1,8 @@
 "use client";
 
-import { format } from "date-fns";
 import Link from "next/link";
 import type { Invitation } from "~/lib/db/schema/invitations";
+import { formatDuration } from "~/lib/utils";
 
 export default function InvitationItem({
   invitation,
@@ -28,7 +28,7 @@ export default function InvitationItem({
           {invitation.title}
         </div>
         <div className="text-left text-sm leading-none tracking-tight text-muted-foreground">
-          {format(invitation.updatedAt, "yyyy.MM.dd")} 수정됨
+          {formatDuration(invitation.updatedAt)} 수정됨
         </div>
       </div>
     </Link>
