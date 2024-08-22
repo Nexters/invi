@@ -1,10 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import InvitationItem from "~/app/(main)/dashboard/invitation-item";
 import TemplateItem from "~/app/(main)/dashboard/template-item";
 import ProfileDropDown from "~/components/profile-dropdown";
 import ThemeDropdown from "~/components/theme-dropdown";
-import { LogoTextIcon } from "~/components/ui/icons";
 import { getAuth } from "~/lib/auth/utils";
 import { getInvitationsByAuth } from "~/lib/db/schema/invitations.query";
 import { getAllTemplates } from "~/lib/db/schema/templates.query";
@@ -42,7 +42,7 @@ export default async function Page() {
       {/* header */}
       <header className="sticky inset-x-0 top-0 z-50 mx-auto flex h-20 w-full max-w-7xl items-center bg-background/70 px-7 backdrop-blur sm:px-14">
         <Link className="flex items-center justify-center" href="/">
-          <LogoTextIcon />
+          <Image src="/landing-logo.png" alt="logo" width={85} height={29} />
           <span className="sr-only">Invi</span>
         </Link>
         <nav className="ml-auto flex items-center gap-3">
