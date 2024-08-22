@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useEditor } from "~/components/editor/provider";
 import type { InferEditorElement } from "~/components/editor/type";
 
 type Props = {
@@ -17,6 +18,8 @@ export default function KakaoMapElement({
   latitude,
   longitude,
 }: Props) {
+  const { editor } = useEditor();
+
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
@@ -51,14 +54,8 @@ export default function KakaoMapElement({
     if (window.kakao && window.kakao.maps) {
       window.kakao.maps.load(initializeMap);
     }
-  }, [
-    addCenterPin,
-    elementContent.location.latitude,
-    elementContent.location.longitude,
-    latitude,
-    level,
-    longitude,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (mapInstanceRef.current) {
@@ -72,11 +69,8 @@ export default function KakaoMapElement({
         markerRef.current.setPosition(newCenter);
       }
     }
-  }, [
-    addCenterPin,
-    elementContent.location.latitude,
-    elementContent.location.longitude,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [elementContent]);
 
   return (
     <div className={"relative h-[250px] w-full"}>
