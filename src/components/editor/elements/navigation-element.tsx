@@ -2,6 +2,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import ElementWrapper from "~/components/editor/elements/element-wrapper";
 import type { InferEditorElement } from "~/components/editor/type";
+import { cn } from "~/lib/utils";
 
 type MapType = "naver" | "kakao";
 type MapUrls = Record<MapType, string>;
@@ -45,7 +46,10 @@ export default function NavigationElement({ element, className }: Props) {
   };
 
   return (
-    <ElementWrapper element={element} className={className}>
+    <ElementWrapper
+      element={element}
+      className={cn("flex items-center justify-center gap-2", className)}
+    >
       <button onClick={() => openMap("naver", address)}>
         <Image
           src="/naver-map.png"
