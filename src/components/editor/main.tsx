@@ -51,9 +51,7 @@ export default function EditorMain() {
         {editor.data.elements.map((childElement) => (
           <Recursive key={childElement.id} element={childElement} />
         ))}
-        <div className={"absolute bottom-[12%] h-fit w-full"}>
-          <FloatingActionButton />
-        </div>
+        <FloatingActionButton />
       </ScrollArea>
       <ElementHelper />
     </div>
