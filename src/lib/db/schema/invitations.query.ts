@@ -120,7 +120,9 @@ export async function updateInvitation(params: UpdateInvitationParams) {
 
     if (eventUrl && eventUrl !== existingInvitation.eventUrl) {
       revalidatePath(`/i/${eventUrl}`);
+      revalidatePath(`/i/${eventUrl}/edit`);
       revalidatePath(`/i/${existingInvitation.eventUrl}`);
+      revalidatePath(`/i/${existingInvitation.eventUrl}/edit`);
     } else {
       revalidatePath(`/i/${existingInvitation.eventUrl}`);
     }
