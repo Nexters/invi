@@ -143,9 +143,7 @@ export default function EditorNavigation() {
       </aside>
       <aside className="flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <TooltipSimple text="테마">
-            <ThemeDropdown />
-          </TooltipSimple>
+          <ThemeDropdown />
           <TooltipSimple text="미리보기">
             <Button variant="ghost" size="icon" onClick={handlePreviewClick}>
               <EyeIcon />
