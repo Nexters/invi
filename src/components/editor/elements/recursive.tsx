@@ -1,3 +1,4 @@
+import AccordionElement from "~/components/editor/elements/accordion-element";
 import BlankElement from "~/components/editor/elements/blank-element";
 import Container from "~/components/editor/elements/container";
 import ImageElement from "~/components/editor/elements/image-element";
@@ -25,6 +26,8 @@ export default function Recursive({ element }: { element: EditorElement }) {
       return <NavigationElement element={element} />;
     case "logoBanner":
       return <LogoBannerElement element={element} />;
+    case "accordion":
+      return <AccordionElement element={element} />;
     default:
       return null;
   }

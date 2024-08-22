@@ -24,6 +24,13 @@ type EditorElementContentMap = {
   blank: {};
   empty: {};
   logoBanner: {};
+  accordion: {
+    triggerText?: string;
+    triggerStyle?: React.CSSProperties;
+    containerStyle?: React.CSSProperties;
+    contentStyle?: React.CSSProperties;
+    innerContainer: InferEditorElement<"container">;
+  };
 };
 
 export type EditorElementType = keyof EditorElementContentMap;

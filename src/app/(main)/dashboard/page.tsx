@@ -21,8 +21,20 @@ export default async function Page() {
     return redirect("/sign-in");
   }
 
-  const templates = await getAllTemplates();
-  const invitations = await getInvitationsByAuth();
+  const [templates, invitations] = await Promise.all([
+    getAllTemplates(),
+    getInvitationsByAuth(),
+  ]);
+
+  const sortByUpdatedAtDescending = (
+    a: { updatedAt: string | Date | number },
+    b: { updatedAt: string | Date | number },
+  ) => {
+    return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+  };
+
+  const sortedTemplates = templates.toSorted(sortByUpdatedAtDescending);
+  const sortedInvitations = invitations.toSorted(sortByUpdatedAtDescending);
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
@@ -49,13 +61,13 @@ export default async function Page() {
               </div>
             </div>
             <div className="mt-9 grid grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
-              {templates.map((template) => (
+              {sortedTemplates.map((template) => (
                 <TemplateItem key={template.id} template={template} />
               ))}
             </div>
           </div>
           {/* 초대장 목록 */}
-          {!!invitations.length && (
+          {!!sortedInvitations.length && (
             <div className="mx-auto max-w-7xl p-14">
               <div className="relative flex items-start justify-between gap-4">
                 <div className="flex w-full max-w-[80ch] flex-col gap-3">
@@ -65,7 +77,7 @@ export default async function Page() {
                 </div>
               </div>
               <div className="mt-9 grid grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
-                {invitations.map((invitation) => (
+                {sortedInvitations.map((invitation) => (
                   <InvitationItem key={invitation.id} invitation={invitation} />
                 ))}
               </div>

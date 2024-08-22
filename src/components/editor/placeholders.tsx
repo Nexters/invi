@@ -1,5 +1,6 @@
 import {
   BoxSelectIcon,
+  ChevronsDownUpIcon,
   ImageIcon,
   MapIcon,
   NavigationIcon,
@@ -26,7 +27,7 @@ function Placeholder({ type, children, className }: PlaceholderProps) {
       draggable
       onDragStart={handleDragStart}
       className={cn(
-        "flex h-14 w-14 cursor-grab items-center justify-center gap-1 rounded-lg bg-muted/70 p-2 active:cursor-grabbing",
+        "flex h-14 w-14 cursor-grab items-center justify-center gap-1 rounded-lg bg-muted/70 p-2 text-muted-foreground active:cursor-grabbing",
         className,
       )}
     >
@@ -63,7 +64,7 @@ export function ContainerPlaceholder() {
 export function ImagePlaceholder() {
   return (
     <Placeholder type="image">
-      <ImageIcon size={40} className="text-muted-foreground" />{" "}
+      <ImageIcon className="size-8" />
     </Placeholder>
   );
 }
@@ -71,7 +72,7 @@ export function ImagePlaceholder() {
 export function NavigationPlaceholder() {
   return (
     <Placeholder type="navigation">
-      <NavigationIcon size={40} className="text-muted-foreground" />
+      <NavigationIcon className="size-8" />
     </Placeholder>
   );
 }
@@ -79,7 +80,7 @@ export function NavigationPlaceholder() {
 export function KakaoMapPlaceholder() {
   return (
     <Placeholder type="kakaoMap">
-      <MapIcon size={40} className="text-muted-foreground" />
+      <MapIcon className="size-8" />
     </Placeholder>
   );
 }
@@ -87,7 +88,7 @@ export function KakaoMapPlaceholder() {
 export function BlankPlaceholder() {
   return (
     <Placeholder type="blank">
-      <BoxSelectIcon size={40} className="text-muted-foreground" />
+      <BoxSelectIcon className="size-8" />
     </Placeholder>
   );
 }
@@ -95,7 +96,15 @@ export function BlankPlaceholder() {
 export function LogoBannerPlaceholder() {
   return (
     <Placeholder type="logoBanner">
-      <LogoTextIcon className="h-8 text-muted-foreground" />
+      <LogoTextIcon className="size-8" />
+    </Placeholder>
+  );
+}
+
+export function AccordionPlaceholder() {
+  return (
+    <Placeholder type="accordion">
+      <ChevronsDownUpIcon className="size-8" />
     </Placeholder>
   );
 }

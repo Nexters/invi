@@ -19,8 +19,10 @@ type CreateInvitationParams = Omit<
 type UpdateInvitationParams = {
   id: Invitation["id"];
   title?: Invitation["title"];
+  description?: Invitation["description"];
   customFields?: Invitation["customFields"];
   eventUrl?: Invitation["eventUrl"];
+  thumbnailUrl?: Invitation["thumbnailUrl"];
 };
 
 export async function getAllInvitations() {

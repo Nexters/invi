@@ -199,6 +199,53 @@ export default function Container({ element }: Props) {
           },
         });
         break;
+      case "accordion":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              type: "accordion",
+              id: nanoid(),
+              name: "Accordion",
+              styles: {},
+              content: {
+                triggerText: "제목",
+                triggerStyle: {
+                  color: "#09090B",
+                },
+                containerStyle: {
+                  backgroundColor: "#F4F4F5",
+                },
+                innerContainer: {
+                  type: "container",
+                  id: nanoid(),
+                  name: "Container",
+                  styles: {
+                    ...containerDefaultStyles,
+                    paddingLeft: 24,
+                    paddingRight: 24,
+                    paddingTop: 12,
+                    paddingBottom: 12,
+                    color: "#09090B",
+                  },
+                  content: [
+                    {
+                      type: "text",
+                      id: nanoid(),
+                      name: "Text",
+                      styles: {
+                        ...textDefaultStyles,
+                      },
+                      content: { innerText: "여기에 내용을 입력하세요." },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        });
+        break;
     }
   };
 
@@ -210,7 +257,7 @@ export default function Container({ element }: Props) {
         isRoot && "min-h-full",
         !isRoot &&
           !editor.state.isPreviewMode &&
-          "ring-1 ring-muted hover:ring-border",
+          "hover:ring-1 hover:ring-border",
       )}
       onDrop={handleDrop}
       onDragStart={handleDragStart}
