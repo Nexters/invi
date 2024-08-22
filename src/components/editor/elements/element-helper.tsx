@@ -152,34 +152,38 @@ export default function ElementHelper() {
             >
               {element.name}
             </Badge>
-            <div className="absolute -left-[28px] -top-[1px] z-10">
-              <div className="flex flex-col gap-0.5">
-                <IconButton
-                  className="cursor-grab"
-                  onClick={(e) => e.stopPropagation()}
-                  draggable
-                  onDragStart={handleDragStart}
-                >
-                  <GripVerticalIcon className="h-4 w-4" />
-                </IconButton>
-                <IconButton onClick={handleMoveUp}>
-                  <ArrowUpIcon className="h-4 w-4" />
-                </IconButton>
-                <IconButton onClick={handleMoveDown}>
-                  <ArrowDownIcon className="h-4 w-4" />
-                </IconButton>
+            {element.type !== "__body" && (
+              <div className="absolute -left-[28px] -top-[1px] z-10">
+                <div className="flex flex-col gap-0.5">
+                  <IconButton
+                    className="cursor-grab"
+                    onClick={(e) => e.stopPropagation()}
+                    draggable
+                    onDragStart={handleDragStart}
+                  >
+                    <GripVerticalIcon className="h-4 w-4" />
+                  </IconButton>
+                  <IconButton onClick={handleMoveUp}>
+                    <ArrowUpIcon className="h-4 w-4" />
+                  </IconButton>
+                  <IconButton onClick={handleMoveDown}>
+                    <ArrowDownIcon className="h-4 w-4" />
+                  </IconButton>
+                </div>
               </div>
-            </div>
-            <div className="absolute -right-[28px] -top-[1px] z-10">
-              <div className="flex flex-col gap-0.5">
-                <IconButton onClick={handleDeleteElement}>
-                  <Trash2Icon className="h-4 w-4" />
-                </IconButton>
-                <IconButton onClick={handleDuplicateElement}>
-                  <CopyPlusIcon className="h-4 w-4" />
-                </IconButton>
+            )}
+            {element.type !== "__body" && (
+              <div className="absolute -right-[28px] -top-[1px] z-10">
+                <div className="flex flex-col gap-0.5">
+                  <IconButton onClick={handleDeleteElement}>
+                    <Trash2Icon className="h-4 w-4" />
+                  </IconButton>
+                  <IconButton onClick={handleDuplicateElement}>
+                    <CopyPlusIcon className="h-4 w-4" />
+                  </IconButton>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         ),
       document.body,
