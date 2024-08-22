@@ -27,6 +27,10 @@ type EditorActionMap = {
     newParentId: string;
     newIndex: number;
   };
+  MOVE_ELEMENT_NEAR_BY: {
+    elementId: string;
+    targetId: string;
+  };
   MOVE_ELEMENT_UP: {
     elementId: string;
   };
@@ -293,6 +297,36 @@ const actionHandlers: {
       { elements: newElements },
       removedElement,
     );
+  },
+
+  MOVE_ELEMENT_NEAR_BY: (editor, payload) => {
+    const { elementId, targetId } = payload;
+
+    if (targetId === "__body") {
+      const bodyContents = editor.data.elements[0].content as EditorElement[];
+
+      return actionHandlers.MOVE_ELEMENT(editor, {
+        elementId,
+        newParentId: targetId,
+        newIndex: bodyContents.length,
+      });
+    }
+
+    const [_, targetParent, targetIndex] = findElementAndParent(
+      editor.data.elements,
+      targetId,
+    );
+
+    if (!targetParent) {
+      console.error("Target parent not found");
+      return editor;
+    }
+
+    return actionHandlers.MOVE_ELEMENT(editor, {
+      elementId,
+      newParentId: targetParent.id,
+      newIndex: targetIndex + 1,
+    });
   },
 
   MOVE_ELEMENT_UP: (editor, payload) => {

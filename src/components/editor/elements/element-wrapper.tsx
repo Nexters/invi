@@ -129,17 +129,16 @@ const useDropzone = ({ element }: { element: EditorElement }) => {
         }
         break;
       case "move":
-        const targetId = e.dataTransfer.getData("elementId");
-        if (targetId === element.id) {
+        const elementId = e.dataTransfer.getData("elementId");
+        if (elementId === element.id) {
           return;
         }
 
         dispatch({
-          type: "MOVE_ELEMENT",
+          type: "MOVE_ELEMENT_NEAR_BY",
           payload: {
-            elementId: targetId,
-            newParentId: element.id,
-            newIndex: 0,
+            elementId,
+            targetId: element.id,
           },
         });
         break;
