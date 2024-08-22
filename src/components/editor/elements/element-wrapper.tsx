@@ -96,6 +96,7 @@ const useDropzone = ({ element }: { element: EditorElement }) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDraggingOver(false);
+    dispatch({ type: "SET_DRAGGING", payload: "" });
 
     const action = e.dataTransfer.getData("action");
 
