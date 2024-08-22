@@ -2,6 +2,8 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ThemeProvider } from "next-themes";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import GlobalLoading from "~/components/gloabl-loading";
 import { GlobalAlert } from "~/components/global-alert";
@@ -41,12 +43,24 @@ export default function Providers({ children }: { children: ReactNode }) {
   //       render if it suspends and there is no boundary
   const queryClient = getQueryClient();
 
+  const pathname = usePathname();
+  const forcedThemeFromPathname =
+    pathname === "/" || pathname === "/sign-in" ? "light" : undefined;
+
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>{children}</TooltipProvider>
-      <Toaster />
-      <GlobalAlert />
-      <GlobalLoading />
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+        forcedTheme={forcedThemeFromPathname}
+      >
+        <TooltipProvider>{children}</TooltipProvider>
+        <Toaster />
+        <GlobalAlert />
+        <GlobalLoading />
+      </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
