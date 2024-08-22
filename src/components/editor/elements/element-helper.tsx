@@ -154,7 +154,7 @@ export default function ElementHelper() {
               className="absolute right-0 top-0 z-10 w-[1px] bg-primary"
             />
             <Badge
-              className="absolute -left-[1px] -top-[26px] z-10"
+              className="absolute -left-[1px] -top-[26px] z-10 truncate"
               onClick={(e) => e.stopPropagation()}
             >
               {getElementName(element.type)}
