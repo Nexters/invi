@@ -8,9 +8,10 @@ type MapUrls = Record<MapType, string>;
 
 type Props = {
   element: InferEditorElement<"navigation">;
+  className?: string;
 };
 
-export default function NavigationElement({ element }: Props) {
+export default function NavigationElement({ element, className }: Props) {
   const { address } = element.content;
 
   const openMap = (mapType: MapType, address: string) => {
@@ -44,7 +45,7 @@ export default function NavigationElement({ element }: Props) {
   };
 
   return (
-    <ElementWrapper element={element}>
+    <ElementWrapper element={element} className={className}>
       <button onClick={() => openMap("naver", address)}>
         <Image
           src="/naver-map.png"

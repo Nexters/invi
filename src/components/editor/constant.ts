@@ -118,7 +118,7 @@ export const kakaoMapElement: InferEditorElement<"kakaoMap"> = {
     },
     address: "서울 중구 세종대로 110 서울특별시청",
     isMapUse: true,
-    isShareUse: true,
+    isShareUse: false,
   },
 };
 
