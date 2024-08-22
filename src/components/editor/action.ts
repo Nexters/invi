@@ -449,7 +449,9 @@ const actionHandlers: {
 
     const newTabValue = isValidSelect
       ? editorTabValue.ELEMENT_SETTINGS
-      : editor.state.currentTabValue;
+      : editor.state.currentTabValue === editorTabValue.ELEMENT_SETTINGS
+        ? editorTabValue.ELEMENTS
+        : editor.state.currentTabValue;
 
     return {
       ...editor,
