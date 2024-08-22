@@ -10,13 +10,35 @@ import { Switch } from "~/components/ui/switch";
 
 export default function SidebarInvitationResponseTab() {
   const { editor, dispatch } = useEditor();
+  const fabType = editor.data.fab.type;
+
+  const handleClickFabSwitch = () => {
+    if (fabType === "invitation_response") {
+      dispatch({
+        type: "UPDATE_FAB_STATE",
+        payload: {
+          type: "",
+        },
+      });
+    } else {
+      dispatch({
+        type: "UPDATE_FAB_STATE",
+        payload: {
+          type: "invitation_response",
+        },
+      });
+    }
+  };
 
   return (
     <div className="w-full border-b">
       <SheetHeader className="p-6">
         <div className="flex items-center justify-between">
           <SheetTitle>초대 응답 설정</SheetTitle>
-          <Switch />
+          <Switch
+            defaultChecked={editor.data.fab.type === "invitation_response"}
+            onClick={handleClickFabSwitch}
+          />
         </div>
         <SheetDescription>
           이벤트에 대한 초대 응답 설정을 관리합니다.
