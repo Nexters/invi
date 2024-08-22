@@ -1,5 +1,5 @@
-import { PlusIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { PlusIcon } from "lucide-react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import type {
@@ -18,16 +18,21 @@ export default function ElementWrapper({
   element,
   children,
   className,
-  parentId,
   ...props
 }: Props) {
   const { editor, dispatch } = useEditor();
   const isContainer = isContainerElement(element);
 
-  const { isDraggingOver, ...dropzoneProps } = useDropzone({
-    element,
-    parentId,
-  });
+  const { isDraggingOver, ...dropzoneProps } = useDropzone({ element });
+  const isDropzoneActive = useMemo(() => {
+    return (
+      isDraggingOver &&
+      editor.state.isDragging &&
+      editor.state.draggedElementId !== element.id
+    );
+  }, [isDraggingOver, editor.state]);
+  const isMoveMode =
+    editor.state.isDragging && editor.state.draggedElementId !== "ghost";
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -58,24 +63,18 @@ export default function ElementWrapper({
         onClick={handleClick}
       >
         {children}
-        {editor.state.isDragging && isDraggingOver && isContainer && (
-          <Dropzone {...dropzoneProps} />
+        {isDropzoneActive && isContainer && (
+          <Dropzone {...dropzoneProps} isMoveMode={isMoveMode} />
         )}
       </div>
-      {editor.state.isDragging && isDraggingOver && !isContainer && (
-        <Dropzone {...dropzoneProps} />
+      {isDropzoneActive && !isContainer && (
+        <Dropzone {...dropzoneProps} isMoveMode={isMoveMode} />
       )}
     </>
   );
 }
 
-const useDropzone = ({
-  element,
-  parentId,
-}: {
-  element: EditorElement;
-  parentId?: string;
-}) => {
+const useDropzone = ({ element }: { element: EditorElement }) => {
   const { dispatch } = useEditor();
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const isContainer = isContainerElement(element);
@@ -155,13 +154,16 @@ const useDropzone = ({
   };
 };
 
-function Dropzone(props: React.ComponentProps<"div">) {
+function Dropzone({
+  isMoveMode,
+  ...props
+}: React.ComponentProps<"div"> & { isMoveMode?: boolean }) {
   return (
     <div
       {...props}
-      className="flex h-full min-h-4 w-full items-center justify-center border bg-muted p-2 text-muted-foreground"
+      className="flex h-full min-h-12 w-full items-center justify-center bg-border p-2 text-muted-foreground"
     >
-      <PlusIcon />
+      {!isMoveMode && <PlusIcon className="size-4" strokeWidth={3} />}
     </div>
   );
 }

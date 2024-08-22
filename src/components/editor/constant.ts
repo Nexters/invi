@@ -211,6 +211,7 @@ export const initialEditorState: EditorState = {
   device: "Mobile",
   isPreviewMode: false,
   isDragging: false,
+  draggedElementId: "",
 };
 
 export const initialEditorHistory: EditorHistory = {

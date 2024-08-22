@@ -25,12 +25,12 @@ function Placeholder({ type, children, className }: PlaceholderProps) {
 
     e.dataTransfer.setData("action", "add");
     e.dataTransfer.setData("componentType", type);
-    dispatch({ type: "SET_DRAGGING", payload: true });
+    dispatch({ type: "SET_DRAGGING", payload: "ghost" });
     dispatch({ type: "CHANGE_CLICKED_ELEMENT", payload: {} });
   };
 
   const handleDragEnd = (e: React.DragEvent) => {
-    dispatch({ type: "SET_DRAGGING", payload: false });
+    dispatch({ type: "SET_DRAGGING", payload: "" });
   };
 
   return (

@@ -56,6 +56,7 @@ export type EditorState = {
   device: DeviceType;
   isPreviewMode: boolean;
   isDragging: boolean;
+  draggedElementId: string;
 };
 
 export type EditorData = {

@@ -115,6 +115,7 @@ export default function ElementHelper() {
 
     e.dataTransfer.setData("action", "move");
     e.dataTransfer.setData("elementId", element.id);
+    dispatch({ type: "SET_DRAGGING", payload: element.id });
   };
 
   return (
