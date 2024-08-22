@@ -118,6 +118,10 @@ export default function ElementHelper() {
     dispatch({ type: "SET_DRAGGING", payload: element.id });
   };
 
+  const handleDragEnd = () => {
+    dispatch({ type: "SET_DRAGGING", payload: "" });
+  };
+
   return (
     typeof window !== "undefined" &&
     createPortal(
@@ -160,6 +164,7 @@ export default function ElementHelper() {
                     onClick={(e) => e.stopPropagation()}
                     draggable
                     onDragStart={handleDragStart}
+                    onDragEnd={handleDragEnd}
                   >
                     <GripVerticalIcon className="h-4 w-4" />
                   </IconButton>
