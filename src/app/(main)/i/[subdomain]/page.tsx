@@ -51,9 +51,7 @@ export default async function Page({ params }: Props) {
             <Recursive key={childElement.id} element={childElement} />
           ))}
         </div>
-        {invitation.customFields?.fab?.type === "invitation_response" && (
-          <FloatingActionButton />
-        )}
+        <FloatingActionButton />
       </main>
     </EditorProvider>
   );
