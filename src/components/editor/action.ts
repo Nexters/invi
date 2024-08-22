@@ -81,6 +81,7 @@ const updateEditorHistory = (
     state: {
       ...editor.state,
       selectedElement: newSelectedElement,
+      currentTabValue: editorTabValue.ELEMENT_SETTINGS,
     },
     data: newData,
     history: {
@@ -368,10 +369,8 @@ const actionHandlers: {
     const isValidSelect = isValidSelectEditorElement(payload.elementDetails);
 
     const newTabValue = isValidSelect
-      ? editorTabValue.ELEMENTS
-      : editor.state.currentTabValue === editorTabValue.ELEMENT_SETTINGS
-        ? editorTabValue.ELEMENT_SETTINGS
-        : editor.state.currentTabValue;
+      ? editorTabValue.ELEMENT_SETTINGS
+      : editor.state.currentTabValue;
 
     return {
       ...editor,
@@ -433,6 +432,10 @@ const actionHandlers: {
           ...editor.history,
           currentIndex: nextIndex,
         },
+        state: {
+          ...editor.state,
+          selectedElement: emptyElement,
+        },
       };
     }
     return editor;
@@ -447,6 +450,10 @@ const actionHandlers: {
         history: {
           ...editor.history,
           currentIndex: prevIndex,
+        },
+        state: {
+          ...editor.state,
+          selectedElement: emptyElement,
         },
       };
     }
