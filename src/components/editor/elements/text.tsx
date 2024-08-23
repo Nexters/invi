@@ -38,7 +38,6 @@ export default function Text({ element }: Props) {
       return;
     }
 
-    console.log("apply", styleRef.current);
     dispatch({
       type: "UPDATE_ELEMENT",
       payload: {

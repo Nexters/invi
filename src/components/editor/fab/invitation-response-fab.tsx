@@ -38,7 +38,6 @@ function InvitationResponseForm() {
     },
     onSubmit: async ({ value }) => {
       const { name, attendance } = value;
-      console.log(name, attendance);
       // await createInvitationResponses(name, attendance as unknown as boolean);
       toast("참여가 완료되었습니다.", {
         duration: 2000,
