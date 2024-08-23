@@ -109,9 +109,7 @@ export async function updateInvitation(params: UpdateInvitationParams) {
   try {
     let existingInvitation;
 
-    if (eventUrl) {
-      existingInvitation = await getInvitationById(id);
-    }
+    const existingInvitation = await getInvitationById(id);
 
     await db
       .update(invitations)
@@ -122,15 +120,12 @@ export async function updateInvitation(params: UpdateInvitationParams) {
       })
       .where(eq(invitations.id, id));
 
-    if (
-      eventUrl &&
-      existingInvitation &&
-      eventUrl !== existingInvitation.eventUrl
-    ) {
+    revalidatePath(`/i/${existingInvitation.eventUrl}`);
+    revalidatePath(`/i/${existingInvitation.eventUrl}/edit`);
+
+    if (eventUrl) {
       revalidatePath(`/i/${eventUrl}`);
       revalidatePath(`/i/${eventUrl}/edit`);
-      revalidatePath(`/i/${existingInvitation.eventUrl}`);
-      revalidatePath(`/i/${existingInvitation.eventUrl}/edit`);
     } else {
       revalidatePath(`/i/${existingInvitation.eventUrl}`);
     }
