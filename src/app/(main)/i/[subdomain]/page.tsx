@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Recursive from "~/components/editor/elements/recursive";
 import FloatingActionButton from "~/components/editor/fab";
 import EditorProvider from "~/components/editor/provider";
+import { ScrollArea } from "~/components/ui/scroll-area";
 import { getInvitationByEventUrl } from "~/lib/db/schema/invitations.query";
 
 type Props = {
@@ -54,11 +55,11 @@ export default async function Page({ params }: Props) {
       editorState={{ isPreviewMode: true }}
     >
       <main className="relative mx-auto max-w-lg">
-        <div className={"h-lvh overflow-y-auto"}>
+        <ScrollArea className={"h-lvh overflow-y-auto"}>
           {invitation.customFields.elements.map((childElement) => (
             <Recursive key={childElement.id} element={childElement} />
           ))}
-        </div>
+        </ScrollArea>
         <FloatingActionButton />
       </main>
     </EditorProvider>

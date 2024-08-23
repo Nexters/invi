@@ -8,12 +8,13 @@ import { Drawer } from "vaul";
 import AttendanceFalseDefault from "~/assets/attendance/attendance-false-default.svg";
 import AttendanceTrueDefault from "~/assets/attendance/attendance-true-default.svg";
 import ImageRadio from "~/components/editor/fab/image-radio";
+import { useEditor } from "~/components/editor/provider";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
 import { createInvitationResponses } from "~/lib/db/schema/invitation_response.query";
-import { getInvitationByEventUrl } from "~/lib/db/schema/invitations.query";
+import { getInvitationById } from "~/lib/db/schema/invitations.query";
 
 export default function InvitationResponseFab() {
   return (
@@ -38,10 +39,12 @@ function InvitationResponseForm() {
   const params = useParams<{ subdomain: string }>();
   const [invitationId, setInvitationId] = useState<string>("");
 
+  const { editor } = useEditor();
+
   useEffect(() => {
     (async () => {
       try {
-        const invitation = await getInvitationByEventUrl(params.subdomain);
+        const invitation = await getInvitationById(editor.config.invitationId);
         return setInvitationId(invitation.id);
       } catch (error) {
         console.error("Failed to fetch invitation:", error);
