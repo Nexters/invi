@@ -3,7 +3,6 @@
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { InView } from "~/components/core/in-view";
 import { useEditor } from "~/components/editor/provider";
 import type {
   EditorElement,
@@ -47,7 +46,7 @@ export default function ElementWrapper({
 
   return (
     <>
-      <InView
+      <div
         {...props}
         {...dropzoneProps}
         data-element-id={element.id}
@@ -60,18 +59,13 @@ export default function ElementWrapper({
           ],
           className,
         )}
-        disable={
-          element.type === "__body" ||
-          !editor.state.isPreviewMode ||
-          !isContainer
-        }
         onClick={handleClick}
       >
         {children}
         {isDropzoneActive && isContainer && (
           <Dropzone {...dropzoneProps} isMoveMode={isMoveMode} />
         )}
-      </InView>
+      </div>
       {isDropzoneActive && !isContainer && (
         <Dropzone {...dropzoneProps} isMoveMode={isMoveMode} />
       )}
