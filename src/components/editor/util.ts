@@ -10,6 +10,7 @@ import {
   kakaoMapElement,
   logoBannerElement,
   navigationElement,
+  shareElement,
   textElement,
   twoColumnElement,
 } from "~/components/editor/constant";
@@ -47,6 +48,7 @@ export const getDefaultElement = <T extends EditorElementType>(
     navigation: navigationElement,
     logoBanner: logoBannerElement,
     accordion: accordionElement,
+    share: shareElement,
     __body: bodyElement,
     empty: emptyElement,
   };

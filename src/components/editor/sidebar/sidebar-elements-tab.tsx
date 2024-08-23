@@ -7,6 +7,7 @@ import {
   KakaoMapPlaceholder,
   LogoBannerPlaceholder,
   NavigationPlaceholder,
+  SharePlaceholder,
   TextPlaceholder,
   TwoColumnsPlaceholder,
 } from "~/components/editor/placeholders";
@@ -75,6 +76,11 @@ export default function SidebarElementsTab(props: Props) {
     {
       type: "logoBanner",
       Component: <LogoBannerPlaceholder />,
+      group: "elements",
+    },
+    {
+      type: "share",
+      Component: <SharePlaceholder />,
       group: "elements",
     },
   ];

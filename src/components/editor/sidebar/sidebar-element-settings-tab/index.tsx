@@ -9,6 +9,7 @@ import KakaoMapSetting from "~/components/editor/sidebar/sidebar-element-setting
 import LayoutSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/layout-setting";
 import LogoBannerSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/logo-banner-setting";
 import MapSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/map-setting";
+import ShareSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/share-setting";
 import TextSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/text-setting";
 import { getElementName } from "~/components/editor/util";
 import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
@@ -77,6 +78,12 @@ export default function SidebarElementSettingsTab(props: Props) {
         {selectedElement.type === "accordion" && (
           <>
             <AccordionSetting />
+          </>
+        )}
+
+        {selectedElement.type === "share" && (
+          <>
+            <ShareSetting />
           </>
         )}
       </div>

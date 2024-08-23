@@ -31,6 +31,7 @@ type EditorElementContentMap = {
     contentStyle?: React.CSSProperties;
     innerContainer: InferEditorElement<"container">;
   };
+  share: {};
 };
 
 export type EditorElementType = keyof EditorElementContentMap;
