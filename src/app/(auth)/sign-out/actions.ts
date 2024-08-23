@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import {
@@ -16,6 +17,7 @@ export async function signOutAction(redirectUrl = "/") {
   }
 
   await invalidateAuth(session.id);
+  revalidatePath("/sign-in");
 
   const headersList = headers();
   const referer = headersList.get("referer") || "/";

@@ -3,6 +3,7 @@
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { LinkIcon } from "lucide-react";
+import { useMemo } from "react";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import ImageDropzone from "~/components/editor/ui/image-dropzone";
@@ -117,10 +118,7 @@ function CustomDomainSection() {
                       type="submit"
                       size="sm"
                       className="ml-2 h-6"
-                      disabled={
-                        updateSubdomainMutation.isPending ||
-                        field.state.value === editor.config.invitationSubdomain
-                      }
+                      disabled={updateSubdomainMutation.isPending}
                     >
                       저장
                     </Button>
@@ -145,7 +143,7 @@ function CustomDomainSection() {
 function SEOSection() {
   const { editor, dispatch } = useEditor();
 
-  const onCopyLink = async () => {
+  const handleCopyLink = async () => {
     const link = `https://${editor.config.invitationSubdomain}.invi.my`;
 
     try {
@@ -173,6 +171,26 @@ function SEOSection() {
     },
   });
 
+  const updateThumbnailMutation = useMutation({
+    mutationFn: async () => {
+      await updateInvitation({
+        id: editor.config.invitationId,
+        description: editor.config.invitationDesc,
+        thumbnailUrl: editor.config.invitationThumbnail,
+      });
+    },
+    onSuccess: () => {
+      toast.success("SEO 설정이 저장되었습니다.");
+    },
+    onError: () => {
+      toast.error("SEO 설정에 실패했습니다.");
+    },
+  });
+
+  const isPending = useMemo(() => {
+    return uploadImageMutation.isPending || updateThumbnailMutation.isPending;
+  }, [uploadImageMutation.isPending, updateThumbnailMutation.isPending]);
+
   return (
     <div className="grid w-full grid-cols-9 gap-2 border-y p-6">
       <div className="col-span-9 flex flex-col">
@@ -181,25 +199,9 @@ function SEOSection() {
           링크 공유시 보여지는 정보를 설정해보세요.
         </p>
       </div>
-      <div className="col-span-9">
-        <EditorInput
-          id="invitationDesc"
-          componentPrefix={"설명:"}
-          className="mt-1"
-          defaultValue={editor.config.invitationDesc}
-          onDebounceChange={(e) => {
-            dispatch({
-              type: "UPDATE_CONFIG",
-              payload: {
-                invitationDesc: e.target.value,
-              },
-            });
-          }}
-        />
-      </div>
-      <div className="col-span-9">
+      <div className="col-span-9 space-y-1">
         <ImageDropzone
-          disabled={uploadImageMutation.isPending}
+          disabled={isPending}
           onLoadImage={async ({ url, file }) => {
             dispatch({
               type: "UPDATE_CONFIG",
@@ -214,15 +216,28 @@ function SEOSection() {
         </ImageDropzone>
         <EditorInput
           id="invitationThumbnail"
-          disabled={uploadImageMutation.isPending}
-          componentPrefix={"src"}
-          className="mt-1"
+          disabled={isPending}
+          componentPrefix={"이미지 링크"}
           defaultValue={editor.config.invitationThumbnail}
           onDebounceChange={(e) => {
             dispatch({
               type: "UPDATE_CONFIG",
               payload: {
                 invitationThumbnail: e.target.value,
+              },
+            });
+          }}
+        />
+        <EditorInput
+          id="invitationDesc"
+          disabled={isPending}
+          componentPrefix={"설명"}
+          defaultValue={editor.config.invitationDesc}
+          onDebounceChange={(e) => {
+            dispatch({
+              type: "UPDATE_CONFIG",
+              payload: {
+                invitationDesc: e.target.value,
               },
             });
           }}
@@ -246,17 +261,24 @@ function SEOSection() {
               <div className="text-xs text-neutral-400">
                 {editor.config.invitationDesc}
               </div>
-              <div className="text-xs text-neutral-300">invi.my</div>
+              <div className="text-xs text-neutral-300">
+                {editor.config.invitationSubdomain}.invi.my
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div className="col-span-9 flex items-center gap-2">
-        <Button size="icon" variant="secondary" onClick={onCopyLink}>
+        <Button size="icon" variant="secondary" onClick={handleCopyLink}>
           <LinkIcon size={16} />
         </Button>
         <div className="ml-auto flex gap-2">
-          <Button>저장</Button>
+          <Button
+            disabled={isPending}
+            onClick={() => updateThumbnailMutation.mutate()}
+          >
+            저장
+          </Button>
         </div>
       </div>
     </div>

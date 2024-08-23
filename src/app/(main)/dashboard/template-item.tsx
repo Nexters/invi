@@ -1,30 +1,42 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
+import { delay } from "es-toolkit";
 import { PlusIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useLoadingStore } from "~/components/gloabl-loading";
 import { createInvitation } from "~/lib/db/schema/invitations.query";
 import type { Template } from "~/lib/db/schema/templates";
 
 export default function TemplateItem({ template }: { template: Template }) {
   const router = useRouter();
+  const loadingLayer = useLoadingStore();
 
   const createMutation = useMutation({
     mutationFn: async () => {
-      // TODO: global loading
-      return await createInvitation({
-        title: template.title,
-        customFields: template.customFields,
-      });
+      loadingLayer.open("초대장을 만들고 있어요...");
+
+      const [data] = await Promise.all([
+        await createInvitation({
+          title: template.title,
+          thumbnailUrl: template.thumbnailUrl,
+          customFields: template.customFields,
+        }),
+        await delay(1000),
+      ]);
+
+      return data;
     },
     onSuccess: (data) => {
       toast.success("초대장이 생성되었습니다.");
       router.push(`/i/${data.eventUrl}/edit`);
+      loadingLayer.close();
     },
     onError: (error) => {
       console.error("Error creating invitation:", error);
       toast.error("초대장 생성 중 오류가 발생했습니다.");
+      loadingLayer.close();
     },
   });
 
