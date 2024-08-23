@@ -41,7 +41,6 @@ function InvitationResponseForm() {
   useEffect(() => {
     (async () => {
       try {
-        console.log(params.subdomain);
         const invitation = await getInvitationByEventUrl(params.subdomain);
         return setInvitationId(invitation.id);
       } catch (error) {
