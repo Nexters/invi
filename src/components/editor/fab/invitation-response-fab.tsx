@@ -60,7 +60,7 @@ function InvitationResponseForm() {
       await createInvitationResponses({
         invitation_id: invitationId,
         participant_name: name,
-        attendance: attendance,
+        attendance: attendance.toLowerCase() === "true",
       });
       toast("참여가 완료되었습니다.", { duration: 2000 });
     },

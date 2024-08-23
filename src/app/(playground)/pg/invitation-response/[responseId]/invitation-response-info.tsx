@@ -26,14 +26,16 @@ export default function InvitationResponseInfo() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{data.participant_name}</CardTitle>
-        <CardDescription>{data.attendance ? "참석" : "불참"}</CardDescription>
+        <CardTitle>{data[0].participant_name}</CardTitle>
+        <CardDescription>
+          {data[0].attendance ? "참석" : "불참"}
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <CardDescription>ID: {data.id}</CardDescription>
-        <CardDescription>사유: {data.reason || "없음"}</CardDescription>
+        <CardDescription>ID: {data[0].id}</CardDescription>
+        <CardDescription>사유: {data[0].reason || "없음"}</CardDescription>
         <CardDescription>
-          생성일: {new Date(data.created_at).toLocaleString()}
+          생성일: {new Date(data[0].created_at).toLocaleString()}
         </CardDescription>
       </CardContent>
     </Card>

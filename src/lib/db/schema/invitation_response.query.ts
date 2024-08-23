@@ -22,8 +22,9 @@ export async function getInvitationResponseById(id: InvitationResponse["id"]) {
   const responses = await db
     .select()
     .from(invitationResponses)
-    .where(eq(invitationResponses.id, id));
-  return responses[0];
+    .where(eq(invitationResponses.invitation_id, id));
+
+  return responses as InvitationResponse[];
 }
 
 export async function getInvitationResponseStats() {
