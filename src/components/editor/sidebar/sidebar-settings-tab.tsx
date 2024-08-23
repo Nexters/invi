@@ -3,6 +3,7 @@
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { LinkIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
@@ -41,6 +42,7 @@ export default function SidebarSettingsTab(props: Props) {
 
 function CustomDomainSection() {
   const { editor, dispatch } = useEditor();
+  const router = useRouter();
 
   const updateSubdomainMutation = useMutation({
     mutationFn: async (subdomain: string) => {
@@ -55,19 +57,19 @@ function CustomDomainSection() {
         eventUrl: subdomain,
       });
 
+      return subdomain;
+    },
+    onSuccess: (subdomain) => {
       dispatch({
         type: "UPDATE_CONFIG",
         payload: {
           invitationSubdomain: subdomain,
         },
       });
-
-      return subdomain;
-    },
-    onSuccess: (subdomain) => {
       toast.success("도메인이 변경되었습니다.", {
         description: `https://${subdomain}.invi.my`,
       });
+      router.replace(`/i/${subdomain}/edit`);
     },
     onError: () => {
       toast.error("도메인 변경에 실패했습니다.");
