@@ -60,7 +60,11 @@ export default function ElementWrapper({
           ],
           className,
         )}
-        disable={element.type === "__body" || !editor.state.isPreviewMode}
+        disable={
+          element.type === "__body" ||
+          !editor.state.isPreviewMode ||
+          !isContainer
+        }
         onClick={handleClick}
       >
         {children}
