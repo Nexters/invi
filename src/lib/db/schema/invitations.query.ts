@@ -90,6 +90,7 @@ export async function createInvitation(
       .returning();
 
     const newInvitation = res[0];
+    revalidatePath(`/dashboard`);
     revalidatePath(`/i/${newInvitation.eventUrl}`);
 
     return newInvitation;
@@ -124,8 +125,6 @@ export async function updateInvitation(params: UpdateInvitationParams) {
     if (eventUrl) {
       revalidatePath(`/i/${eventUrl}`);
       revalidatePath(`/i/${eventUrl}/edit`);
-    } else {
-      revalidatePath(`/i/${existingInvitation.eventUrl}`);
     }
   } catch (error) {
     console.error("Error updating invitation:", error);
@@ -144,6 +143,10 @@ export async function deleteInvitation(id: Invitation["id"]): Promise<boolean> {
       console.warn(`No invitation found with id: ${id}`);
       return false;
     }
+
+    revalidatePath(`/dashboard`);
+    revalidatePath(`/i/${invitations.eventUrl}`);
+    revalidatePath(`/i/${invitations.eventUrl}/edit`);
     return true;
   } catch (error) {
     console.error("Error deleting invitation:", error);
