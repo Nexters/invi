@@ -10,7 +10,7 @@ import { Button } from "~/components/ui/button";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col px-7">
+    <div className="mx-auto flex min-h-screen max-w-5xl flex-col px-7">
       <header className="pt-[58px]">
         <Image
           src="/landing-logo.png"
@@ -92,7 +92,10 @@ export default function Home() {
       </ul>
 
       <footer className="flex justify-center px-4 py-8">
-        <Button className="h-[60px] w-full rounded-[12px] bg-[#2B2D36] text-lg font-bold">
+        <Button
+          asChild
+          className="h-[60px] w-full rounded-[12px] bg-[#2B2D36] text-lg font-bold"
+        >
           <Link href="/dashboard">무료로 시작하기</Link>
         </Button>
       </footer>
