@@ -47,7 +47,8 @@ export default async function Page() {
           />
           <section className="mb-[56px] flex flex-col items-center gap-y-6">
             <h2 className="text-[2.5em] font-semibold -tracking-[0.2px]">
-              당신의 환대, INVI
+              당신의 환대,
+              <span className="font-[950]"> INVI</span>
             </h2>
             <p className="text-xl -tracking-[0.2px] text-[#333333]">
               인비와 함께 나만의 초대장을 만들어보세요

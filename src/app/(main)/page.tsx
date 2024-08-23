@@ -10,7 +10,7 @@ import { Button } from "~/components/ui/button";
 
 export default function Home() {
   return (
-    <div className="mx-auto flex min-h-screen max-w-5xl flex-col px-7">
+    <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-7">
       <header className="pt-[58px]">
         <Image
           src="/landing-logo.png"
@@ -21,7 +21,8 @@ export default function Home() {
         />
         <section className="flex flex-col gap-y-3">
           <h1 className="text-4xl font-bold leading-[40px]">
-            당신의 환대, INVI
+            당신의 환대,
+            <span className="font-[950]"> INVI</span>
           </h1>
           <h3 className="break-keep text-lg font-medium leading-5 -tracking-[0.2px] text-[#888888]">
             따뜻한 마음을 담아 당신의 환대를 전해보세요.
