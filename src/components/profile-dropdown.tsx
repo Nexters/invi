@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import TooltipSimple from "~/components/ui/tooltip-simple";
 import type { Auth } from "~/lib/auth/utils";
 import { deleteUser } from "~/lib/db/schema/users.query";
 
@@ -50,28 +51,25 @@ export default function ProfileDropDown({ user }: ProfileDropDownProps) {
   };
 
   return (
-    <div>
-      <DropdownMenu>
+    <DropdownMenu>
+      <TooltipSimple text="프로필">
         <DropdownMenuTrigger className="text-sm outline-none">
           <Avatar className="h-8 w-8">
             <AvatarImage src={user?.profileImage} />
             <AvatarFallback>{user?.name[0].toUpperCase()}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
-            <Link href="/sign-out">로그아웃</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="text-destructive"
-            onClick={handleOnDelete}
-          >
-            탈퇴하기
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+      </TooltipSimple>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/sign-out">로그아웃</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="text-destructive" onClick={handleOnDelete}>
+          탈퇴하기
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

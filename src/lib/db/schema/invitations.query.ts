@@ -1,7 +1,6 @@
 "use server";
 
 import { count, eq, getTableColumns } from "drizzle-orm";
-import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 import { getAuth } from "~/lib/auth/utils";
 import { db } from "~/lib/db";
@@ -10,6 +9,13 @@ import {
   type InvitationInsert,
   invitations,
 } from "~/lib/db/schema/invitations";
+
+import { customAlphabet } from "nanoid";
+
+const alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+const nanoid = customAlphabet(alphabet, 5);
+
+// TODO 중복 방지 로직 추가되어야 함
 
 type CreateInvitationParams = Omit<
   InvitationInsert,
@@ -91,6 +97,7 @@ export async function createInvitation(
       .returning();
 
     const newInvitation = res[0];
+    revalidatePath(`/dashboard`);
     revalidatePath(`/i/${newInvitation.eventUrl}`);
 
     return newInvitation;
@@ -101,20 +108,31 @@ export async function createInvitation(
 }
 
 export async function updateInvitation(params: UpdateInvitationParams) {
-  const { id, ...updates } = params;
+  const { id, eventUrl, ...updates } = params;
 
   if (!id) {
     throw new Error("ID is required to update an invitation");
   }
 
   try {
+    const existingInvitation = await getInvitationById(id);
+
     await db
       .update(invitations)
       .set({
         ...updates,
+        ...(eventUrl && { eventUrl }),
         updatedAt: new Date(),
       })
       .where(eq(invitations.id, id));
+
+    revalidatePath(`/i/${existingInvitation.eventUrl}`);
+    revalidatePath(`/i/${existingInvitation.eventUrl}/edit`);
+
+    if (eventUrl) {
+      revalidatePath(`/i/${eventUrl}`);
+      revalidatePath(`/i/${eventUrl}/edit`);
+    }
   } catch (error) {
     console.error("Error updating invitation:", error);
     throw new Error("Could not update invitation");
@@ -132,6 +150,10 @@ export async function deleteInvitation(id: Invitation["id"]): Promise<boolean> {
       console.warn(`No invitation found with id: ${id}`);
       return false;
     }
+
+    revalidatePath(`/dashboard`);
+    revalidatePath(`/i/${invitations.eventUrl}`);
+    revalidatePath(`/i/${invitations.eventUrl}/edit`);
     return true;
   } catch (error) {
     console.error("Error deleting invitation:", error);

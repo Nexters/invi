@@ -20,6 +20,7 @@ export default async function Page({
         invitationId: invitation.id,
         invitationTitle: invitation.title,
         invitationSubdomain: invitation.eventUrl,
+        invitationThumbnail: invitation.thumbnailUrl ?? "",
       }}
       editorData={invitation.customFields}
     />

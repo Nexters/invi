@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import TitleInput from "~/components/editor/title-input";
 import { useAlertDialogStore } from "~/components/global-alert";
+import ThemeDropdown from "~/components/theme-dropdown";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -142,6 +143,7 @@ export default function EditorNavigation() {
       </aside>
       <aside className="flex items-center gap-4">
         <div className="flex items-center gap-2">
+          <ThemeDropdown />
           <TooltipSimple text="미리보기">
             <Button variant="ghost" size="icon" onClick={handlePreviewClick}>
               <EyeIcon />

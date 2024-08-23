@@ -16,6 +16,7 @@ export default function KakaoMap({ element }: Props) {
         {element.content.isShareUse && (
           <NavigationElement
             element={element as unknown as InferEditorElement<"navigation">}
+            className="mt-2"
           />
         )}
       </KakaoAddressProvider>

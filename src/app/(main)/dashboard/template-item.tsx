@@ -50,7 +50,7 @@ export default function TemplateItem({ template }: { template: Template }) {
           <img
             src={template.thumbnailUrl}
             alt={template.title}
-            className="transition-all group-hover:blur-sm"
+            className="h-full w-full object-cover transition-all group-hover:blur-sm"
           />
         )}
         <div className="absolute inset-0 flex items-center justify-center bg-[#1D1D2370] opacity-0 transition group-hover:opacity-100">

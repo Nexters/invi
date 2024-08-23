@@ -3,6 +3,7 @@ import type {
   EditorElement,
   InferEditorElement,
 } from "~/components/editor/type";
+import { Button } from "~/components/ui/button";
 
 export default function KakaoMapSetting() {
   const { editor, dispatch } = useEditor();
@@ -88,40 +89,38 @@ export default function KakaoMapSetting() {
   };
 
   return (
-    <div className="mb-4 border-t p-6">
-      <div className={"mb-4"}>
-        <p className={"mb-2 text-lg font-bold"}>위치 설정</p>
-        <button
-          className={`h-8 w-full rounded border-none bg-[#5E8AFF] text-sm font-bold text-white disabled:bg-[#D5D7D9]`}
-          onClick={handleChangeKakaoMapLocationChange}
-        >
-          지도 위치 변경하기
-        </button>
-      </div>
-      <div className={"mb-4"}>
-        <p className={"mb-2 text-lg font-bold"}>현재위치</p>
-        <p>{selectedElement.content.address}</p>
-      </div>
+    <div className="space-y-4 border-t p-6">
       <div>
-        <p className={"mb-2 text-lg font-bold"}>표시 옵션</p>
-        <div className={"flex gap-3 text-center"}>
-          <label>
+        <p className={"mb-2 text-sm font-medium"}>표시 옵션</p>
+        <div className={"flex gap-3 text-sm"}>
+          <label className="space-x-1">
             <input
               type={"checkbox"}
               onChange={handleClickMapCheckBox}
               checked={selectedElement.content.isMapUse}
             />
-            지도
+            <span>지도</span>
           </label>
-          <label>
+          <label className="space-x-1">
             <input
               type={"checkbox"}
               onChange={handleClickShareCheckBox}
               checked={selectedElement.content.isShareUse}
             />
-            공유
+            <span>공유</span>
           </label>
         </div>
+      </div>
+      <div>
+        <p className={"mb-2 text-sm font-medium"}>현재위치</p>
+        <p className="text-sm">{selectedElement.content.address}</p>
+        <Button
+          variant="secondary"
+          className="mt-2 w-full"
+          onClick={handleChangeKakaoMapLocationChange}
+        >
+          지도 위치 변경하기
+        </Button>
       </div>
     </div>
   );

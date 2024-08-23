@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useReducer, type Dispatch } from "react";
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useReducer,
+  type Dispatch,
+} from "react";
 import { editorReducer, type EditorAction } from "~/components/editor/action";
 import {
   initialEditor,
@@ -36,12 +42,20 @@ export default function EditorProvider({
   editorData,
   editorState,
 }: EditorProviderProps) {
-  const [editor, dispatch] = useReducer(editorReducer, {
-    ...initialEditor,
-    data: {
+  const initialData = useMemo(() => {
+    return {
       ...initialEditor.data,
       ...editorData,
+    };
+  }, [editorData]);
+
+  const [editor, dispatch] = useReducer(editorReducer, {
+    ...initialEditor,
+    history: {
+      ...initialEditor.history,
+      list: [initialData],
     },
+    data: initialData,
     config: {
       ...initialEditorConfig,
       ...editorConfig,

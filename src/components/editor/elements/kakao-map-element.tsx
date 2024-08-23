@@ -54,6 +54,7 @@ export default function KakaoMapElement({
     if (window.kakao && window.kakao.maps) {
       window.kakao.maps.load(initializeMap);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -68,7 +69,8 @@ export default function KakaoMapElement({
         markerRef.current.setPosition(newCenter);
       }
     }
-  }, [editor.state.selectedElement]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [elementContent]);
 
   return (
     <div className={"relative h-[250px] w-full"}>

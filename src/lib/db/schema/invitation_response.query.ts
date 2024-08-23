@@ -18,11 +18,11 @@ export async function getAllInvitationResponses() {
   return await db.select().from(invitationResponses);
 }
 
-export async function getInvitationResponseById(id: InvitationResponse["id"]) {
+export async function getInvitationResponseById(invitation_id: InvitationResponse["invitation_id"]) {
   const responses = await db
     .select()
     .from(invitationResponses)
-    .where(eq(invitationResponses.invitation_id, id));
+    .where(eq(invitationResponses.invitation_id, invitation_id));
 
   return responses as InvitationResponse[];
 }

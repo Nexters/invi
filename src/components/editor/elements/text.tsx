@@ -24,19 +24,26 @@ export default function Text({ element }: Props) {
   }, []);
 
   const text = useRef(sanitize(element.content.innerText));
+  const styleRef = useRef(element.styles);
 
   const handleChange = (e: ContentEditableEvent) => {
     text.current = e.target.value;
+    styleRef.current = element.styles;
   };
 
-  const handleBlur = () => {
+  const handleSave = () => {
     const textHtml = sanitize(text.current);
-    text.current = textHtml;
+
+    if (textHtml === element.content.innerText) {
+      return;
+    }
+
     dispatch({
       type: "UPDATE_ELEMENT",
       payload: {
         elementDetails: {
           ...element,
+          styles: styleRef.current,
           content: {
             innerText: textHtml,
           },
@@ -51,8 +58,8 @@ export default function Text({ element }: Props) {
         className="w-full outline-none"
         disabled={editor.state.isPreviewMode}
         html={text.current}
-        onBlur={handleBlur}
         onChange={handleChange}
+        onBlur={handleSave}
       />
     </ElementWrapper>
   );

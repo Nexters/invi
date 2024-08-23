@@ -109,7 +109,7 @@ function CustomDomainSection() {
                 name={field.name}
                 value={field.state.value}
                 onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
+                onChange={(e) => field.handleChange(e.target.value.trim())}
                 className="pr-0.5 ring-1"
                 componentSuffix={
                   <div>
@@ -257,7 +257,9 @@ function SEOSection() {
               />
             )}
             <div className="bg-white p-2.5 text-sm">
-              <div>{editor.config.invitationTitle}</div>
+              <div className="text-neutral-900">
+                {editor.config.invitationTitle}
+              </div>
               <div className="text-xs text-neutral-400">
                 {editor.config.invitationDesc}
               </div>

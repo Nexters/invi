@@ -12,7 +12,6 @@ export default async function Page() {
             content: [
               {
                 id: "logoBanner",
-                name: "Logo Banner",
                 type: "logoBanner",
                 styles: {
                   height: 69,
@@ -22,7 +21,6 @@ export default async function Page() {
               },
               {
                 id: "blank",
-                name: "Blank",
                 type: "blank",
                 styles: {
                   height: 32,
@@ -31,7 +29,6 @@ export default async function Page() {
               },
               {
                 id: "container",
-                name: "Container",
                 type: "container",
                 styles: {
                   display: "flex",
@@ -48,7 +45,6 @@ export default async function Page() {
                 content: [
                   {
                     id: "text",
-                    name: "Text",
                     type: "text",
                     styles: {
                       textAlign: "left",

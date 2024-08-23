@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={pretendard.className}>
+      <body className={`${pretendard.className} bg-[#FFFCF9]`}>
         <Providers>{children}</Providers>
       </body>
     </html>

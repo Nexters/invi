@@ -1,7 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { create } from "zustand";
+import MainImage from "~/assets/main.png";
 import { TextEffect } from "~/components/core/text-effect";
 
 type LoadingStore = {
@@ -24,21 +26,22 @@ export default function GlobalLoading() {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[999] flex flex-col items-center justify-center gap-2 bg-background/95 animate-in"
+          className="fixed inset-0 z-[999] flex select-none flex-col items-center justify-center gap-10 bg-background/95 animate-in"
           initial={{ opacity: 0, filter: "blur(4px)" }}
           animate={{ opacity: 1, filter: "blur(0px)" }}
           exit={{ opacity: 0, filter: "blur(2px)" }}
         >
-          <img
-            src="https://velog.velcdn.com/images/bepyan/post/3433ddb0-3b6d-43f0-8568-8d678f323b0b/image.png"
-            alt="로딩중..."
-            width={500}
-            height={300}
-            className="animate-head-shake"
+          <Image
+            src={MainImage}
+            alt="로딩중"
+            width={185}
+            height={269}
+            className="animate-head-shake p-4 dark:bg-white"
             style={{ animationDuration: "5s" }}
+            draggable={false}
           />
           {text && (
-            <TextEffect className="pb-10 text-4xl font-bold">{text}</TextEffect>
+            <TextEffect className="pb-10 text-2xl font-bold">{text}</TextEffect>
           )}
         </motion.div>
       )}
