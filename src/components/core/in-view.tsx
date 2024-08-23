@@ -17,7 +17,10 @@ interface InViewProps {
   };
   transition?: Transition;
   viewOptions?: UseInViewOptions;
+  disable?: boolean;
   className?: string;
+  style?: React.CSSProperties;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 const defaultVariants = {
@@ -30,19 +33,20 @@ export function InView({
   variants = defaultVariants,
   transition,
   viewOptions,
-  className,
+  disable = false,
+  ...props
 }: InViewProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, viewOptions);
 
   return (
     <motion.div
+      {...props}
       ref={ref}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      variants={variants}
+      variants={disable ? {} : variants}
       transition={transition}
-      className={className}
     >
       {children}
     </motion.div>

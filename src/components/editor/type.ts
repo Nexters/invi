@@ -29,7 +29,7 @@ type EditorElementContentMap = {
     triggerStyle?: React.CSSProperties;
     containerStyle?: React.CSSProperties;
     contentStyle?: React.CSSProperties;
-    text: InferEditorElement<"text">;
+    innerContainer: InferEditorElement<"container">;
   };
 };
 
@@ -39,7 +39,6 @@ export type EditorElement = {
   [K in EditorElementType]: {
     type: K;
     id: string;
-    name: string;
     styles: React.CSSProperties;
     content: EditorElementContentMap[K];
   };
@@ -55,6 +54,8 @@ export type EditorState = {
   currentTabValue: EditorTabTypeValue;
   device: DeviceType;
   isPreviewMode: boolean;
+  isDragging: boolean;
+  draggedElementId: string;
 };
 
 export type EditorData = {

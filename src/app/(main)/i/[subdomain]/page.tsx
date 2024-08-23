@@ -29,6 +29,7 @@ export async function generateMetadata(
       default: invitation.title,
       template: "%s | 인비",
     },
+    description: invitation.description ?? "",
     openGraph: {
       images,
     },
@@ -37,7 +38,6 @@ export async function generateMetadata(
 
 export default async function Page({ params }: Props) {
   const invitation = await getInvitationByEventUrl(params.subdomain);
-
   if (!invitation) {
     notFound();
   }
@@ -54,12 +54,12 @@ export default async function Page({ params }: Props) {
       editorState={{ isPreviewMode: true }}
     >
       <main className="relative mx-auto max-w-lg">
-        {invitation.customFields.elements.map((childElement) => (
-          <Recursive key={childElement.id} element={childElement} />
-        ))}
-        {invitation.customFields?.fab?.type === "invitation_response" && (
-          <FloatingActionButton />
-        )}
+        <div className={"h-lvh overflow-y-auto"}>
+          {invitation.customFields.elements.map((childElement) => (
+            <Recursive key={childElement.id} element={childElement} />
+          ))}
+        </div>
+        <FloatingActionButton />
       </main>
     </EditorProvider>
   );

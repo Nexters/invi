@@ -1,7 +1,6 @@
 "use server";
 
 import { count, eq, getTableColumns } from "drizzle-orm";
-import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 import { getAuth } from "~/lib/auth/utils";
 import { db } from "~/lib/db";
@@ -11,6 +10,13 @@ import {
   invitations,
 } from "~/lib/db/schema/invitations";
 
+import { customAlphabet } from "nanoid";
+
+const alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+const nanoid = customAlphabet(alphabet, 5);
+
+// TODO 중복 방지 로직 추가되어야 함
+
 type CreateInvitationParams = Omit<
   InvitationInsert,
   "id" | "userId" | "eventUrl" | "createdAt" | "updatedAt"
@@ -19,6 +25,7 @@ type CreateInvitationParams = Omit<
 type UpdateInvitationParams = {
   id: Invitation["id"];
   title?: Invitation["title"];
+  description?: Invitation["description"];
   customFields?: Invitation["customFields"];
   eventUrl?: Invitation["eventUrl"];
   thumbnailUrl?: Invitation["thumbnailUrl"];

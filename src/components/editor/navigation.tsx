@@ -1,15 +1,13 @@
 "use client";
 
+import { delay } from "es-toolkit";
 import {
   ArrowLeftIcon,
   DownloadIcon,
   EllipsisVerticalIcon,
   EyeIcon,
-  Laptop,
   MailOpenIcon,
   Redo2,
-  Smartphone,
-  Tablet,
   Undo2,
 } from "lucide-react";
 import Link from "next/link";
@@ -17,8 +15,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useEditor } from "~/components/editor/provider";
 import TitleInput from "~/components/editor/title-input";
-import type { DeviceType } from "~/components/editor/type";
 import { useAlertDialogStore } from "~/components/global-alert";
+import ThemeDropdown from "~/components/theme-dropdown";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -26,18 +24,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import TooltipSimple from "~/components/ui/tooltip-simple";
 import {
+  createInvitation,
   deleteInvitation,
   updateInvitation,
 } from "~/lib/db/schema/invitations.query";
 import { cn } from "~/lib/utils";
+import { useLoadingStore } from "../gloabl-loading";
 
 export default function EditorNavigation() {
-  const { editor, dispatch } = useEditor();
   const router = useRouter();
+  const { editor, dispatch } = useEditor();
   const { openDialog } = useAlertDialogStore();
+  const loadingStore = useLoadingStore();
 
   const handlePreviewClick = () => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
@@ -80,6 +80,28 @@ export default function EditorNavigation() {
     });
   };
 
+  const handleOnClone = async () => {
+    try {
+      loadingStore.open("새로운 초대장을 만들고 있어요...");
+
+      const [newInvi] = await Promise.all([
+        createInvitation({
+          title: editor.config.invitationTitle + " 복사본",
+          customFields: editor.data,
+          thumbnailUrl: editor.config.invitationThumbnail,
+        }),
+        delay(2000),
+      ]);
+
+      router.push(`/i/${newInvi.eventUrl}/edit`);
+    } catch (e) {
+      console.error(e);
+      toast.error("일시적인 오류가 발생되었습니다.");
+    } finally {
+      loadingStore.close();
+    }
+  };
+
   return (
     <nav
       className={cn(
@@ -88,13 +110,16 @@ export default function EditorNavigation() {
       )}
     >
       <aside className="flex items-center gap-6">
-        <Button asChild variant="ghost" size="icon">
-          <Link href={editor.config.backLink}>
-            <ArrowLeftIcon />
-          </Link>
-        </Button>
+        <TooltipSimple text="대시보드">
+          <Button asChild variant="ghost" size="icon">
+            <Link href={editor.config.backLink}>
+              <ArrowLeftIcon />
+            </Link>
+          </Button>
+        </TooltipSimple>
         <TitleInput />
-        <Tabs
+        {/* TODO: 디바이스 미리보기 개선 */}
+        {/* <Tabs 
           value={editor.state.device}
           onValueChange={(value) => {
             dispatch({
@@ -114,31 +139,46 @@ export default function EditorNavigation() {
               <Smartphone />
             </TabsTrigger>
           </TabsList>
-        </Tabs>
+        </Tabs> */}
       </aside>
       <aside className="flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" onClick={handlePreviewClick}>
-            <EyeIcon />
-          </Button>
-          <Button
+          <ThemeDropdown />
+          <TooltipSimple text="미리보기">
+            <Button variant="ghost" size="icon" onClick={handlePreviewClick}>
+              <EyeIcon />
+            </Button>
+          </TooltipSimple>
+          <TooltipSimple
+            text="되돌리기"
             disabled={!(editor.history.currentIndex > 0)}
-            onClick={handleUndo}
-            variant="ghost"
-            size="icon"
           >
-            <Undo2 />
-          </Button>
-          <Button
+            <Button
+              disabled={!(editor.history.currentIndex > 0)}
+              onClick={handleUndo}
+              variant="ghost"
+              size="icon"
+            >
+              <Undo2 />
+            </Button>
+          </TooltipSimple>
+          <TooltipSimple
+            text="다시 실행"
             disabled={
               !(editor.history.currentIndex < editor.history.list.length - 1)
             }
-            onClick={handleRedo}
-            variant="ghost"
-            size="icon"
           >
-            <Redo2 />
-          </Button>
+            <Button
+              disabled={
+                !(editor.history.currentIndex < editor.history.list.length - 1)
+              }
+              onClick={handleRedo}
+              variant="ghost"
+              size="icon"
+            >
+              <Redo2 />
+            </Button>
+          </TooltipSimple>
         </div>
         <Button variant="secondary" onClick={handleOnSave} className="gap-1">
           <DownloadIcon className="h-4 w-4" /> 저장
@@ -160,7 +200,9 @@ export default function EditorNavigation() {
             </DropdownMenuTrigger>
           </TooltipSimple>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>복제하기</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleOnClone}>
+              복제하기
+            </DropdownMenuItem>
             <DropdownMenuItem
               className="text-destructive"
               onClick={handleOnDelete}

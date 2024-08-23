@@ -109,7 +109,7 @@ function CustomDomainSection() {
                 name={field.name}
                 value={field.state.value}
                 onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value)}
+                onChange={(e) => field.handleChange(e.target.value.trim())}
                 className="pr-0.5 ring-1"
                 componentSuffix={
                   <div>
@@ -175,6 +175,7 @@ function SEOSection() {
     mutationFn: async () => {
       await updateInvitation({
         id: editor.config.invitationId,
+        description: editor.config.invitationDesc,
         thumbnailUrl: editor.config.invitationThumbnail,
       });
     },
@@ -198,7 +199,7 @@ function SEOSection() {
           링크 공유시 보여지는 정보를 설정해보세요.
         </p>
       </div>
-      <div className="col-span-9">
+      <div className="col-span-9 space-y-1">
         <ImageDropzone
           disabled={isPending}
           onLoadImage={async ({ url, file }) => {
@@ -217,13 +218,26 @@ function SEOSection() {
           id="invitationThumbnail"
           disabled={isPending}
           componentPrefix={"이미지 링크"}
-          className="mt-1"
           defaultValue={editor.config.invitationThumbnail}
           onDebounceChange={(e) => {
             dispatch({
               type: "UPDATE_CONFIG",
               payload: {
                 invitationThumbnail: e.target.value,
+              },
+            });
+          }}
+        />
+        <EditorInput
+          id="invitationDesc"
+          disabled={isPending}
+          componentPrefix={"설명"}
+          defaultValue={editor.config.invitationDesc}
+          onDebounceChange={(e) => {
+            dispatch({
+              type: "UPDATE_CONFIG",
+              payload: {
+                invitationDesc: e.target.value,
               },
             });
           }}
@@ -243,11 +257,15 @@ function SEOSection() {
               />
             )}
             <div className="bg-white p-2.5 text-sm">
-              <div>{editor.config.invitationTitle}</div>
+              <div className="text-neutral-900">
+                {editor.config.invitationTitle}
+              </div>
               <div className="text-xs text-neutral-400">
                 {editor.config.invitationDesc}
               </div>
-              <div className="text-xs text-neutral-300">invi.my</div>
+              <div className="text-xs text-neutral-300">
+                {editor.config.invitationSubdomain}.invi.my
+              </div>
             </div>
           </div>
         </div>

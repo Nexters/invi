@@ -1,6 +1,6 @@
 "use client";
 
-import BottomSheet from "~/app/(playground)/pg/bottom-sheet/_components/bottom-sheet";
+import InvitationResponseFab from "~/components/editor/fab/invitation-response-fab";
 import { useEditor } from "~/components/editor/provider";
 
 export default function FloatingActionButton() {
@@ -8,7 +8,7 @@ export default function FloatingActionButton() {
 
   switch (editor.data.fab.type) {
     case "invitation_response":
-      return <BottomSheet />;
+      return <InvitationResponseFab />;
     default:
       return null;
   }

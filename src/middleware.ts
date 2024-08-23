@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { env } from "~/lib/env";
 
 export const config = {
   matcher: ["/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)"],
@@ -24,10 +25,8 @@ export function middleware(request: NextRequest) {
   const path = `${url.pathname}${searchParams ? `?${searchParams}` : ""}`;
 
   // 서브도메인으로 접근한 경우
-  if (isSubdomain(hostname)) {
+  if (env.NODE_ENV === "production" && isSubdomain(hostname)) {
     const subdomain = hostname.split(".")[0];
     return NextResponse.rewrite(new URL(`/i/${subdomain}${path}`, request.url));
   }
-
-  return NextResponse.rewrite(new URL(path, request.url));
 }

@@ -2,15 +2,17 @@ import Image from "next/image";
 import { toast } from "sonner";
 import ElementWrapper from "~/components/editor/elements/element-wrapper";
 import type { InferEditorElement } from "~/components/editor/type";
+import { cn } from "~/lib/utils";
 
 type MapType = "naver" | "kakao";
 type MapUrls = Record<MapType, string>;
 
 type Props = {
   element: InferEditorElement<"navigation">;
+  className?: string;
 };
 
-export default function NavigationElement({ element }: Props) {
+export default function NavigationElement({ element, className }: Props) {
   const { address } = element.content;
 
   const openMap = (mapType: MapType, address: string) => {
@@ -32,7 +34,9 @@ export default function NavigationElement({ element }: Props) {
   const handleCopy = async (text: string) => {
     await copyTextAsync(text);
     toast("복사되었습니다.", {
+      description: text,
       duration: 2000,
+      position: "top-center",
       style: {
         backgroundColor: "black",
         opacity: 0.9,
@@ -44,7 +48,10 @@ export default function NavigationElement({ element }: Props) {
   };
 
   return (
-    <ElementWrapper element={element}>
+    <ElementWrapper
+      element={element}
+      className={cn("flex items-center justify-center gap-2", className)}
+    >
       <button onClick={() => openMap("naver", address)}>
         <Image
           src="/naver-map.png"

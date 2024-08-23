@@ -1,8 +1,8 @@
 "use client";
 
-import { format } from "date-fns";
 import Link from "next/link";
 import type { Invitation } from "~/lib/db/schema/invitations";
+import { formatDuration } from "~/lib/utils";
 
 export default function InvitationItem({
   invitation,
@@ -12,14 +12,14 @@ export default function InvitationItem({
   return (
     <Link
       href={`/i/${invitation.eventUrl}/edit`}
-      className="relative inline-flex flex-col overflow-hidden rounded border px-4 pb-5 pt-6 transition hover:bg-muted/20 focus:outline-none"
+      className="relative inline-flex flex-col overflow-hidden rounded border px-4 pb-5 pt-6 transition hover:scale-[1.02] focus:outline-none active:scale-[0.98]"
     >
       <div className="relative flex aspect-[11/4] w-full items-center justify-center overflow-hidden rounded border bg-muted">
         {invitation.thumbnailUrl && (
           <img
             src={invitation.thumbnailUrl}
             alt={invitation.title}
-            className="transition-all"
+            className="h-full w-full object-cover transition-all"
           />
         )}
       </div>
@@ -28,7 +28,7 @@ export default function InvitationItem({
           {invitation.title}
         </div>
         <div className="text-left text-sm leading-none tracking-tight text-muted-foreground">
-          {format(invitation.updatedAt, "yyyy.MM.dd")} 수정됨
+          {formatDuration(invitation.updatedAt)} 수정됨
         </div>
       </div>
     </Link>

@@ -10,6 +10,7 @@ import LayoutSetting from "~/components/editor/sidebar/sidebar-element-settings-
 import LogoBannerSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/logo-banner-setting";
 import MapSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/map-setting";
 import TextSetting from "~/components/editor/sidebar/sidebar-element-settings-tab/text-setting";
+import { getElementName } from "~/components/editor/util";
 import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
 
 type Props = {};
@@ -21,7 +22,7 @@ export default function SidebarElementSettingsTab(props: Props) {
   return (
     <div className="w-full border-b">
       <SheetHeader className="p-6">
-        <SheetTitle>{selectedElement.name} 설정</SheetTitle>
+        <SheetTitle>{getElementName(selectedElement.type)} 설정</SheetTitle>
       </SheetHeader>
 
       <div key={selectedElement.id}>
