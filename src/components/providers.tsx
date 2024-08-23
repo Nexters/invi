@@ -44,8 +44,9 @@ export default function Providers({ children }: { children: ReactNode }) {
   const queryClient = getQueryClient();
 
   const pathname = usePathname();
-  const forcedThemeFromPathname =
-    pathname === "/" || pathname === "/sign-in" ? "light" : undefined;
+  const forcedThemeFromPathname = !pathname.startsWith("/i/")
+    ? "light"
+    : undefined;
 
   return (
     <QueryClientProvider client={queryClient}>
