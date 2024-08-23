@@ -30,36 +30,48 @@ export default function ElementHelper() {
   }>();
   const rafRef = useRef<number | null>(null);
 
-  const updateLayerStyle = useCallback((id: string) => {
-    const el = document.querySelector(`[data-element-id="${id}"]`);
+  const updateLayerStyle = useCallback(
+    (id: string) => {
+      const el = document.querySelector(`[data-element-id="${id}"]`);
 
-    if (!el) {
-      return;
-    }
-
-    const updateStyle = () => {
-      const { top, left, width, height } = el.getBoundingClientRect();
-      setLayerStyle({ top, left, width, height });
-      rafRef.current = requestAnimationFrame(updateStyle);
-    };
-
-    const handleScroll = () => {
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
+      if (!el) {
+        return;
       }
+
+      const updateStyle = () => {
+        const { top, left, width, height } = el.getBoundingClientRect();
+
+        if (!top) {
+          dispatch({
+            type: "CHANGE_CLICKED_ELEMENT",
+            payload: {},
+          });
+          return;
+        }
+
+        setLayerStyle({ top, left, width, height });
+        rafRef.current = requestAnimationFrame(updateStyle);
+      };
+
+      const handleScroll = () => {
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+        }
+        rafRef.current = requestAnimationFrame(updateStyle);
+      };
+
+      window.addEventListener("scroll", handleScroll, true);
       rafRef.current = requestAnimationFrame(updateStyle);
-    };
 
-    window.addEventListener("scroll", handleScroll, true);
-    rafRef.current = requestAnimationFrame(updateStyle);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll, true);
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
-    };
-  }, []);
+      return () => {
+        window.removeEventListener("scroll", handleScroll, true);
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+        }
+      };
+    },
+    [dispatch],
+  );
 
   useLayoutEffect(() => {
     return updateLayerStyle(element.id);
