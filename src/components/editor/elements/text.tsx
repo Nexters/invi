@@ -1,6 +1,5 @@
 "use client";
 
-import { debounce } from "es-toolkit";
 import { useCallback, useRef } from "react";
 import ContentEditable, {
   type ContentEditableEvent,
@@ -25,14 +24,21 @@ export default function Text({ element }: Props) {
   }, []);
 
   const text = useRef(sanitize(element.content.innerText));
+  const styleRef = useRef(element.styles);
 
   const handleChange = (e: ContentEditableEvent) => {
-    const textHtml = sanitize(e.target.value);
+    text.current = e.target.value;
+    styleRef.current = element.styles;
+  };
+
+  const handleSave = () => {
+    const textHtml = sanitize(text.current);
     dispatch({
       type: "UPDATE_ELEMENT",
       payload: {
         elementDetails: {
           ...element,
+          styles: styleRef.current,
           content: {
             innerText: textHtml,
           },
@@ -47,7 +53,8 @@ export default function Text({ element }: Props) {
         className="w-full outline-none"
         disabled={editor.state.isPreviewMode}
         html={text.current}
-        onChange={debounce(handleChange, 500)}
+        onChange={handleChange}
+        onBlur={handleSave}
       />
     </ElementWrapper>
   );
