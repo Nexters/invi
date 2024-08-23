@@ -19,10 +19,9 @@ type Props = {
 
 export default function ShareElement({ element }: Props) {
   const { editor } = useEditor();
+  const link = `https://${editor.config.invitationSubdomain}.invi.my`;
 
   const handleCopyLink = async () => {
-    const link = `https://${editor.config.invitationSubdomain}.invi.my`;
-
     try {
       await navigator.clipboard.writeText(link);
       toast("링크가 복사되었습니다.", {
@@ -44,9 +43,6 @@ export default function ShareElement({ element }: Props) {
   };
 
   const handleKakaoShare = () => {
-    // 카카오 정책 상 서브도메인을 사용할 수 없음
-    const link = `https://invi.my/i/${editor.config.invitationSubdomain}`;
-
     window.Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
