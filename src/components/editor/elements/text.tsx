@@ -33,6 +33,12 @@ export default function Text({ element }: Props) {
 
   const handleSave = () => {
     const textHtml = sanitize(text.current);
+
+    if (textHtml === element.content.innerText) {
+      return;
+    }
+
+    console.log("apply", styleRef.current);
     dispatch({
       type: "UPDATE_ELEMENT",
       payload: {
