@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import InvitationItem from "~/app/(main)/dashboard/invitation-item";
 import TemplateItem from "~/app/(main)/dashboard/template-item";
+import { Stagger, StaggerItem } from "~/components/core/stagger";
 import ProfileDropDown from "~/components/profile-dropdown";
 import { getAuth } from "~/lib/auth/utils";
 import { getInvitationsByAuth } from "~/lib/db/schema/invitations.query";
@@ -60,11 +61,13 @@ export default async function Page() {
                 </h2>
               </div>
             </div>
-            <div className="mt-9 grid grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
+            <Stagger className="mt-9 grid grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
               {sortedTemplates.map((template) => (
-                <TemplateItem key={template.id} template={template} />
+                <StaggerItem key={template.id}>
+                  <TemplateItem template={template} />
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           </div>
           {/* 초대장 목록 */}
           {!!sortedInvitations.length && (
@@ -76,11 +79,16 @@ export default async function Page() {
                   </h2>
                 </div>
               </div>
-              <div className="mt-9 grid grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
+              <Stagger
+                className="mt-9 grid grid-cols-[repeat(1,_minmax(15rem,_1fr))] gap-8 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5"
+                delay={0.1}
+              >
                 {sortedInvitations.map((invitation) => (
-                  <InvitationItem key={invitation.id} invitation={invitation} />
+                  <StaggerItem key={invitation.id}>
+                    <InvitationItem invitation={invitation} />
+                  </StaggerItem>
                 ))}
-              </div>
+              </Stagger>
             </div>
           )}
         </main>

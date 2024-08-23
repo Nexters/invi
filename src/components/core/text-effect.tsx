@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion, type MotionProps, type Variants } from "framer-motion";
 import React from "react";
 
 type PresetType = "blur" | "shake" | "scale" | "fade" | "slide";
 
-type TextEffectProps = {
+type TextEffectProps = MotionProps & {
   children: string;
   per?: "word" | "char";
   as?: keyof JSX.IntrinsicElements;
@@ -117,6 +117,7 @@ export function TextEffect({
   variants,
   className,
   preset,
+  ...props
 }: TextEffectProps) {
   const words = children.split(/(\S+)/);
   const MotionTag = motion[as as keyof typeof motion];
@@ -133,6 +134,7 @@ export function TextEffect({
       aria-label={children}
       variants={containerVariants}
       className={className}
+      {...props}
     >
       {words.map((word, wordIndex) => (
         <AnimationComponent
