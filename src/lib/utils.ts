@@ -22,7 +22,7 @@ export function formatDuration(time: string | number | Date) {
   return `${format(time, "yyyy.MM.dd")}`;
 }
 
-export function formatUTCtoKST(utcDateString: Date) {
+export function formatUTCtoKST(utcDateString: Date | string) {
   const date = new Date(utcDateString);
 
   const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
