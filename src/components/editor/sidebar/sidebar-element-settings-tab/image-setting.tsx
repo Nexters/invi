@@ -19,6 +19,10 @@ export default function ImageSetting({
   const imageUploadMutation = useMutation({
     mutationFn: uploadImage,
     onSuccess: (url) => {
+      const inputEl = document.querySelector<HTMLInputElement>("#image_src");
+      if (inputEl) {
+        inputEl.value = url;
+      }
       dispatch({
         type: "UPDATE_ELEMENT",
         payload: {

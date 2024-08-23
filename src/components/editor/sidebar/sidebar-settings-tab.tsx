@@ -162,6 +162,12 @@ function SEOSection() {
   const uploadImageMutation = useMutation({
     mutationFn: uploadImage,
     onSuccess: (url) => {
+      const inputEl = document.querySelector<HTMLInputElement>(
+        "#invitationThumbnail",
+      );
+      if (inputEl) {
+        inputEl.value = url;
+      }
       dispatch({
         type: "UPDATE_CONFIG",
         payload: {
