@@ -15,7 +15,7 @@ export default function InvitationResponseFab() {
   return (
     <Drawer.Root>
       <div className="absolute inset-x-0 bottom-0 z-50 mx-auto max-w-lg px-3 text-center">
-        <Drawer.Trigger className="mb-5 h-[63px] w-[100%] rounded-lg bg-[#5E8AFF] text-lg font-bold text-white">
+        <Drawer.Trigger className="mb-5 h-[63px] w-[100%] select-none rounded-lg bg-[#5E8AFF] text-lg font-bold text-white active:scale-[0.98]">
           세션 참여 조사하기
         </Drawer.Trigger>
       </div>
@@ -40,16 +40,17 @@ function InvitationResponseForm() {
       const { name, attendance } = value;
       console.log(name, attendance);
       // await createInvitationResponses(name, attendance as unknown as boolean);
-      toast("참여가 완료되었습니다.", { duration: 2000 });
+      toast("참여가 완료되었습니다.", {
+        duration: 2000,
+        position: "top-center",
+      });
     },
   });
 
   return (
     <div className="h-[500px] bg-transparent p-5">
       <SheetHeader>
-        <SheetTitle className="text-left text-2xl text-primary-foreground">
-          세션 참여 조사
-        </SheetTitle>
+        <SheetTitle className="text-left text-2xl">세션 참여 조사</SheetTitle>
         <form
           onSubmit={(event) => {
             event.preventDefault();
