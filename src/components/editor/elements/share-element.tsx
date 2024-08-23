@@ -12,6 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
+import { kakaoShareInvi } from "~/lib/kakao-share";
 
 type Props = {
   element: InferEditorElement<"share">;
@@ -43,28 +44,11 @@ export default function ShareElement({ element }: Props) {
   };
 
   const handleKakaoShare = () => {
-    window.Kakao.Share.sendDefault({
-      objectType: "feed",
-      content: {
-        imageUrl: editor.config.invitationThumbnail,
-        imageWidth: 600,
-        imageHeight: 450,
-        title: editor.config.invitationTitle,
-        description: editor.config.invitationDesc,
-        link: {
-          mobileWebUrl: link,
-          webUrl: link,
-        },
-      },
-      buttons: [
-        {
-          title: "초대장 열기",
-          link: {
-            mobileWebUrl: link,
-            webUrl: link,
-          },
-        },
-      ],
+    kakaoShareInvi({
+      link,
+      title: editor.config.invitationTitle,
+      description: editor.config.invitationDesc,
+      imageUrl: editor.config.invitationThumbnail,
     });
   };
 
