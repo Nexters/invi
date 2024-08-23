@@ -54,7 +54,7 @@ export const containerElement: InferEditorElement<"container"> = {
 export const twoColumnElement: InferEditorElement<"2Col"> = {
   id: "__2col",
   type: "2Col",
-  styles: containerDefaultStyles,
+  styles: { ...containerDefaultStyles, flexDirection: "row" },
   content: [
     {
       ...containerElement,

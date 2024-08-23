@@ -8,6 +8,7 @@ import {
   LogoBannerPlaceholder,
   NavigationPlaceholder,
   TextPlaceholder,
+  TwoColumnsPlaceholder,
 } from "~/components/editor/placeholders";
 import type { EditorElementType } from "~/components/editor/type";
 import { getElementName } from "~/components/editor/util";
@@ -42,8 +43,8 @@ export default function SidebarElementsTab(props: Props) {
       group: "layout",
     },
     {
-      type: "logoBanner",
-      Component: <LogoBannerPlaceholder />,
+      type: "2Col",
+      Component: <TwoColumnsPlaceholder />,
       group: "layout",
     },
     {
@@ -69,6 +70,11 @@ export default function SidebarElementsTab(props: Props) {
     {
       type: "accordion",
       Component: <AccordionPlaceholder />,
+      group: "elements",
+    },
+    {
+      type: "logoBanner",
+      Component: <LogoBannerPlaceholder />,
       group: "elements",
     },
   ];

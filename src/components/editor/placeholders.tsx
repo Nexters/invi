@@ -58,9 +58,9 @@ export function TextPlaceholder() {
 
 export function TwoColumnsPlaceholder() {
   return (
-    <Placeholder type="2Col">
-      <div className="h-full w-full rounded-sm border-[1px] border-dashed border-muted-foreground/50 bg-muted"></div>
-      <div className="h-full w-full rounded-sm border-[1px] border-dashed border-muted-foreground/50 bg-muted"></div>
+    <Placeholder type="2Col" className="gap-0.5">
+      <BoxSelectIcon className="size-5" />
+      <BoxSelectIcon className="size-5" />
     </Placeholder>
   );
 }
