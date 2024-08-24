@@ -1,8 +1,6 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Drawer } from "vaul";
 import AttendanceFalseDefault from "~/assets/attendance/attendance-false-default.svg";
@@ -14,7 +12,6 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
 import { createInvitationResponses } from "~/lib/db/schema/invitation_response.query";
-import { getInvitationById } from "~/lib/db/schema/invitations.query";
 
 export default function InvitationResponseFab() {
   return (
@@ -36,21 +33,7 @@ export default function InvitationResponseFab() {
 }
 
 function InvitationResponseForm() {
-  const params = useParams<{ subdomain: string }>();
-  const [invitationId, setInvitationId] = useState<string>("");
-
   const { editor } = useEditor();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const invitation = await getInvitationById(editor.config.invitationId);
-        return setInvitationId(invitation.id);
-      } catch (error) {
-        console.error("Failed to fetch invitation:", error);
-      }
-    })();
-  }, []);
 
   const form = useForm({
     defaultValues: {
@@ -60,7 +43,7 @@ function InvitationResponseForm() {
     onSubmit: async ({ value }) => {
       const { name, attendance } = value;
       await createInvitationResponses({
-        invitation_id: invitationId,
+        invitation_id: editor.config.invitationId,
         participant_name: name,
         attendance: attendance.toLowerCase() === "true",
       });
@@ -140,14 +123,16 @@ function InvitationResponseForm() {
                 const isFormComplete =
                   isValid && values.name && values.attendance;
                 return (
-                  <Button
-                    type="submit"
-                    variant="outline"
-                    disabled={!isFormComplete || isSubmitting}
-                    className={`h-full w-full rounded-xl border-none bg-[#5E8AFF] text-lg font-bold text-white disabled:bg-[#D5D7D9]`}
-                  >
-                    제출하기
-                  </Button>
+                  <Drawer.Close asChild>
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      disabled={!isFormComplete || isSubmitting}
+                      className={`h-full w-full rounded-xl border-none bg-[#5E8AFF] text-lg font-bold text-white disabled:bg-[#D5D7D9]`}
+                    >
+                      제출하기
+                    </Button>
+                  </Drawer.Close>
                 );
               }}
             </form.Subscribe>
