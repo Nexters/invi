@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { useEditor } from "~/components/editor/provider";
 import type { EditorElementType } from "~/components/editor/type";
-import { ImageSolidIcon, LogoTextIcon } from "~/components/ui/icons";
+import { ImageSolidIcon, LogoTextIcon, ShareIcon } from "~/components/ui/icons";
 import { cn } from "~/lib/utils";
 
 type PlaceholderProps = {
@@ -58,9 +58,9 @@ export function TextPlaceholder() {
 
 export function TwoColumnsPlaceholder() {
   return (
-    <Placeholder type="2Col">
-      <div className="h-full w-full rounded-sm border-[1px] border-dashed border-muted-foreground/50 bg-muted"></div>
-      <div className="h-full w-full rounded-sm border-[1px] border-dashed border-muted-foreground/50 bg-muted"></div>
+    <Placeholder type="2Col" className="gap-0.5">
+      <BoxSelectIcon className="size-5" />
+      <BoxSelectIcon className="size-5" />
     </Placeholder>
   );
 }
@@ -117,6 +117,14 @@ export function AccordionPlaceholder() {
   return (
     <Placeholder type="accordion">
       <ChevronsDownUpIcon className="size-6" />
+    </Placeholder>
+  );
+}
+
+export function SharePlaceholder() {
+  return (
+    <Placeholder type="share">
+      <ShareIcon className="size-6" />
     </Placeholder>
   );
 }

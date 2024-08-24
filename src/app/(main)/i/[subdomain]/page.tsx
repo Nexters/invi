@@ -1,4 +1,4 @@
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Recursive from "~/components/editor/elements/recursive";
 import FloatingActionButton from "~/components/editor/fab";
@@ -10,19 +10,11 @@ type Props = {
   params: { subdomain: string };
 };
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const invitation = await getInvitationByEventUrl(params.subdomain);
 
   if (!invitation) {
     return {};
-  }
-
-  const images = (await parent).openGraph?.images || [];
-  if (invitation.thumbnailUrl) {
-    images.unshift(invitation.thumbnailUrl);
   }
 
   return {
@@ -32,7 +24,9 @@ export async function generateMetadata(
     },
     description: invitation.description ?? "",
     openGraph: {
-      images,
+      images:
+        invitation.thumbnailUrl ??
+        "http://t1.daumcdn.net/brunch/service/user/d4v5/image/Axc3mTi7LoZC2GpsBWosDpRrNPU.png",
     },
   };
 }

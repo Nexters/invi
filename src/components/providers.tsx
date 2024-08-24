@@ -2,7 +2,6 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ThemeProvider } from "next-themes";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import GlobalLoading from "~/components/gloabl-loading";
@@ -44,23 +43,16 @@ export default function Providers({ children }: { children: ReactNode }) {
   const queryClient = getQueryClient();
 
   const pathname = usePathname();
-  const forcedThemeFromPathname =
-    pathname === "/" || pathname === "/sign-in" ? "light" : undefined;
+  const forcedThemeFromPathname = !pathname.startsWith("/i/")
+    ? "light"
+    : undefined;
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-        forcedTheme={forcedThemeFromPathname}
-      >
-        <TooltipProvider>{children}</TooltipProvider>
-        <Toaster />
-        <GlobalAlert />
-        <GlobalLoading />
-      </ThemeProvider>
+      <TooltipProvider>{children}</TooltipProvider>
+      <Toaster />
+      <GlobalAlert />
+      <GlobalLoading />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

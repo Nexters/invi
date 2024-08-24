@@ -19,8 +19,8 @@ import { getInvitationById } from "~/lib/db/schema/invitations.query";
 export default function InvitationResponseFab() {
   return (
     <Drawer.Root>
-      <div className="absolute inset-x-0 bottom-0 z-50 mx-auto max-w-lg px-3 text-center">
-        <Drawer.Trigger className="mb-5 h-[63px] w-[100%] rounded-lg bg-[#5E8AFF] text-lg font-bold text-primary-foreground">
+      <div className="absolute inset-x-0 bottom-0 z-50 mx-auto max-w-lg px-[28px] text-center">
+        <Drawer.Trigger className="mb-5 h-[63px] w-[100%] select-none rounded-lg bg-[#5E8AFF] text-lg font-bold text-white active:scale-[0.98]">
           세션 참여 조사하기
         </Drawer.Trigger>
       </div>

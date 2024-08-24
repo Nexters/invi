@@ -126,6 +126,7 @@ export async function updateInvitation(params: UpdateInvitationParams) {
       })
       .where(eq(invitations.id, id));
 
+    revalidatePath("/"); // 서브 도메인을 위함..
     revalidatePath(`/i/${existingInvitation.eventUrl}`);
     revalidatePath(`/i/${existingInvitation.eventUrl}/edit`);
 

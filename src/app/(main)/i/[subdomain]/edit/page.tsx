@@ -19,6 +19,7 @@ export default async function Page({
         backLink: "/dashboard",
         invitationId: invitation.id,
         invitationTitle: invitation.title,
+        invitationDesc: invitation.description ?? undefined,
         invitationSubdomain: invitation.eventUrl,
         invitationThumbnail: invitation.thumbnailUrl ?? "",
       }}

@@ -5,6 +5,7 @@ import ImageElement from "~/components/editor/elements/image-element";
 import KakaoMap from "~/components/editor/elements/kakao-map";
 import LogoBannerElement from "~/components/editor/elements/logo-banner-element";
 import NavigationElement from "~/components/editor/elements/navigation-element";
+import ShareElement from "~/components/editor/elements/share-element";
 import Text from "~/components/editor/elements/text";
 import type { EditorElement } from "~/components/editor/type";
 
@@ -28,6 +29,8 @@ export default function Recursive({ element }: { element: EditorElement }) {
       return <LogoBannerElement element={element} />;
     case "accordion":
       return <AccordionElement element={element} />;
+    case "share":
+      return <ShareElement element={element} />;
     default:
       return null;
   }

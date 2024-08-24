@@ -54,7 +54,7 @@ export const containerElement: InferEditorElement<"container"> = {
 export const twoColumnElement: InferEditorElement<"2Col"> = {
   id: "__2col",
   type: "2Col",
-  styles: containerDefaultStyles,
+  styles: { ...containerDefaultStyles, flexDirection: "row" },
   content: [
     {
       ...containerElement,
@@ -178,6 +178,16 @@ export const accordionElement: InferEditorElement<"accordion"> = {
   },
 };
 
+export const shareElement: InferEditorElement<"share"> = {
+  id: "__share",
+  type: "share",
+  styles: {
+    color: "#222",
+    height: "50px",
+  },
+  content: {},
+};
+
 /**
  * mapper for element types
  */
@@ -193,6 +203,7 @@ export const elementNameMap: Record<EditorElementType, string> = {
   navigation: "길찾기",
   logoBanner: "인비 로고",
   accordion: "펼침/접힘",
+  share: "공유하기",
   empty: "",
 };
 

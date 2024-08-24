@@ -28,6 +28,10 @@ export const env = createEnv({
     NCP_SECRET_KEY: z.string(),
     NCP_BUCKET_NAME: z.string(),
   },
-  client: {},
-  experimental__runtimeEnv: {},
+  client: {
+    NEXT_PUBLIC_KAKAO_JS_KEY: z.string(),
+  },
+  experimental__runtimeEnv: {
+    NEXT_PUBLIC_KAKAO_JS_KEY: process.env.NEXT_PUBLIC_KAKAO_JS_KEY,
+  },
 });

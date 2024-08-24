@@ -11,6 +11,7 @@ import ImageDropzone from "~/components/editor/ui/image-dropzone";
 import { EditorInput } from "~/components/editor/ui/input";
 import { Accordion } from "~/components/ui/accordion";
 import { Button } from "~/components/ui/button";
+import { KakaoIcon } from "~/components/ui/icons";
 import {
   SheetDescription,
   SheetHeader,
@@ -21,6 +22,7 @@ import {
   updateInvitation,
 } from "~/lib/db/schema/invitations.query";
 import { uploadImage } from "~/lib/image";
+import { kakaoShareInvi } from "~/lib/kakao-share";
 
 type Props = {};
 
@@ -160,6 +162,12 @@ function SEOSection() {
   const uploadImageMutation = useMutation({
     mutationFn: uploadImage,
     onSuccess: (url) => {
+      const inputEl = document.querySelector<HTMLInputElement>(
+        "#invitationThumbnail",
+      );
+      if (inputEl) {
+        inputEl.value = url;
+      }
       dispatch({
         type: "UPDATE_CONFIG",
         payload: {
@@ -192,6 +200,15 @@ function SEOSection() {
   const isPending = useMemo(() => {
     return uploadImageMutation.isPending || updateThumbnailMutation.isPending;
   }, [uploadImageMutation.isPending, updateThumbnailMutation.isPending]);
+
+  const handleShareKakao = () => {
+    kakaoShareInvi({
+      link: `https://${editor.config.invitationSubdomain}.invi.my`,
+      title: editor.config.invitationTitle,
+      description: editor.config.invitationDesc,
+      imageUrl: editor.config.invitationThumbnail,
+    });
+  };
 
   return (
     <div className="grid w-full grid-cols-9 gap-2 border-y p-6">
@@ -274,7 +291,10 @@ function SEOSection() {
       </div>
       <div className="col-span-9 flex items-center gap-2">
         <Button size="icon" variant="secondary" onClick={handleCopyLink}>
-          <LinkIcon size={16} />
+          <LinkIcon className="size-4" />
+        </Button>
+        <Button size="icon" variant="secondary" onClick={handleShareKakao}>
+          <KakaoIcon className="size-4" />
         </Button>
         <div className="ml-auto flex gap-2">
           <Button
