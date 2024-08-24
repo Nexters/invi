@@ -4,19 +4,21 @@ import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
 import { Drawer } from "vaul";
 import AttendanceFalseDefault from "~/assets/attendance/attendance-false-default.svg";
-import AttendanceTrueDefault from "~/assets/attendance/attendance-true-deafult.svg";
+import AttendanceTrueDefault from "~/assets/attendance/attendance-true-default.svg";
 import ImageRadio from "~/components/editor/fab/image-radio";
+import { useEditor } from "~/components/editor/provider";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { SheetHeader, SheetTitle } from "~/components/ui/sheet";
+import { createInvitationResponses } from "~/lib/db/schema/invitation_response.query";
 
 export default function InvitationResponseFab() {
   return (
     <Drawer.Root>
       <div className="absolute inset-x-0 bottom-0 z-50 mx-auto max-w-lg px-[28px] text-center">
         <Drawer.Trigger className="mb-5 h-[63px] w-[100%] select-none rounded-lg bg-[#5E8AFF] text-lg font-bold text-white active:scale-[0.98]">
-          세션 참여 조사하기
+          참석 여부 응답하기
         </Drawer.Trigger>
       </div>
       <Drawer.Portal>
@@ -31,6 +33,8 @@ export default function InvitationResponseFab() {
 }
 
 function InvitationResponseForm() {
+  const { editor } = useEditor();
+
   const form = useForm({
     defaultValues: {
       name: "",
@@ -38,10 +42,20 @@ function InvitationResponseForm() {
     },
     onSubmit: async ({ value }) => {
       const { name, attendance } = value;
-      // await createInvitationResponses(name, attendance as unknown as boolean);
+      await createInvitationResponses({
+        invitation_id: editor.config.invitationId,
+        participant_name: name,
+        attendance: attendance.toLowerCase() === "true",
+      });
       toast("참여가 완료되었습니다.", {
         duration: 2000,
-        position: "top-center",
+        style: {
+          backgroundColor: "black",
+          opacity: 0.9,
+          height: "56px",
+          color: "white",
+          border: 0,
+        },
       });
     },
   });
@@ -49,7 +63,9 @@ function InvitationResponseForm() {
   return (
     <div className="h-[500px] bg-transparent p-5">
       <SheetHeader>
-        <SheetTitle className="text-left text-2xl">세션 참여 조사</SheetTitle>
+        <SheetTitle className="text-left text-2xl text-primary-foreground">
+          세션 참여 조사
+        </SheetTitle>
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -116,14 +132,16 @@ function InvitationResponseForm() {
                 const isFormComplete =
                   isValid && values.name && values.attendance;
                 return (
-                  <Button
-                    type="submit"
-                    variant="outline"
-                    disabled={!isFormComplete || isSubmitting}
-                    className={`h-full w-full rounded-xl border-none bg-[#5E8AFF] text-lg font-bold text-white disabled:bg-[#D5D7D9]`}
-                  >
-                    제출하기
-                  </Button>
+                  <Drawer.Close asChild>
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      disabled={!isFormComplete || isSubmitting}
+                      className={`h-full w-full rounded-xl border-none bg-[#5E8AFF] text-lg font-bold text-white disabled:bg-[#D5D7D9]`}
+                    >
+                      제출하기
+                    </Button>
+                  </Drawer.Close>
                 );
               }}
             </form.Subscribe>

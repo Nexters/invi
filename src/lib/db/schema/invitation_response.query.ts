@@ -23,7 +23,8 @@ export async function getInvitationResponseById(invitation_id: InvitationRespons
     .select()
     .from(invitationResponses)
     .where(eq(invitationResponses.invitation_id, invitation_id));
-  return responses[0];
+
+  return responses as InvitationResponse[];
 }
 
 export async function getInvitationResponseStats() {

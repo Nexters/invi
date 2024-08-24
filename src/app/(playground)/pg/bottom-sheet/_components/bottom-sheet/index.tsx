@@ -17,7 +17,7 @@ import {
 
 import { toast } from "sonner";
 import AttendanceFalseDefault from "~/assets/attendance/attendance-false-default.svg";
-import AttendanceTrueDefault from "~/assets/attendance/attendance-true-deafult.svg";
+import AttendanceTrueDefault from "~/assets/attendance/attendance-true-default.svg";
 import { createInvitationResponses } from "~/lib/db/schema/invitation_response.query";
 
 export default function BottomSheet() {
