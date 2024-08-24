@@ -18,7 +18,7 @@ export default function InvitationResponseFab() {
     <Drawer.Root>
       <div className="absolute inset-x-0 bottom-0 z-50 mx-auto max-w-lg px-[28px] text-center">
         <Drawer.Trigger className="mb-5 h-[63px] w-[100%] select-none rounded-lg bg-[#5E8AFF] text-lg font-bold text-white active:scale-[0.98]">
-          세션 참여 조사하기
+          참석 여부 응답하기
         </Drawer.Trigger>
       </div>
       <Drawer.Portal>
@@ -47,7 +47,16 @@ function InvitationResponseForm() {
         participant_name: name,
         attendance: attendance.toLowerCase() === "true",
       });
-      toast("참여가 완료되었습니다.", { duration: 2000 });
+      toast("참여가 완료되었습니다.", {
+        duration: 2000,
+        style: {
+          backgroundColor: "black",
+          opacity: 0.9,
+          height: "56px",
+          color: "white",
+          border: 0,
+        },
+      });
     },
   });
 
